@@ -13,6 +13,12 @@ class Box
     side3 =  @dimensions[0] * @dimensions[2]
     (side1 * 3) + (side2 * 2) + (side3 * 2)
   end
+
+  def ribbon
+    (2 * @dimensions[0]) +
+    (2 * @dimensions[1]) +
+    @dimensions.reduce(&:*)
+  end
 end
 
 
@@ -24,4 +30,5 @@ lines.each do |line|
   boxes << Box.new(line)
 end
 
-puts boxes.map(&:size).reduce(&:+)
+puts "wrapping : #{boxes.map(&:size).reduce(&:+)}"
+puts "ribbon : #{boxes.map(&:ribbon).reduce(&:+)}"
