@@ -6,23 +6,27 @@ instructions.map! { |instruction| instruction.match(PARSE) }
 
 class Light
   def initialize
-    @lit = false
+    @lit = 0
   end
 
   def on
-    @lit = true
+    @lit += 1
   end
 
   def off
-    @lit = false
+    @lit -= 1 if @lit > 0
   end
 
   def toggle
-    @lit = !@lit
+    @lit = @lit + 2
   end
 
   def is_lit?
     @lit == true
+  end
+
+  def value
+    @lit
   end
 end
 
@@ -51,7 +55,7 @@ class Board
     @num = 0
     @state.each do |row|
       row.each do |light|
-        @num += 1 if light.is_lit?
+        @num += light.value
       end
     end
 
