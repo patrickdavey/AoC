@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Ruby's bitwise operators</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="Calle is a software developer based in Stockholm, Sweden.">
+    <link rel="canonical" href="http://calleerlandsson.com/2014/02/06/rubys-bitwise-operators/">
+    <link rel="alternate" type="application/atom+xml" href="http://www.calleerlandsson.com/feed.xml">
+  </head>
+  <body>
+    <h1>Ruby's bitwise operators</h1>
+
+    <div>
+  <header>
+    <p>
+      Feb 6, 2014
+
+      
+
+      
+    </p>
+  </header>
+
+  <article>
+    <p>The bitwise operators in Ruby works on integers by treating them as the
+sequence of bits that they are stored as in memory. This means that decimal
+<code>13</code> is treated as binary <code>1101</code>.</p>
+
+<p>To convert an integer into a string of ones and zeros you can use the
+<a href="http://bit.ly/1kwWZAs">Fixnum#to_s</a> method, supplying <code>2</code> as the base:</p>
+
+<pre><code class="language-ruby">13.to_s(2) #=&gt; "1101"
+</code></pre>
+
+<p>Ruby has 6 bitwise operators:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">operator</th>
+      <th>description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">&amp;</td>
+      <td>The AND operator</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">|</td>
+      <td>The OR operator</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">^</td>
+      <td>The XOR operator</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">~</td>
+      <td>The NOT (complement) operator</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">«</td>
+      <td>The left shift operator</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">»</td>
+      <td>The right shift operator</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Below follows a brief rundown of them.</p>
+
+<h3 id="the-and-operator">The AND operator</h3>
+<p>The AND operator walks through the binary representation of two supplied
+integers bit by bit. If the bits at the same position in both integers are
+<code>1</code> the resulting integer will have that bit set to <code>1</code>. If not, the
+bit will be set to&nbsp;<code>0</code>:</p>
+
+<pre><code class="language-ruby">(a = 18).to_s(2)     #=&gt; "10010"
+(b = 20).to_s(2)     #=&gt; "10100"
+(a &amp; b).to_s(2)      #=&gt; "10000"
+</code></pre>
+
+<h3 id="the-or-operator">The OR operator</h3>
+<p>The OR operator functions much in the same way as the AND operator but with the
+exception that it will set the bit in the resulting integer to <code>1</code> as long
+as at least one of the corresponding bits in the given integers is <code>1</code>:</p>
+
+<pre><code class="language-ruby">(a = 18).to_s(2)     #=&gt; "10010"
+(b = 20).to_s(2)     #=&gt; "10100"
+(a | b).to_s(2)      #=&gt; "10110"
+</code></pre>
+
+<h3 id="the-xor-operator">The XOR operator</h3>
+<p>The XOR operator implements an exclusive OR which means that it will set the bit
+to <code>1</code> in the output if <strong><em>only one</em></strong> of the corresponding bits in the
+inputs are set to <code>1</code>:</p>
+
+<pre><code class="language-ruby">(a = 18).to_s(2)     #=&gt; "10010"
+(b = 20).to_s(2)     #=&gt; "10100"
+(a ^ b).to_s(2)      #=&gt;   "110" (leading zeros are omitted)
+</code></pre>
+
+<h3 id="the-not-operator">The NOT operator</h3>
+<p>The bitwise NOT, or complement, operator flips the bits inside an integer
+turning zeros to ones and ones to zeros. This sounds, and is, really simple but
+is a bit harder to show and explain. First, lets see what Fixnum#to_s can show
+us about this:</p>
+
+<pre><code class="language-ruby">(a = 18).to_s(2)     #=&gt; "10010"
+~a                   #=&gt; -19
+(~a).to_s(2)         #=&gt; "-10011"
+</code></pre>
+
+<p>That doesn’t look very flipped to me! And what is that minus sign doing there?</p>
+
+<p>It turns out that Fixnum#to_s is not returning the real binary representation
+of negative numbers. Instead it returns the binary representation of the
+corresponding positive number prepended with a minus sign:</p>
+
+<pre><code class="language-ruby">-19.to_s(2)          #=&gt; "-10011"
+"-" + 19.to_s(2)     #=&gt; "-10011"
+</code></pre>
+
+<p>In mathematics, negative numbers are denoted by prefixing them with a minus
+sign, regardless of their base. This is, however, not possible in computer
+hardware where everything is represented using ones and zeros. Instead, other
+methods has to be used.</p>
+
+<p>In modern computers, negative integers are stored in
+memory using a method called <a href="http://bit.ly/1bQ1Erf">two’s complement</a>. The
+two’s complement method is designed to make basic arithmetic operations simple
+to implement and can be summarized in these three rules:</p>
+
+<ul>
+  <li><code>0</code> is represented by all zeros.</li>
+  <li>Positive numbers starts at zero and counts upward towards a maximum value of
+2<sup>(n-1)</sup>-1 where n is the number of bits. This means that the
+maximum value possible to represent using 4 bits is 2<sup>(4-1)</sup>-1 = 7
+or <code>0111</code>.</li>
+  <li>Negative numbers are represented by toggling the roles of the ones and zeros.
+Instead of starting at zero, negative numbers starts at <code>-1</code>, which is
+represented using all ones, and are counted downward using zeros towards a
+minimum of -2<sup>(n-1)</sup>. In the case of a 4 bit number that would be
+-2<sup>(4-1)</sup> = -8 or <code>1000</code>.</li>
+</ul>
+
+<p>This means that instead of being able to represent the numbers 0 to 15, 4 bits
+can represent the numbers -8 to 7. Here are some examples of positive and
+negative integers and their binary representation:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: right">binary</th>
+      <th style="text-align: right">decimal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: right"><code>0000</code></td>
+      <td style="text-align: right"><code>0</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: right"><code>0001</code></td>
+      <td style="text-align: right"><code>1</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: right"><code>0010</code></td>
+      <td style="text-align: right"><code>2</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: right"><code>0111</code></td>
+      <td style="text-align: right"><code>7</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: right"><code>1111</code></td>
+      <td style="text-align: right"><code>-1</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: right"><code>1110</code></td>
+      <td style="text-align: right"><code>-2</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: right"><code>1101</code></td>
+      <td style="text-align: right"><code>-3</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: right"><code>1000</code></td>
+      <td style="text-align: right"><code>-8</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>OK, if Fixmnum#to_s can’t help us, how do we get hold of the real binary
+representation of negative numbers?</p>
+
+<p>Let us turn to the <a href="http://bit.ly/1n5Er9Q">Fixnum#[]</a> method. This
+method returns the value of the bit at the given position in the integer with 0
+being the rightmost. This means that we can loop through the interesting
+positions in the integer and collect their bit values:</p>
+
+<pre><code class="language-ruby">a = 18
+b = ~a     #=&gt; -19
+
+5.downto(0).map { |n| a[n] }.join    #=&gt; "010010"
+5.downto(0).map { |n| b[n] }.join    #=&gt; "101101"
+</code></pre>
+
+<p>At last, we can see the effect of the NOT operator! Using the rules from above
+we can also understand why <code>101101</code> in this case means <code>-19</code> instead
+of <code>45</code>.</p>
+
+<h3 id="the-left-and-right-shift-operators">The left and right shift operators</h3>
+<p>The left and right shift operators shifts an integers bits to the left or
+right by the given number of positions, truncating bits or padding with zeros
+where needed.</p>
+
+<pre><code class="language-ruby">a = 18
+
+(a &gt;&gt; 2).to_s(2)       #=&gt;     "100"
+(a &gt;&gt; 1).to_s(2)       #=&gt;    "1001"
+(a).to_s(2)            #=&gt;   "10010"
+(a &lt;&lt; 1).to_s(2)       #=&gt;  "100100"
+(a &lt;&lt; 2).to_s(2)       #=&gt; "1001000"
+</code></pre>
+
+<p>I hope you found this rundown on Ruby’s bitwise operators interesting. If you
+want learn more about what you can use these operators for, be sure to check out
+the followup article <a href="http://calleerlandsson.com/2015/02/16/flags-bitmasks-and-unix-file-system-permissions-in-ruby/">“Flags, bitmasks, and unix file system permissions in
+Ruby”</a></p>
+
+  </article>
+</div>
+
+  
+
+</body></html>
