@@ -4,12 +4,12 @@ class Place
     @distances = {}
   end
 
-  def store_distance_to(place, distance)
-    @distances[place.to_s] = distance.to_i
+  def []=(place, distance)
+    @distances[place] = distance.to_i
   end
 
   def distance_to(place)
-    @distances[place.to_s]
+    @distances[place]
   end
 
   def distance_between(place)
