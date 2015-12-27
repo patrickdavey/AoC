@@ -1,4 +1,4 @@
-stram to AlphaCentauri = 34
+Tristram to AlphaCentauri = 34
 Tristram to Snowdin = 100
 Tristram to Tambi = 63
 Tristram to Faerun = 108
