@@ -29,6 +29,27 @@ class Place
   attr_reader :name
 end
 
+class Trip
+  def initialize(places)
+    @places = places
+  end
+
+  def distance
+    trip_distance = 0
+    places.each_cons(2).each do |(a, b)|
+      trip_distance += a.distance_between(b)
+    end
+    trip_distance
+  end
+
+  def to_s
+    "#{places.map(&:to_s).join("->")} : #{distance}"
+  end
+
+  private
+  attr_reader :places
+end
+
 distances = IO.readlines('test.txt')
 PARSE = /(?<first_place>\w+) to (?<second_place>\w+) = (?<distance>\d+)/.freeze
 
@@ -39,21 +60,10 @@ distances.map do |distance|
   places[input[:first_place]].store_distance_to(places[input[:second_place]], input[:distance])
 end
 
-min = nil
-best = nil
-
-places.keys.permutation.each do |trip|
-  trip_distance = 0
-  trip.each_cons(2).each do |(a, b)|
-    trip_distance += places[a].distance_between(places[b])
-  end
-  min ||= trip_distance
-
-  if min <= trip_distance
-    best = trip
-  end
-
+trips = places.keys.permutation.map do |trip|
+  Trip.new(trip.map { |name| places[name] })
 end
 
-puts min
-puts best
+puts trips
+
+puts trips.min_by { |trip| trip.distance }
