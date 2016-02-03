@@ -20,7 +20,7 @@ class TestLookAndSay < Minitest::Test
     ]
 
     sample_data.each do |(initial, next_in_seq)|
-      assert_equal next_in_seq, LookAndSay.new(initial).next
+      assert_equal next_in_seq, LookAndSay.new(initial).succ
     end
   end
 end

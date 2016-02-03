@@ -5,7 +5,7 @@ class LookAndSay
     @initial = split_to_digits(init)
   end
 
-  def next
+  def succ
     intermediate_list.map do |number, length|
       "#{number}#{length}"
     end.join.to_i
@@ -32,4 +32,3 @@ class LookAndSay
 
   attr_reader :initial
 end
-
