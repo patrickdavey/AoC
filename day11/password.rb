@@ -45,12 +45,14 @@ class PasswordGenerator
     @current_password = current_password
   end
 
-  def succ
+  def succ(count = 1)
     possible = current_password
-    loop do
+    found = 0
+    while found < count do
       possible = Password.new(possible.to_s.succ)
-      return possible if possible.valid?
+      found += 1 if possible.valid?
     end
+    return possible
   end
 
   private

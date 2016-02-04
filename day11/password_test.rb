@@ -41,4 +41,8 @@ class TestPasswordGenerator < Minitest::Test
       assert_equal next_in_seq, PasswordGenerator.new(Password.new(initial)).succ.to_s
     end
   end
+
+  def test_allow_succ_to_take_a_count
+    assert_equal "abcdffbb", PasswordGenerator.new(Password.new("abcdefgh")).succ(2).to_s
+  end
 end
