@@ -29,7 +29,7 @@ Given Santa's current password (your puzzle input), what should his next passwor
 Your puzzle input is hxbxwxba.
 =end
 
-class TestPassword < Minitest::Test
+class TestPasswordGenerator < Minitest::Test
 
   def test_example_next_passwords
     sample_data = [
@@ -38,7 +38,7 @@ class TestPassword < Minitest::Test
     ]
 
     sample_data.each do |(initial, next_in_seq)|
-      assert_equal next_in_seq, Password.new(initial).succ
+      assert_equal next_in_seq, PasswordGenerator.new(Password.new(initial)).succ.to_s
     end
   end
 end
