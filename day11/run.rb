@@ -1,3 +1,4 @@
 require './password.rb'
 
-puts Password.new("hxbxwxba").succ
+first = PasswordGenerator.new(Password.new("hxbxwxba")).succ
+puts PasswordGenerator.new(first).succ
