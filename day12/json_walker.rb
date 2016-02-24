@@ -7,11 +7,11 @@ class JsonWalker
   end
 
   def sum(iterate_over = json, accumulator = [])
-    iterate_over.each_with_object(accumulator) do |k, accum|
+    iterate_over.each_with_object(accumulator) do |k, accumulator|
       if k.respond_to?(:each)
-        sum(k, accum)
+        sum(k, accumulator)
       elsif k.is_a?(Numeric)
-        accum << k
+        accumulator << k
       end
     end.reduce(&:+)
   end
