@@ -6,14 +6,14 @@ class JsonWalker
     @json = JSON.parse(json_string)
   end
 
-  def sum(traverse = json, acc = 0)
-    if (traverse.respond_to?(:each))
-      return acc + sum(traverse.pop) + sum(traverse)
-    elsif traverse.kind_of?(Numeric)
-      return acc + traverse
-    else
-      return acc + 0
+  def sum(iterate_over = json, accumulator = [])
+    t = iterate_over.each_with_object(accumulator) do |(k,v), accum|
+      accum << k if k.is_a?(Numeric)
+      accum << v if v.is_a?(Numeric)
+      sum(v, accum) if v.respond_to?(:each)
+      sum(k, accum) if k.respond_to?(:each)
     end
+    t.reduce(&:+)
   end
 
 
