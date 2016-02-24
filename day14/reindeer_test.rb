@@ -7,8 +7,14 @@ require "./reindeer.rb"
 
 class ReindeerTest < Minitest::Test
   def test_reindeer_to_s
-    reindeer = Reindeer.new("rudolf")
+    reindeer = Reindeer.new(name: "rudolf", speed: 14, duration: 10, rest: 127)
 
     assert_equal reindeer.to_s, "rudolf"
+  end
+
+  def test_tick
+    reindeer = Reindeer.new(name: "rudolf", speed: 14, duration: 10, rest: 127)
+    reindeer.tick
+    assert_equal reindeer.distance, 14
   end
 end
