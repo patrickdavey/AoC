@@ -25,4 +25,14 @@ class ReindeerTest < Minitest::Test
     reindeer.tick
     assert_equal reindeer.distance, 28
   end
+
+  def test_long_tick
+    comet = Reindeer.new(name: "comet", speed: 14, duration: 10, rest: 127)
+    1000.times { comet.tick }
+    assert_equal comet.distance, 1120
+
+    dancer = Reindeer.new(name: "dancer", speed: 16, duration: 11, rest: 162)
+    1000.times { dancer.tick }
+    assert_equal dancer.distance, 1056
+  end
 end
