@@ -2,6 +2,7 @@ require 'pry'
 
 class Reindeer
   attr_reader :distance
+  attr_accessor :score
 
   def initialize(name:, speed:, duration:, rest:)
     @name = name
@@ -9,6 +10,7 @@ class Reindeer
     @duration = duration
     @rest = rest
     @distance = 0
+    @score = 0
     @time = 0
   end
 

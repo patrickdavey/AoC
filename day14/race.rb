@@ -11,9 +11,13 @@ class Race
   def winner_after(number_of_seconds)
     number_of_seconds.times do
       @entrants.map(&:tick)
+      current_top_distance = @entrants.max_by(&:distance).distance
+      @entrants.select do |entrant|
+        entrant.distance == current_top_distance
+      end.each { |entrant| entrant.score += 1 }
     end
 
-    @entrants.max_by(&:distance)
+    @entrants.max_by(&:score)
   end
 
 
