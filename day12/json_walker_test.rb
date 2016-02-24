@@ -30,6 +30,7 @@ class JsonWalkerTest < Minitest::Test
       ['{"a":[-1,{"a": 1}]}',0],
       ['[-1,{"a":1}]',0],
       ['{"a":[-1,{"a": [[1,2,3]]}]}',5],
+      ['[1,{"c":"red","b":2},3]', 4]
     ]
 
     sample_data.each do |(json, sum)|
