@@ -1,3 +1,4 @@
+=begin
 --- Day 14: Reindeer Olympics ---
 
 This year is the Reindeer Olympics! Reindeer can fly at high speeds, but must rest occasionally to recover their energy. Santa would like to know which of his reindeer is fastest, and so he has them race.
@@ -14,4 +15,16 @@ After one second, Comet has gone 14 km, while Dancer has gone 16 km. After ten s
 In this example, after the 1000th second, both reindeer are resting, and Comet is in the lead at 1120 km (poor Dancer has only gotten 1056 km by that point). So, in this situation, Comet would win (if the race ended at 1000 seconds).
 
 Given the descriptions of each reindeer (in your puzzle input), after exactly 2503 seconds, what distance has the winning reindeer traveled?
+=end
 
+require "minitest/autorun"
+require "./race.rb"
+
+class RaceTest < Minitest::Test
+  def test_example_race
+    sample = "Comet can fly 14 km/s for 10 seconds, but then must rest for 127 seconds.
+    Dancer can fly 16 km/s for 11 seconds, but then must rest for 162 seconds."
+
+    assert Race.new(sample).winner_after(1000).to_s == "Comet"
+  end
+end
