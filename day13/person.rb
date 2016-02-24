@@ -20,7 +20,14 @@ class Person
     @seatings[person.hash] = value
   end
 
+  def [](person)
+    return 0 if person.is_a?(ApatheticPerson)
+    @seatings[person.hash]
+  end
+end
+
+class ApatheticPerson < Person
   def [](index)
-    @seatings[index.hash]
+    0
   end
 end

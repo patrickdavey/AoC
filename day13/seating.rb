@@ -7,6 +7,7 @@ class Seating
   def initialize(happiness_information)
     @people = []
     setup_people(happiness_information)
+    @people << ApatheticPerson.new("me")
   end
 
   def optimal
