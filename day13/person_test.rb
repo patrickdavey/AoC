@@ -11,8 +11,14 @@ class PersonTest < Minitest::Test
     alice = Person.new("Alice")
     bob = Person.new("Bob")
     alice[bob] = 54
-    # assert_equal 54, alice[bob]
+    assert_equal 54, alice[bob]
     bob = Person.new("Bob")
     assert_equal 54, alice[bob]
+  end
+
+  def test_equality
+    alice = Person.new("Alice")
+    alice2 = Person.new("Alice")
+    assert alice == alice2
   end
 end

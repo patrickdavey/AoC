@@ -12,6 +12,10 @@ class Person
     @name.hash
   end
 
+  def ==(other)
+    name == other.name
+  end
+
   def []=(person, value)
     @seatings[person.hash] = value
   end
