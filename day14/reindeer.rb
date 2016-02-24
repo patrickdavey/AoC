@@ -9,6 +9,7 @@ class Reindeer
     @duration = duration
     @rest = rest
     @distance = 0
+    @time = 0
   end
 
   def to_s
@@ -16,11 +17,18 @@ class Reindeer
   end
 
   def tick
-    @distance += speed
+    @distance += speed unless resting?
+    @time += 1
   end
 
 
   private
 
-  attr_reader :name, :speed, :duration, :rest
+  attr_reader :name, :speed, :duration, :rest, :time
+
+  def resting?
+    left_time = time.modulo(duration + rest)
+    left_time - duration >= 0
+  end
+
 end

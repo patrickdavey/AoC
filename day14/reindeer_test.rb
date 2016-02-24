@@ -13,8 +13,16 @@ class ReindeerTest < Minitest::Test
   end
 
   def test_tick
-    reindeer = Reindeer.new(name: "rudolf", speed: 14, duration: 10, rest: 127)
+    reindeer = Reindeer.new(name: "rudolf", speed: 14, duration: 1, rest: 2)
     reindeer.tick
     assert_equal reindeer.distance, 14
+    reindeer.tick
+    assert_equal reindeer.distance, 14
+    reindeer.tick
+    assert_equal reindeer.distance, 14
+    reindeer.tick
+    assert_equal reindeer.distance, 28
+    reindeer.tick
+    assert_equal reindeer.distance, 28
   end
 end
