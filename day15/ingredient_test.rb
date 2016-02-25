@@ -40,11 +40,23 @@ class IngredientTest < Minitest::Test
                                 durability: 2,
                                 flavor: 3,
                                 texture: 4,
-                                calories: 5)
+                                calories: 5,
+                                amount: 7)
     assert_equal ingredient.capacity, 1
     assert_equal ingredient.durability, 2
     assert_equal ingredient.flavor, 3
     assert_equal ingredient.texture, 4
     assert_equal ingredient.calories, 5
+    assert_equal ingredient.amount, 7
+  end
+
+  def test_totals
+    ingredient = Ingredient.new(capacity: 1,
+                                durability: 2,
+                                flavor: 3,
+                                texture: 4,
+                                calories: 5,
+                                amount: 7)
+    assert_equal ingredient.total_capacity, 7
   end
 end
