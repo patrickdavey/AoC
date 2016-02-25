@@ -1,3 +1,4 @@
+=begin
 --- Day 15: Science for Hungry People ---
 
 Today, you set out on the task of perfecting your milk-dunking cookie recipe. All you have to do is find the right balance of ingredients.
@@ -27,5 +28,34 @@ Then, choosing to use 44 teaspoons of butterscotch and 56 teaspoons of cinnamon 
 Multiplying these together (68 * 80 * 152 * 76, ignoring calories for now) results in a total score of 62842880, which happens to be the best score possible given these ingredients. If any properties had produced a negative total, it would have instead become zero, causing the whole score to multiply to zero.
 
 Given the ingredients in your kitchen and their properties, what is the total score of the highest-scoring cookie you can make?
+`
+=end
 
+require "minitest/autorun"
 
+class Ingredient
+  attr_reader :capacity, :durability, :flavor, :texture, :calories
+
+  def initialize(capacity:, durability:, flavor:, texture:, calories:)
+    @capacity = capacity
+    @durability = durability
+    @flavor = flavor
+    @texture = texture
+    @calories = calories
+  end
+end
+
+class IngredientTest < Minitest::Test
+  def test_basic_initialization
+    ingredient = Ingredient.new(capacity: 1,
+                                durability: 2,
+                                flavor: 3,
+                                texture: 4,
+                                calories: 5)
+    assert_equal ingredient.capacity, 1
+    assert_equal ingredient.durability, 2
+    assert_equal ingredient.flavor, 3
+    assert_equal ingredient.texture, 4
+    assert_equal ingredient.calories, 5
+  end
+end
