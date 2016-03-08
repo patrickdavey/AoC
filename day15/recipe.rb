@@ -18,7 +18,8 @@ class Recipe
     end.transpose
     combined_ingredients.map do |sum|
       added = sum.reduce(:+)
-      added > 0 ? added : 0
+      return 0 if added <= 0
+      added
     end.reduce(:*)
   end
 end
