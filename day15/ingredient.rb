@@ -1,9 +1,10 @@
 require 'pry'
 
 class Ingredient
-  attr_reader :capacity, :durability, :flavor, :texture, :calories, :amount
+  attr_accessor :amount
+  attr_reader :capacity, :durability, :flavor, :texture, :calories
 
-  def initialize(capacity:, durability:, flavor:, texture:, calories:, amount:)
+  def initialize(capacity:, durability:, flavor:, texture:, calories:, amount: 0)
     @capacity = capacity
     @durability = durability
     @flavor = flavor
