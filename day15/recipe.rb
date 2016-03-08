@@ -16,6 +16,9 @@ class Recipe
        ingredient.total_flavor,
        ingredient.total_texture ]
     end.transpose
-    combined_ingredients.map { |sum| sum.reduce(:+) }.reduce(:*)
+    combined_ingredients.map do |sum|
+      added = sum.reduce(:+)
+      added > 0 ? added : 0
+    end.reduce(:*)
   end
 end

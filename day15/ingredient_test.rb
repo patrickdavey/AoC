@@ -58,5 +58,6 @@ class IngredientTest < Minitest::Test
                                 calories: 5,
                                 amount: 7)
     assert_equal ingredient.total_capacity, 7
+    assert_equal ingredient.total_durability, 14
   end
 end
