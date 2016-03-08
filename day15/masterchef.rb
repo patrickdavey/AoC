@@ -11,9 +11,9 @@ class Masterchef
     @ingredients << ingredient
   end
 
-  def find_best!(*amounts)
-    amounts = initial_amounts if amounts.empty?
+  def find_best!(amounts = initial_amounts)
     raise "messup #{amounts}" if amounts.reduce(:+) != 100
+    raise "messup #{amounts}" if amounts.find { |a| a < 0 }
 
     recipe = Recipe.new
 
@@ -26,7 +26,14 @@ class Masterchef
 
     return @max_score if amounts.last == 100 #we have iterated all the way to the end
 
-    find_best!(amounts[0] - 1, amounts[1] + 1)
+    (1..(amounts.size - 1)).each do |index|
+      amounts[0] = amounts[0] - 1
+      amounts[index] = amounts[index] + 1
+      find_best!(amounts)
+    end
+
+    return @max_score
+
   end
 
   def initial_amounts
