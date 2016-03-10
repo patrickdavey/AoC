@@ -6,7 +6,7 @@ class TeaspoonIterator
   def initialize(number_of_ingredients)
     @number_of_ingredients = number_of_ingredients
     @max_possible_combinations = MAX_TEASPOONS ** @number_of_ingredients
-    @combination = BigDecimal.new(0)
+    @combination = starting_decimal
   end
 
   def has_next?
@@ -24,6 +24,7 @@ class TeaspoonIterator
         next_iteration << div
       end
       @combination += 1
+      puts "#{Time.now.to_i}, #{@combination}, #{next_iteration.map(&:to_i).inspect}" if (@combination % 100_000 == 0)
     end
     next_iteration.map(&:to_i)
   end
@@ -31,4 +32,12 @@ class TeaspoonIterator
   private
 
   attr_accessor :combination
+
+  def starting_decimal
+    start = BigDecimal.new(0)
+    (0...(@number_of_ingredients )).to_a.reverse.each do |power|
+      start += MAX_TEASPOONS ** power
+    end
+    start
+  end
 end
