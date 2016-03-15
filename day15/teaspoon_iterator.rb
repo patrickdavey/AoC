@@ -24,7 +24,6 @@ class TeaspoonIterator
         next_iteration << div
       end
       @combination += 1
-      puts "#{Time.now.to_i}, #{@combination}, #{next_iteration.map(&:to_i).inspect}" if (@combination % 100_000 == 0)
     end
     next_iteration.map(&:to_i)
   end

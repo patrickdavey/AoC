@@ -25,7 +25,11 @@ class Masterchef
         recipe << ingredient
       end
       recipe_score = recipe.score
-      @max_score = recipe_score if recipe_score > @max_score
+
+      if recipe_score > @max_score
+        @max_score = recipe_score
+        puts @max_score
+      end
     end
 
     return @max_score
