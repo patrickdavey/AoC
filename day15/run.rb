@@ -18,4 +18,4 @@ IO.read("./input.txt").each_line do |ingredient|
   masterchef << ingredient
 end
 
-puts masterchef.find_best!
+puts masterchef.find_best!(500)

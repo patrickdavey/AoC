@@ -12,7 +12,7 @@ class Masterchef
     @ingredients << ingredient
   end
 
-  def find_best!
+  def find_best!(calories = false)
     iterator = TeaspoonIterator.new(@ingredients.size)
     while(iterator.has_next?) do
       amounts = iterator.succ
@@ -26,7 +26,7 @@ class Masterchef
       end
       recipe_score = recipe.score
 
-      if recipe_score > @max_score
+      if should_count_score?(recipe, calories) && recipe_score > @max_score
         @max_score = recipe_score
         puts @max_score
       end
@@ -34,5 +34,14 @@ class Masterchef
 
     return @max_score
 
+  end
+
+
+  private
+
+  def should_count_score?(recipe, calories)
+    return true unless calories
+
+    recipe.total_calories == calories
   end
 end

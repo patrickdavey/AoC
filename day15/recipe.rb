@@ -9,6 +9,10 @@ class Recipe
     @ingredients << ingredient
   end
 
+  def total_calories
+    @ingredients.map(&:total_calories).reduce(:+)
+  end
+
   def score
     combined_ingredients = @ingredients.map do |ingredient|
       [ingredient.total_capacity,
