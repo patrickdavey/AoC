@@ -44,6 +44,6 @@ class Searcher
 
   private
 
-  attr_reader :sues, :children, :cats, :samoyeds, :pomeranians,
-    :akitas, :vizslas, :goldfish, :trees, :cars, :perfumes
+  attr_reader :sues
+  attr_reader *ATTRIBUTES_TO_CHECK
 end
