@@ -37,10 +37,11 @@ require "./sue.rb"
 
 class SueTest < Minitest::Test
   def test_responds_to_basic_initialization
-    sue = Sue.new
+    sue = Sue.new("Sue1")
     sue.cars = 9
     assert_same sue.cars, 9
     assert_same sue.cats, nil
+    assert_equal sue.name, "Sue1"
   end
 end
 
