@@ -6,11 +6,11 @@ PARSE = /^(?<name>.+):\s(?<attr1>[\w]+):\s(?<attr1_value>[\d]+),\s
 
 searcher = Searcher.new({
   children: 3,
-  cats: 10,
+  cats: 7,
   samoyeds: 2,
   pomeranians: 3,
   akitas: 0,
-  vizslas: 2,
+  vizslas: 0,
   goldfish: 5,
   trees: 3,
   cars: 2,

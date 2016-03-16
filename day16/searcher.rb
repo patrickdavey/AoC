@@ -27,12 +27,12 @@ class Searcher
   def find_matching_sue!(remaining_collection = sues, index = 0)
     return remaining_collection.first.name if remaining_collection.size == 1
 
-    if index == ATTRIBUTES_TO_CHECK.length
+    if (index + 1) == ATTRIBUTES_TO_CHECK.length
       return remaining_collection.find do |sue|
         sue.perfumes == perfumes
       end.name
     else
-      remaining_collection = sues.find_all do |sue|
+      remaining_collection = remaining_collection.find_all do |sue|
         sue.send(ATTRIBUTES_TO_CHECK[index]) == send(ATTRIBUTES_TO_CHECK[index]) ||
         sue.send(ATTRIBUTES_TO_CHECK[index]) == nil
       end
