@@ -5,6 +5,9 @@ class Searcher
   ATTRIBUTES_TO_CHECK = [:children, :cats, :samoyeds, :pomeranians,
     :akitas, :vizslas, :goldfish, :trees, :cars, :perfumes].freeze
 
+  ATTRIBUTES_RANGE = [:==, :>, :==, :<,
+    :==, :==, :<, :>, :==, :==].freeze
+
   def initialize(children:, cats:, samoyeds:, pomeranians:, akitas:, vizslas:,
                 goldfish:, trees:, cars:, perfumes:)
     @children = children
@@ -27,17 +30,11 @@ class Searcher
   def find_matching_sue!(remaining_collection = sues, index = 0)
     return remaining_collection.first.name if remaining_collection.size == 1
 
-    if (index + 1) == ATTRIBUTES_TO_CHECK.length
-      return remaining_collection.find do |sue|
-        sue.perfumes == perfumes
-      end.name
-    else
-      remaining_collection = remaining_collection.find_all do |sue|
-        sue.send(ATTRIBUTES_TO_CHECK[index]) == send(ATTRIBUTES_TO_CHECK[index]) ||
-        sue.send(ATTRIBUTES_TO_CHECK[index]) == nil
-      end
-      find_matching_sue!(remaining_collection, index + 1)
+    remaining_collection = remaining_collection.find_all do |sue|
+      sue.send(ATTRIBUTES_TO_CHECK[index]) == nil ||
+      sue.send(ATTRIBUTES_TO_CHECK[index]).send(ATTRIBUTES_RANGE[index], send(ATTRIBUTES_TO_CHECK[index]))
     end
+    find_matching_sue!(remaining_collection, index + 1)
 
   end
 
