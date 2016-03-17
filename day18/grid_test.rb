@@ -93,7 +93,7 @@ class GridTest < Minitest::Test
 end
 
 def states
-  [initial_state, second_state]
+  [initial_state, second_state, third_state, fourth_state, fifth_state]
 end
 
 def initial_state
@@ -115,5 +115,38 @@ def second_state
 ......
 #.....
 #.##..
+STATE
+end
+
+def third_state
+<<STATE
+..###.
+......
+..###.
+......
+.#....
+.#....
+STATE
+end
+
+def fourth_state
+<<STATE
+...#..
+......
+...#..
+..##..
+......
+......
+STATE
+end
+
+def fifth_state
+<<STATE
+......
+......
+..##..
+..##..
+......
+......
 STATE
 end

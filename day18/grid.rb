@@ -24,8 +24,10 @@ class Grid
       row.each_with_index do |light, col_index|
         new_row << light.next_state(lights_around(row_index, col_index))
       end
+      next_state << new_row
     end
-
+    @board = next_state
+    to_s
   end
 
   def to_s
@@ -41,9 +43,9 @@ class Grid
     lights << @board[row_index - 1 ][col_index + 1] if row_index - 1 >= 0
     lights << @board[row_index][col_index - 1] if col_index - 1 >= 0
     lights << @board[row_index][col_index + 1]
-    lights << @board[row_index + 1][col_index - 1] if col_index - 1 >= 0
-    lights << @board[row_index + 1 ][col_index]
-    lights << @board[row_index + 1 ][col_index + 1]
+    lights << @board[row_index + 1][col_index - 1] if @board[row_index + 1] && col_index - 1 >= 0
+    lights << @board[row_index + 1 ][col_index] if @board[row_index + 1]
+    lights << @board[row_index + 1 ][col_index + 1] if @board[row_index + 1]
     lights.compact
   end
 end
