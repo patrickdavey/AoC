@@ -79,7 +79,6 @@ require "pry"
 
 class GridTest < Minitest::Test
   def test_sample_input
-    skip
     states.each_cons(2) do |first, second|
       grid = Grid.new(first.strip)
       assert_equal(grid.next, second.strip)
@@ -88,7 +87,6 @@ class GridTest < Minitest::Test
 
   def test_grid_initial_state
     grid = Grid.new(initial_state.strip)
-    assert_equal grid[0,1].to_s, "#"
     assert_equal grid[5,5].to_s, "."
     assert_equal grid.to_s, initial_state.strip
   end

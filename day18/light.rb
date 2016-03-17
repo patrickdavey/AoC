@@ -1,4 +1,4 @@
-class Point
+class Light
   def initialize(intial_state)
     @intial_state = intial_state
   end
