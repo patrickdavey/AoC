@@ -5,6 +5,7 @@ class Filler
     @buckets = buckets
     @num_possible_fills = 0
     @litres_to_fill = litres_to_fill
+    @min_number_buckets = buckets.size
   end
 
   def find_possible_fills
@@ -20,7 +21,13 @@ class Filler
     (1..remaining_buckets.size).each do |combination_size|
       remaining_buckets.combination(combination_size).each do |combination|
         if remaining_to_fill - combination.reduce(:+) == 0
-          @num_possible_fills += 1
+          # then we have filled up the container, now need to test if it is the smallest one
+          if (1 + combination.size) < @min_number_buckets
+            @num_possible_fills = 1 #reset the counter, we now have a smaller number
+            @min_number_buckets = (1 + combination.size)
+          elsif (1 + combination.size) == @min_number_buckets
+            @num_possible_fills += 1
+          end
         end
       end
     end
