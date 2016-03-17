@@ -30,6 +30,10 @@ class Grid
     to_s
   end
 
+  def number_on
+    @board.flatten.select(&:on?).size
+  end
+
   def to_s
     @board.map do |row|
       row.map(&:to_s).join("")

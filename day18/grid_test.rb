@@ -89,6 +89,7 @@ class GridTest < Minitest::Test
     grid = Grid.new(initial_state.strip)
     assert_equal grid[5,5].to_s, "."
     assert_equal grid.to_s, initial_state.strip
+    assert_equal grid.number_on, 15
   end
 end
 
