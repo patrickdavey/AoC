@@ -11,6 +11,7 @@ class Grid
       end
       @board << row_of_lights
     end
+    turn_corners_on
   end
 
   def [](row, col)
@@ -27,6 +28,7 @@ class Grid
       next_state << new_row
     end
     @board = next_state
+    turn_corners_on
     to_s
   end
 
@@ -51,5 +53,15 @@ class Grid
     lights << @board[row_index + 1 ][col_index] if @board[row_index + 1]
     lights << @board[row_index + 1 ][col_index + 1] if @board[row_index + 1]
     lights.compact
+  end
+
+
+  private
+
+  def turn_corners_on
+    @board[0][0] = Light.new("#")
+    @board[@board.size - 1][0] = Light.new("#")
+    @board[0][@board.size - 1] = Light.new("#")
+    @board[@board.size - 1][@board.size - 1] = Light.new("#")
   end
 end
