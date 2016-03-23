@@ -1,0 +1,2 @@
+class MoleculeCalibrator
+end
