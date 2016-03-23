@@ -37,13 +37,15 @@ require "./molecule_calibrator.rb"
 require "./replacement.rb"
 require "pry"
 class MoleculeCalibratorTest < Minitest::Test
-  def test_sample_input
+  def test_simple_input
     replacements = []
     replacements << Replacement.new(starting_molecule: "H", inserted_molecule: "HO")
     replacements << Replacement.new(starting_molecule: "H", inserted_molecule: "OH")
+    replacements << Replacement.new(starting_molecule: "O", inserted_molecule: "HH")
     initial_molecule = "HOH"
-    molecule_calibrator = MoleculeCalibrator.new(initial_molecule, replacements)
-    assert_same 4, molecule_calibrator.distinct_molecules
+    molecule_calibrator = MoleculeCalibrator.new(initial_molecule: initial_molecule, replacements: replacements)
+    assert_equal 4, molecule_calibrator.distinct_molecules
+    molecule_calibrator = MoleculeCalibrator.new(initial_molecule: "HOHOHO", replacements: replacements)
+    assert_equal 7, molecule_calibrator.distinct_molecules
   end
 end
- #captures << ($` << "wibble" << $') 
