@@ -13,5 +13,9 @@ class MoleculeCalibratorTest < Minitest::Test
     desired_molecule = "HOH"
     generator = MoleculeGenerator.new(desired_molecule: desired_molecule, replacements: replacements)
     assert_equal 3, generator.steps_required
+
+    generator = MoleculeGenerator.new(desired_molecule: "HOHOHO", replacements: replacements)
+    assert_equal 6, generator.steps_required
+
   end
 end
