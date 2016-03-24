@@ -28,5 +28,9 @@ class Player
     @items.map(&:armor).reduce(:+)
   end
 
+  def total_cost
+    @items.map(&:cost).reduce(:+)
+  end
+
   attr_reader :hit_points
 end
