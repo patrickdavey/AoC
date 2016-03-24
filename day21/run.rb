@@ -45,12 +45,15 @@ def get_player(cash_available)
 
   # now ... eek... use the rest of the cash somehow
   available_items_left = [@armors, @rings, @rings].flatten.
+                                                  reject { |w| w.cost > cash_available }.
                                                   sort_by(&:cost).
-                                                  reject { |w| w.cost > cash_available }
+                                                  reverse
   while(available_items_left.count > 0)
     item_to_add = available_items_left.shift
     player << item_to_add
-    available_items_left = available_items_left.reject{ |i| i == item_to_add }
+    cash_available -= item_to_add.cost
+    available_items_left = available_items_left.reject{ |i| i.name == item_to_add.name }.
+                                                  reject { |w| w.cost > cash_available }
   end
 
   player
