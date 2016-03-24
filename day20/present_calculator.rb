@@ -21,7 +21,10 @@ class PresentCalculator
       q, m = house.divmod(elf)
       factors << q << elf if m == 0
     end
-    total = factors.uniq.reduce(0) { |sum,e| sum + e*10}
+    # how do we know if we have passed the 50th house?
+    # well, we have the factors, and we have the house we are at.
+    # so, reject any factor which divides more than 50 times in
+    total = factors.uniq.reject { |f| house / f > 50 }.reduce(0) { |sum,e| sum + e*11}
     puts "total: #{total} for house #{house}" if (house % 4000).zero?
     total
   end
