@@ -3,6 +3,7 @@ require "./armor"
 require "./ring"
 require "./player"
 require "./round"
+require "pry"
 
 @weapons = []
 @weapons << Weapon.new("Dagger", cost: 8, damage:4, armor: 0)
@@ -65,5 +66,6 @@ until player_wins
   puts round.player_wins?
   player_wins = round.player_wins?
 end
+binding.pry
 
 puts "cash used: #{cash}"
