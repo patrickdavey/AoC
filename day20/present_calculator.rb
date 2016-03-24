@@ -1,8 +1,9 @@
 class PresentCalculator
 
-  def initialize(number_presents, house_checked_to = 0)
+  def initialize(number_presents, house_checked_to = 1)
     @number_presents = number_presents
     @house_checked_to = house_checked_to
+    @factors = {}
   end
 
   def house_number
@@ -16,15 +17,24 @@ class PresentCalculator
 
 
   def presents_accum(house)
+    factors[house] = []
+    factors[house] << 1 << house
 
-    total = 0
-    (1..house).each do |elf|
-      total += elf * 10 if house % elf == 0
+    common_factor = (house.to_f / 2).ceil.downto(2).find do |elf|
+      house % elf == 0 && factors[elf]
     end
+
+    if common_factor
+      factors[house] << factors[common_factor]
+      factors[house] = factors[house].flatten.uniq
+    end
+
+    total = factors[house].map { |elf| elf * 10 }.reduce(:+)
+
     puts "total for house #{house} was #{total}"
     total
   end
 
-  attr_reader :number_presents, :house_checked_to
+  attr_reader :number_presents, :house_checked_to, :factors
 end
 
