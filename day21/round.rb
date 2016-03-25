@@ -15,7 +15,6 @@ class Round
       else
         player.take_damage(boss.total_damage)
       end
-      puts "after turn #{@turn}: player has #{player.hit_points} , boss has  #{boss.hit_points}"
       @turn += 1
 
     end

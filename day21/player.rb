@@ -8,6 +8,10 @@ class Player
     @items << item
   end
 
+  def <=>(player)
+    player.total_cost <=> self.total_cost
+  end
+
   def take_damage(attack_value)
     if total_armor >= attack_value
       @hit_points -= 1
