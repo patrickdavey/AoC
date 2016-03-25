@@ -11,16 +11,17 @@ def new_boss
   boss
 end
 
-player_wins = false
-cash = 0
+player_wins = true
+cash = 1000
 
-until player_wins
-  cash += 1
+while player_wins
+  cash -= 1
   player_generator = PlayerGenerator.new(cash)
   player_generator.each do |player|
     round = Round.new(new_boss, player)
     player_wins = round.player_wins?
-    break if round.player_wins?
+    cash = player.total_cost unless player_wins
+    break unless round.player_wins?
   end
 end
 

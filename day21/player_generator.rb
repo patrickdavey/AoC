@@ -58,7 +58,7 @@ class PlayerGenerator
       end
       players << p
     end
-    players.sort.reverse
+    players.sort
   end
 
   def items_available
