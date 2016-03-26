@@ -1,6 +1,8 @@
 require './player.rb'
 
 class Boss < Player
+  attr_reader :damage
+
   def initialize(hit_points, damage)
     @damage = damage
     super(hit_points)

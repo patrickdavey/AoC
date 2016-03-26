@@ -8,21 +8,31 @@ class Round
   end
 
   def tick!
+    wizard.remove_armor!
     spells_in_effect.each do |spell|
-      binding.pry
+      boss.apply_spell(spell)
+      wizard.apply_spell(spell)
     end
-    # apply any existing spells
-    # if boss' turn - take damage
-    # if my turn, pick a random allowable spell
+
+    return true if round_finished?
+
     if wizards_turn?
       spell = wizard.cast_spell(spells_in_effect)
       return unless spell
       spells << spell
       apply_spell(spell) if spell.immediate?
     else
-      # do stuff
+      wizard.attacked_with!(boss.damage)
     end
     @turn += 1
+  end
+
+  def wizard_wins?
+    boss.dead? && !wizard.dead?
+  end
+
+  def round_finished?
+    boss.dead? || wizard.dead?
   end
 
 
@@ -31,7 +41,7 @@ class Round
   attr_reader :wizard, :boss
 
   def spells_in_effect
-    spells.select { spell.turns > 0 }
+    spells.select { |spell| spell.turns > 0 }
   end
 
   def wizards_turn?
