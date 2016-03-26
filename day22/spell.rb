@@ -15,7 +15,11 @@ class Spell
     @turns == 0
   end
 
-  attr_reader :cost, :damage, :heals, :turns, :name, :armor, :mana
+  def use_one_day!
+    @turns_left -= 1
+  end
+
+  attr_reader :cost, :damage, :heals, :turns_left, :name, :armor, :mana
 
   class << self
     def all

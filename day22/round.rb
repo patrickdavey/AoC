@@ -12,6 +12,7 @@ class Round
     spells_in_effect.each do |spell|
       boss.apply_spell(spell)
       wizard.apply_spell(spell)
+      spell.use_one_day!
     end
 
     return true if round_finished?
@@ -45,7 +46,7 @@ class Round
   attr_reader :wizard, :boss
 
   def spells_in_effect
-    spells.select { |spell| spell.turns > 0 }
+    spells.select { |spell| spell.turns_left > 0 }
   end
 
   def wizards_turn?
