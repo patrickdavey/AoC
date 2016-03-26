@@ -21,4 +21,16 @@ class RoundTest < Minitest::Test
     round.tick!
     assert_equal 51 - 4, boss.hit_points
   end
+
+  def test_using_drain
+    wizard = Wizard.new(50, 54)
+    def wizard.cast_spell(_)
+      Spell.drain
+    end
+    boss = Boss.new(51, 9)
+    round = Round.new(boss, wizard)
+    round.tick!
+    assert_equal 51 - 2, boss.hit_points
+    assert_equal 50 + 2, wizard.hit_points
+  end
 end
