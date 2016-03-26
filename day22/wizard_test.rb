@@ -38,4 +38,24 @@ class WizardTest < Minitest::Test
     wizard.apply_spell(Spell.recharge)
     assert_equal 102, wizard.mana
   end
+
+  def test_attack_no_armor
+    wizard = Wizard.new(10, 1)
+    wizard.attacked_with!(5)
+    assert_equal 10 - 5, wizard.hit_points
+  end
+
+  def test_attack_with_sufficient_armor
+    wizard = Wizard.new(10, 1)
+    wizard.apply_spell(Spell.shield)
+    wizard.attacked_with!(5)
+    assert_equal 10 - 1, wizard.hit_points
+  end
+
+  def test_attack_with_partial_armor
+    wizard = Wizard.new(10, 1)
+    wizard.apply_spell(Spell.shield)
+    wizard.attacked_with!(9)
+    assert_equal 10 - 2, wizard.hit_points
+  end
 end
