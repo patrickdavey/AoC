@@ -7,6 +7,12 @@ class Spell
     @armor = armor
     @mana = mana
     @turns = turns
+    @turns_left = turns
+
+  end
+
+  def immediate?
+    @turns == 0
   end
 
   attr_reader :cost, :damage, :heals, :turns, :name, :armor, :mana
