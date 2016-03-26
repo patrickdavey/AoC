@@ -54,6 +54,7 @@ class RoundTest < Minitest::Test
     assert_equal 24, wizard.mana
     assert_equal true, boss.dead?, "boss should be dead"
     assert_equal true, round.wizard_wins?, "wizard should win"
+    assert_equal 173 + 53, round.mana_used
 
   end
 

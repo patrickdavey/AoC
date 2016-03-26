@@ -35,6 +35,10 @@ class Round
     boss.dead? || wizard.dead?
   end
 
+  def mana_used
+    spells.map(&:cost).reduce(:+)
+  end
+
 
   private
 
