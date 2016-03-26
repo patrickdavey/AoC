@@ -5,4 +5,9 @@ class Boss < Player
     @damage = damage
     super(hit_points)
   end
+
+  def apply_spell(spell)
+    # only apply positive effects to wizards
+    @hit_points -= spell.damage
+  end
 end
