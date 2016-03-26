@@ -1,4 +1,6 @@
 class Player
+  attr_reader :hit_points
+
   def initialize(hit_points)
     @hit_points = hit_points
   end
@@ -15,5 +17,4 @@ class Player
     @hit_points <= 0
   end
 
-  attr_reader :hit_points
 end

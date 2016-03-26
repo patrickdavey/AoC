@@ -1,8 +1,8 @@
 class Round
   attr_reader :spells
-  def initialize(boss, player)
+  def initialize(boss, wizard)
     @boss = boss
-    @player = player
+    @wizard = wizard
     @turn = 0
     @spells = []
   end
@@ -14,10 +14,11 @@ class Round
     # apply any existing spells
     # if boss' turn - take damage
     # if my turn, pick a random allowable spell
-    if players_turn?
-      spell = player.cast_spell(spells_in_effect)
+    if wizards_turn?
+      spell = wizard.cast_spell(spells_in_effect)
       return unless spell
       spells << spell
+      apply_spell(spell) if spell.immediate?
     else
       # do stuff
     end
@@ -27,14 +28,19 @@ class Round
 
   private
 
-  attr_reader :player, :boss
+  attr_reader :wizard, :boss
 
   def spells_in_effect
     spells.select { spell.turns > 0 }
   end
 
-  def players_turn?
+  def wizards_turn?
     @turn % 2 == 0
+  end
+
+  def apply_spell(spell)
+    boss.apply_spell(spell)
+    wizard.apply_spell(spell)
   end
 
 end
