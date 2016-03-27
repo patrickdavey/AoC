@@ -10,6 +10,7 @@ class InstructionSetTest < Minitest::Test
     assert_equal(parsed_instructions[1].class, JioInstruction)
     assert_equal(parsed_instructions[2].class, TplInstruction)
     assert_equal(parsed_instructions[3].class, IncInstruction)
+    assert_equal(parsed_instructions.length, 4)
   end
 
   def instructions

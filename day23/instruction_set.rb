@@ -1,4 +1,5 @@
 require 'pry'
+require './instruction.rb'
 
 class InstructionSet
   def initialize(instruction_string)
@@ -10,5 +11,9 @@ class InstructionSet
 
   def [](index)
     @instructions[index]
+  end
+
+  def length
+    @instructions.length
   end
 end

@@ -1,18 +1,30 @@
 class Turing
-  def initialize(instructions, register_a = 0, register_b = 0)
+  attr_reader :registers
+  attr_accessor :line
+
+  def initialize(instruction_set, register_a = 0, register_b = 0)
     @registers = {}
-    @register["a"] = register_a
-    @register["b"] = register_b
-    @instructions = parse_instructions(instructions)
+    @registers["a"] = register_a
+    @registers["b"] = register_b
+    @instruction_set = instruction_set.freeze
+    @line = 0
   end
 
+  def run!
+    while(within_bounds?)
+      instruction_set[line].call(self)
+    end
+  end
+
+  def register(reg)
+    registers[reg]
+  end
 
   private
 
-  def parse_instructions(instructions)
-    parsed_instructions = []
-    instructions.each_line do |instruction|
-      parsed_instructions << Instruction.new(instruction.strip)
-    end
+  attr_reader :instruction_set
+
+  def within_bounds?
+    line < instruction_set.length
   end
 end

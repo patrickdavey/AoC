@@ -9,8 +9,13 @@ class Instruction
   def initialize(register, offset, distance)
     @register = register
     @offset = offset
-    @distance = distance
+    @distance = distance.to_i if distance
   end
+
+
+  private
+
+  attr_reader :register, :offset, :distance
 end
 
 require "./hlf_instruction.rb"
