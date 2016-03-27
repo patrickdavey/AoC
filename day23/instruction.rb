@@ -12,3 +12,11 @@ class Instruction
     @distance = distance
   end
 end
+
+require "./hlf_instruction.rb"
+require "./inc_instruction.rb"
+require "./tpl_instruction.rb"
+require "./jmp_instruction.rb"
+require "./jie_instruction.rb"
+require "./jio_instruction.rb"
+
