@@ -8,6 +8,6 @@ result = ""
 loop do
   modifier = modifier + 1
   result = "#{secret_key}#{modifier}"
-  break if Digest::MD5.hexdigest(result).start_with?('00000')
+  break if Digest::MD5.hexdigest(result).start_with?('000000')
 end
 puts result
