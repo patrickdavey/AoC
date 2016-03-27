@@ -10,6 +10,9 @@ class NiceStringTest < Minitest::Test
     s = NiceString.new("xxyxx")
     assert s.nice?
 
+    s = NiceString.new("xyxy")
+    assert s.nice?
+
     s = NiceString.new("uurcxstgmygtbstg")
     assert !s.nice?
 
