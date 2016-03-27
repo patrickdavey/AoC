@@ -1,4 +1,5 @@
 require './player.rb'
+require './spell.rb'
 
 class Wizard < Player
   attr_reader :mana, :armor # will become private variable later
@@ -6,6 +7,7 @@ class Wizard < Player
   def initialize(hit_points, mana)
     @mana = mana
     @armor = 0
+    @original_mana = mana
     super(hit_points)
   end
 
@@ -13,7 +15,12 @@ class Wizard < Player
     @armor = 0
   end
 
-
+  def reset!
+    @mana = @original_mana
+    @armor = 0
+    super
+    self
+  end
 
   def attacked_with!(attack_strength)
     if armor >= attack_strength

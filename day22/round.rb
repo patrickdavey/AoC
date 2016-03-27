@@ -1,3 +1,5 @@
+require 'pry'
+
 class Round
   attr_reader :spells
   def initialize(boss, wizard)

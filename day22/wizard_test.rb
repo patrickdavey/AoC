@@ -58,4 +58,14 @@ class WizardTest < Minitest::Test
     wizard.attacked_with!(9)
     assert_equal 10 - 2, wizard.hit_points
   end
+
+  def test_reset!
+    wizard = Wizard.new(10, 1)
+    wizard.attacked_with!(5)
+    assert_equal 10 - 5, wizard.hit_points
+    wizard.reset!
+    assert_equal 10, wizard.hit_points
+    assert_equal 1, wizard.mana
+  end
+
 end
