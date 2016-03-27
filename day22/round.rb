@@ -10,6 +10,9 @@ class Round
   end
 
   def tick!
+    wizard.lose_hit_point! if wizards_turn?
+    return true if round_finished?
+
     wizard.remove_armor!
     spells_in_effect.each do |spell|
       boss.apply_spell(spell)

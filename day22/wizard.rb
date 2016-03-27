@@ -15,6 +15,10 @@ class Wizard < Player
     @armor = 0
   end
 
+  def lose_hit_point!
+    @hit_points -= 1
+  end
+
   def reset!
     @mana = @original_mana
     @armor = 0
