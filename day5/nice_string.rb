@@ -1,5 +1,5 @@
 class NiceString
-  GROUP_MATCH = /(..)(?:.)+\1/.freeze
+  GROUP_MATCH = /(..)(?:.*)\1/.freeze
   SINGLE_LETTER_MATCH = /(.).\1/.freeze
 
   def initialize(string)
