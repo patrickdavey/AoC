@@ -1,0 +1,10 @@
+{
+  "*_test.rb": {
+    "alternate": "{}.rb",
+    "type": "source"
+  },
+  "*.rb": {
+    "alternate": "{}_test.rb",
+    "type": "source"
+  },
+}
