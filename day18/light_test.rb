@@ -18,6 +18,12 @@ class LightTest < Minitest::Test
     assert_equal light.off?, true
   end
 
+  def test_sticky_light_on
+    light = Light.new(".")
+    light.stuck_on!
+    assert_equal light.on?, true
+  end
+
   def test_next_state_on_to_off
     light = Light.new("#")
     light.next_state(array_of_on_lights)

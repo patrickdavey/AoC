@@ -7,8 +7,12 @@ class Light
     intial_state
   end
 
+  def stuck_on!
+    @stuck_on = true
+  end
+
   def on?
-    intial_state == "#"
+    @stuck_on || intial_state == "#"
   end
 
   def off?
@@ -16,6 +20,8 @@ class Light
   end
 
   def next_state(neighbours)
+    return Light.new("#").tap {|light| light.stuck_on!} if @stuck_on
+
     num_on_neighbours = neighbours.select(&:on?).size
     if on?
       if [2,3].include?(num_on_neighbours)
