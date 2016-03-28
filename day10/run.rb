@@ -1,5 +1,4 @@
 require './look_and_say.rb'
 
-value = 1321131112
-40.times { value = LookAndSay.new(value).succ }
-puts value.to_s.length
+initial_value = 1321131112
+puts LookAndSay.new(initial_value).after(50).length

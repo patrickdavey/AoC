@@ -20,7 +20,11 @@ class TestLookAndSay < Minitest::Test
     ]
 
     sample_data.each do |(initial, next_in_seq)|
-      assert_equal next_in_seq, LookAndSay.new(initial).succ
+      assert_equal next_in_seq.to_s, LookAndSay.new(initial.to_s).after(1)
     end
+  end
+
+  def test_sample_run
+    assert_equal "312211", LookAndSay.new("1").after(5)
   end
 end
