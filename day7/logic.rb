@@ -3,7 +3,7 @@ require 'pry'
 class Logic
   def self.build(signal)
     case
-    when match = signal.match(/^(?<value>\d+) -> (?<wire>\w+)/)
+    when match = signal.match(/^(?<value>\S+) -> (?<wire>\w+)/)
       ValueLogic.new(match[:value], match[:wire])
     when match = signal.match(/^(?<first_input>.+) AND (?<second_input>.+) -> (?<wire>\w+)/)
       AndLogic.new(match[:first_input], match[:second_input], match[:wire])
