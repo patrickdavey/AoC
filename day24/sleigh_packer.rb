@@ -8,15 +8,18 @@ class SleighPacker
         a.reduce(:*) <=> b.reduce(:*)
       end
     end
-  def initialize(weights)
+
+  def initialize(weights, number_of_groups = 3)
     @weights = weights.freeze
-    @target_weight = weights.reduce(:+) / 3
+    @number_of_groups = number_of_groups
+    @target_weight = weights.reduce(:+) / number_of_groups
+
   end
 
   def first_group
     (1..weights.size).each do |group_size|
       best_group = possible_groups(group_size).find do |group|
-                      can_make_two_equal_groups?(weights - group)
+                      can_make_equal_groups?(weights - group)
                     end
       return best_group if best_group
     end
@@ -25,7 +28,7 @@ class SleighPacker
 
   private
 
-  attr_reader :weights, :target_weight
+  attr_reader :weights, :target_weight, :number_of_groups
 
   def possible_groups(group_size)
     possibilities = []
@@ -37,10 +40,20 @@ class SleighPacker
     possibilities.sort(&SORTER)
   end
 
-  def can_make_two_equal_groups?(remaining_buckets)
-    (1..remaining_buckets.size).each do |group_size|
-      remaining_buckets.combination(group_size).each do |grouping|
-        if grouping.reduce(:+) == target_weight && (remaining_buckets - grouping).reduce(:+) == target_weight
+  def can_make_equal_groups?(remaining_weights)
+    (1..remaining_weights.size).each do |group_size|
+      remaining_weights.combination(group_size).each do |grouping|
+        if grouping.reduce(:+) == target_weight && can_make_two_equal_groups?(remaining_weights - grouping)
+          return true
+        end
+      end
+    end
+  end
+
+  def can_make_two_equal_groups?(remaining_weights)
+    (1..remaining_weights.size).each do |group_size|
+      remaining_weights.combination(group_size).each do |grouping|
+        if grouping.reduce(:+) == target_weight && (remaining_weights - grouping).reduce(:+) == target_weight
           return true
         end
       end
