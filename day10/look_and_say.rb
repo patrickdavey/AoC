@@ -9,15 +9,16 @@ class LookAndSay
     times.times do
       n = ''
       counter = 1
-      for i in 0..value.size - 1
-        digit = value[i]
-        if value[i + 1] == digit
+      index = 0
+      while (digit = value[index])
+        if value[index + 1] == digit
           counter += 1
         else
           n << counter.to_s
           n << digit
           counter = 1
         end
+        index += 1
       end
       @value = n
     end
