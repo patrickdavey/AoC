@@ -4,10 +4,10 @@ require './person.rb'
 class Seating
   PARSE = /^(?<name>\w+) would (?<change>(gain|lose)) (?<value>\d+) happiness units by sitting next to (?<partner>\w+)\.$/
 
-  def initialize(happiness_information)
+  def initialize(happiness_information, apathetic = false)
     @people = []
     setup_people(happiness_information)
-    @people << ApatheticPerson.new("me")
+    @people << ApatheticPerson.new("me") if apathetic
   end
 
   def optimal

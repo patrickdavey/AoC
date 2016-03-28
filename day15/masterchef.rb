@@ -28,7 +28,6 @@ class Masterchef
 
       if should_count_score?(recipe, calories) && recipe_score > @max_score
         @max_score = recipe_score
-        puts @max_score
       end
     end
 

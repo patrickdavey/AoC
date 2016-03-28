@@ -22,6 +22,6 @@ require "./filler.rb"
 class FillerTest < Minitest::Test
   def test_sample_input
     filler = Filler.new([20, 15, 10, 5, 5], 25)
-    assert_equal 4, filler.find_possible_fills
+    assert_equal 3, filler.find_possible_fills
   end
 end

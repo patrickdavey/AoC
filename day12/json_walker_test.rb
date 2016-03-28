@@ -34,7 +34,6 @@ class JsonWalkerTest < Minitest::Test
     ]
 
     sample_data.each do |(json, sum)|
-      10.times { puts }
       assert_equal sum, JsonWalker.new(json).sum, "#{sum} not the sum of #{json}"
     end
   end

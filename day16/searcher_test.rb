@@ -17,7 +17,7 @@ class SearcherTest < Minitest::Test
     })
 
     a1 = Sue.new("Sue1")
-    a1.cats = 10
+    a1.cats = 11
     a1.vizslas = 1
     searcher << a1
 
@@ -26,6 +26,6 @@ class SearcherTest < Minitest::Test
     a2.vizslas = 2
     searcher << a2
 
-    assert_equal searcher.find_matching_sue!, "Sue2"
+    assert_equal searcher.find_matching_sue!, "Sue1"
   end
 end
