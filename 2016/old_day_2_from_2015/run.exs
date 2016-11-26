@@ -1,1 +1,1 @@
-Loader.load
+Day2.run
