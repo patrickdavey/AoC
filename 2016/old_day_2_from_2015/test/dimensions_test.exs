@@ -1,7 +1,7 @@
 defmodule DimensionsTest do
   use ExUnit.Case
-  alias Day2.Dimensions
-  alias Day2.Box
+  alias AOCDay.Dimensions
+  alias AOCDay.Box
 
   test "calulates wrapping correctly from sample data" do
     b = %Box{length: 2, width: 3, height: 4}

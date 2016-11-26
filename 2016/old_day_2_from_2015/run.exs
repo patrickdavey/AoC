@@ -1,1 +1,1 @@
-Day2.run
+AOCDay.run

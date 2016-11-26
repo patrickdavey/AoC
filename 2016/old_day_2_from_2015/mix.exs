@@ -1,8 +1,8 @@
-defmodule Day2.Mixfile do
+defmodule AOCDay.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :day2,
+    [app: :aocday,
      version: "0.1.0",
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
@@ -27,6 +27,8 @@ defmodule Day2.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [
+     {:credo, "~> 0.4", only: [:dev, :test]}
+    ]
   end
 end

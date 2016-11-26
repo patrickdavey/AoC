@@ -1,5 +1,5 @@
-defmodule Day2.Dimensions do
-  alias Day2.Box
+defmodule AOCDay.Dimensions do
+  alias AOCDay.Box
 
   def wrapping(%Box{length: length, width: width, height: height}) do
     areas = [ length * width , length * height, width * height]

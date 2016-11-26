@@ -10,11 +10,11 @@ use Mix.Config
 
 # You can configure for your application as:
 #
-#     config :day2, key: :value
+#     config :aocday, key: :value
 #
 # And access this configuration in your application as:
 #
-#     Application.get_env(:day2, :key)
+#     Application.get_env(:aocday, :key)
 #
 # Or configure a 3rd-party app:
 #
