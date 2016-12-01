@@ -1,1 +1,1 @@
-AOCDay.run
+IO.puts AOCDay.run
