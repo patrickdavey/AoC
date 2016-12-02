@@ -3,8 +3,10 @@ defmodule RunnerTest do
   alias AOCDay.Runner
 
   test "calulates test distances correctly" do
+    Application.put_env(AOCDay, :keypad, AOCDay.Keypad)
     assert Runner.combination(test_input) == "1985"
-    assert Runner.final_combination(test_input) == "5DB3"
+    Application.put_env(AOCDay, :keypad, AOCDay.KeypadFinal)
+    assert Runner.combination(test_input) == "5DB3"
   end
 
   defp test_input do

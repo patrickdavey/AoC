@@ -1,2 +1,5 @@
+Application.put_env(AOCDay, :keypad, AOCDay.Keypad)
 IO.puts AOCDay.Runner.combination
-IO.puts AOCDay.Runner.final_combination
+
+Application.put_env(AOCDay, :keypad, AOCDay.KeypadFinal)
+IO.puts AOCDay.Runner.combination
