@@ -1,1 +1,2 @@
-IO.puts AOCDay.run
+IO.puts AOCDay.Runner.combination
+IO.puts AOCDay.Runner.final_combination

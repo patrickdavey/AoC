@@ -4,6 +4,7 @@ defmodule RunnerTest do
 
   test "calulates test distances correctly" do
     assert Runner.combination(test_input) == "1985"
+    assert Runner.final_combination(test_input) == "5DB3"
   end
 
   defp test_input do

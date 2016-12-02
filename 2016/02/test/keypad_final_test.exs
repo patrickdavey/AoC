@@ -1,13 +1,6 @@
 defmodule KeypadFinalTest do
   use ExUnit.Case
   alias AOCDay.KeypadFinal
-  @moduledoc """
-    1
-  2 3 4
-5 6 7 8 9
-  A B C
-    D
-    """
 
   test "calulates next positions for 1 correctly" do
     assert KeypadFinal.next("1", "U") == "1"
