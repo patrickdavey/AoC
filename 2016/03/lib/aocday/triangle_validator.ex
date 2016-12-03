@@ -1,6 +1,5 @@
 defmodule AOCDay.TriangleValidator do
-  def valid?(sides_list) do
-    [s1, s2, largest_side] = sides_list |> Enum.sort
-    s1 + s2 > largest_side
+  def valid?([a,b,c]) do
+    (a + b) > c && (a + c) > b && (b + c) > a
   end
 end
