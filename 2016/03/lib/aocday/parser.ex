@@ -12,6 +12,12 @@ defmodule AOCDay.Parser do
     binary
     |> String.trim
     |> String.split("\n")
-    |> Enum.map(fn(line) -> String.trim(line) |> String.split(~r/\s+/) |> Enum.map(&(String.to_integer/1)) |> Enum.map(&(abs/1)) end)
+    |> Enum.map(fn(line) ->
+      line
+      |> String.trim
+      |> String.split(~r/\s+/)
+      |> Enum.map(&(String.to_integer/1))
+      |> Enum.map(&(abs/1))
+    end)
   end
 end
