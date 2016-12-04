@@ -3,11 +3,10 @@ defmodule SectorTest do
   alias AOCDay.Sector
   alias AOCDay.Parser
 
-  test "finds code correctly" do
-    assert Sector.letters(Parser.formatted "aaaaa-bbb-z-y-x-123[abxyz]") == 123
-    assert Sector.letters(Parser.formatted "a-b-c-d-e-f-g-h-987[abcde] ") == 987
-    assert Sector.letters(Parser.formatted "not-a-real-room-404[oarel]") == 404
-    refute Sector.letters(Parser.formatted "totally-real-room-200[decoy]")
+  test "finds sector correctly" do
+    assert Parser.formatted("aaaaa-bbb-z-y-x-123[abxyz]").sector == 123
+    assert Parser.formatted("a-b-c-d-e-f-g-h-987[abcde] ").sector == 987
+    assert Parser.formatted("not-a-real-room-404[oarel]").sector == 404
   end
 
   test "rotates correctly" do
