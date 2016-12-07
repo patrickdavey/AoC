@@ -37,6 +37,7 @@ defmodule CrackTest do
     refute Runner.valid_ssl("abaxxxbab")
     refute Runner.valid_ssl("ababxxxbab")
     refute Runner.valid_ssl("ababxxxbab")
+    refute Runner.valid_ssl("adncdhtushtvtfcbez[rvaycmplefdvbrchc]vtviiplkpfhsyhwzz[pdpnsseaizogzvtkcq]piorguaivfpummlo piftqfdhtumcmjmsge[qrsntvxhtfurcgcynx]oyswvuklvtmivlhen[syqhqtijyiduoxb]pdtdrhijqqzvcnl[xivmeqcwyafxvnok]jvlbkrwbgcgzaqms")
   end
 end
   # @good_ahead ~r/(?=(\w)(\w)\1(?![^[]*])(?=\w*\2\1\2\w*(?=[^[]*])))/
