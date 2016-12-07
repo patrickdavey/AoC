@@ -27,15 +27,15 @@ defmodule AOCDay.Runner do
   end
 
   def valid_ssl(string) do
-    ins = Regex.scan(~r/(\[\w+])/, string, capture: :all_but_first) |> List.flatten
-    ts = Regex.scan(~r/(?=(\w)(\w)\1(?![^[]*]))/, string, capture: :all_but_first)
-    Enum.filter(ts, &find_match(&1, ins))
+    inside_brackets = Regex.scan(~r/(\[\w+])/, string, capture: :all_but_first) |> List.flatten
+    matches_outside_brackets = Regex.scan(~r/(?=(\w)(\w)\1(?![^[]*]))/, string, capture: :all_but_first)
+    Enum.filter(matches_outside_brackets, &find_match(&1, inside_brackets))
     |> Enum.count
     |> Kernel.>(0)
   end
 
   def find_match([a, a], _ins), do: false
-  def find_match([a, b], ins) do
-    Enum.any?(ins, &(String.contains?(&1, "#{b}#{a}#{b}")))
+  def find_match([a, b], inside_brackets) do
+    Enum.any?(inside_brackets, &(String.contains?(&1, "#{b}#{a}#{b}")))
   end
 end
