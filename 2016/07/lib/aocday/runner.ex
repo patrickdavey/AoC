@@ -1,11 +1,6 @@
 defmodule AOCDay.Runner do
   @bad_match ~r/\[\w*(\w)(\w)\2\1\w*]/
   @good_match ~r/(?<first>\w)(?<second>\w)\2\1/
-  @good_ahead ~r/(?=(\w)(\w)\1(?![^[]*])(?=.*\2\1\2.*(?=[^[]*])))/
-  @brackets_first ~r/(?=(\w)(\w)\1(?=.*](?=\w*\2\1\2\w*(?![^[]*]))))/
-  #@brackets_first ~r/(?=(\w)(\w)\1(?=[^[]*])(?=.*\2\1\2.*(?![^[]*])))/
-  # @brackets_first ~r/(?=(\w)(\w)\1(?=.*\w*\2\1\2\w*(?![^[]*])))/
-  # (?=(\w)(\w)\1(?=.*](?=\2\1\2.*(?![^[]*]))))
 
   def part_1 do
     structured_data
@@ -32,11 +27,16 @@ defmodule AOCDay.Runner do
   end
 
   def valid_ssl(string) do
-    match1 = Regex.scan(@good_ahead, string, capture: :all_but_first)
-    match2 = Regex.scan(@brackets_first, string, capture: :all_but_first)
-    mc1 = Enum.filter(match1, fn(m) -> test(m) end) |> Enum.count
-    mc2 = Enum.filter(match2, fn(m) -> test(m) end) |> Enum.count
-    (mc1 + mc2) > 0
+    ins = Regex.scan(~r/(\[\w+])/, string, capture: :all_but_first) |> List.flatten
+    ts = Regex.scan(~r/(?=(\w)(\w)\1(?![^[]*]))/, string, capture: :all_but_first)
+    t = Enum.filter(ts, &find_match(&1, ins))
+    |> Enum.count
+    |> Kernel.>(0)
+  end
+
+  def find_match([a, a], ins), do: false
+  def find_match([a, b], ins) do
+    Enum.any?(ins, &(String.contains?(&1, "#{b}#{a}#{b}")))
   end
 
   def test([]), do: false
