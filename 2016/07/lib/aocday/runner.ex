@@ -1,8 +1,9 @@
 defmodule AOCDay.Runner do
   @bad_match ~r/\[\w*(\w)(\w)\2\1\w*]/
   @good_match ~r/(?<first>\w)(?<second>\w)\2\1/
-  @good_ahead ~r/(\w)(\w)\1(?=.*\[\w*\2\1\2\w*])/
-  @brackets_first ~r/\w*\[\w*(\w)(\w)\1\w*](?=.*\2\1\2.*)/
+  #  @good_ahead ~r/(?=(\w)(\w)\1(?=.*\2\1\2.*(?![^[]*])))/
+  @good_ahead ~r/(?=(\w)(\w)\1(?![^[]*])(?=.*\2\1\2.*(?=[^[]*])))/
+  @brackets_first ~r/(?=(\w)(\w)\1(?=.*\w*\2\1\2\w*(?![^[]*])))/
 
   def part_1 do
     structured_data
@@ -29,10 +30,11 @@ defmodule AOCDay.Runner do
   end
 
   def valid_ssl(string) do
-  #    not_bracketed_content = Regex.scan(~r/(\w+)(?![^[]*])/, capture: :all_but_first)
-    match1 = Regex.run(@good_ahead, string, capture: :all_but_first)
-    match2 = Regex.run(@brackets_first, string, capture: :all_but_first)
-    match1 && test(match1) || match2 && test(match2)
+    match1 = Regex.scan(@good_ahead, string, capture: :all_but_first)
+    match2 = Regex.scan(@brackets_first, string, capture: :all_but_first)
+    mc1 = Enum.filter(match1, fn(m) -> test(m) end) |> Enum.count
+    mc2 = Enum.filter(match2, fn(m) -> test(m) end) |> Enum.count
+    (mc1 + mc2) > 0
   end
 
   def test([]), do: false
