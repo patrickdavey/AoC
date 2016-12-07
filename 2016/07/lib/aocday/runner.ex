@@ -1,9 +1,11 @@
 defmodule AOCDay.Runner do
   @bad_match ~r/\[\w*(\w)(\w)\2\1\w*]/
   @good_match ~r/(?<first>\w)(?<second>\w)\2\1/
-  #  @good_ahead ~r/(?=(\w)(\w)\1(?=.*\2\1\2.*(?![^[]*])))/
   @good_ahead ~r/(?=(\w)(\w)\1(?![^[]*])(?=.*\2\1\2.*(?=[^[]*])))/
-  @brackets_first ~r/(?=(\w)(\w)\1(?=.*\w*\2\1\2\w*(?![^[]*])))/
+  @brackets_first ~r/(?=(\w)(\w)\1(?=.*](?=\w*\2\1\2\w*(?![^[]*]))))/
+  #@brackets_first ~r/(?=(\w)(\w)\1(?=[^[]*])(?=.*\2\1\2.*(?![^[]*])))/
+  # @brackets_first ~r/(?=(\w)(\w)\1(?=.*\w*\2\1\2\w*(?![^[]*])))/
+  # (?=(\w)(\w)\1(?=.*](?=\2\1\2.*(?![^[]*]))))
 
   def part_1 do
     structured_data

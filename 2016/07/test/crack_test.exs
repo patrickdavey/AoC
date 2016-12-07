@@ -15,12 +15,12 @@ defmodule CrackTest do
 
   test "finds valid_ssl" do
     assert Runner.valid_ssl("aba[bab]xyz")
-    assert Runner.valid_ssl("aba[bhhhhhhab]xyzasdfksdf[sdfsdfsdf][vvvvvbabvvvv]")
     refute Runner.valid_ssl("xyx[xyx]xyx")
     assert Runner.valid_ssl("aaa[kek]eke")
     assert Runner.valid_ssl("aaa[aaa]ekezazbz[bzb]cdb")
     assert Runner.valid_ssl("[xxxabaxxx]asjhdfjhsdbbbab")
     refute Runner.valid_ssl("[babxxx][xxxabaxxxbab][bab]")
+    refute Runner.valid_ssl("[babxxx][xxxabaxxxbab][bab]xxx")
     assert Runner.valid_ssl("babxxx[xxxabaxxxbab][bab]")
     assert Runner.valid_ssl("xxxxxxaba[babxxxxxxxx]xxxx[xxxxxxx]")
     assert Runner.valid_ssl("xxxxxxaba[xxxxxxxx]xxxx[babxxxxxxx]")
@@ -32,6 +32,12 @@ defmodule CrackTest do
     assert Runner.valid_ssl("[baba]abab[xxxxxx][xxxxxxxx]xxxx[xxbabaxxxxx]")
     assert Runner.valid_ssl("xyx[xyx]xyx[aaayxyaa]")
     assert Runner.valid_ssl("xyx[xyx]xyx[aaayxyaa]")
+    refute Runner.valid_ssl("[aba][babxxx][xxxabaxxxbab][bab]")
+    refute Runner.valid_ssl("[abaxxxbab]")
+    refute Runner.valid_ssl("abaxxxbab")
+    refute Runner.valid_ssl("ababxxxbab")
+    refute Runner.valid_ssl("ababxxxbab")
   end
 end
-# (?=(\w)(\w)\1(?![^[]*])(?=.*\2\1\2.*(?![^[]*])))
+  # @good_ahead ~r/(?=(\w)(\w)\1(?![^[]*])(?=\w*\2\1\2\w*(?=[^[]*])))/
+  # @brackets_first ~r/(?=(\w)(\w)\1(?=.*\w*\2\1\2\w*(?![^[]*])))/
