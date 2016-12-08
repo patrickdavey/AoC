@@ -13,6 +13,8 @@ defmodule AOCDay.Screen do
   def update(matrix, %{action: "rect", x: x, y: y}) do
     for i <- 0..(x - 1) do
       for j <- 0..(y - 1) do
+        require IEx
+        IEx.pry
         AsyncMatrix.update(matrix, j, i, "#")
       end
     end

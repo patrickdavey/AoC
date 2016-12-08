@@ -23,4 +23,12 @@ defmodule ScreenTest do
     assert Screen.as_string(screen) == ".#..#.#\n#.#....\n.#....."
     assert Screen.pixels_lit(screen) == 6
   end
+
+  test "1 square works ok" do
+    Application.put_env(:caster, :width, 70)
+    Application.put_env(:caster, :height, 6)
+    screen = Screen.init
+    Screen.update(screen, %{action: "rect", x: 1, y: 1})
+    assert Screen.as_string(screen) == "#.....................................................................\n......................................................................\n......................................................................\n......................................................................\n......................................................................\n......................................................................"
+  end
 end

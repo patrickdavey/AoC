@@ -1,7 +1,9 @@
 defmodule AOCDay.Runner do
   alias AOCDay.Screen
   def part_1 do
-    screen = Screen.init(50, 6)
+    Application.put_env(:caster, :width, 50)
+    Application.put_env(:caster, :height, 6)
+    screen = Screen.init
     s = structured_data
     structured_data
     |> Enum.each(fn(command) -> update_screen(command, screen) end)
@@ -18,6 +20,11 @@ defmodule AOCDay.Runner do
   end
 
   def update_screen(e, screen) do
+    IO.puts("===============================\n")
+    IO.inspect(e)
+    IO.puts(Screen.as_string(screen))
     Screen.update(screen, e)
+    IO.puts(Screen.as_string(screen))
+    IO.puts("===============================\n")
   end
 end
