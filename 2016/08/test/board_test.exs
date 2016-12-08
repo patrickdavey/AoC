@@ -2,8 +2,8 @@ defmodule BoardTest do
   use ExUnit.Case
   alias AOCDay.Board
   test "more board positions" do
-    Application.put_env(:caster, :width, 7)
-    Application.put_env(:caster, :height, 3)
+    Application.put_env(:aoc, :width, 7)
+    Application.put_env(:aoc, :height, 3)
     Board.init
     Board.set(0, 0, "#")
     assert Board.as_string == """

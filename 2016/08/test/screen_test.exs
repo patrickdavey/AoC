@@ -3,8 +3,8 @@ defmodule ScreenTest do
   alias AOCDay.Screen
 
   test "can initialize the screen" do
-    Application.put_env(:caster, :width, 3)
-    Application.put_env(:caster, :height, 2)
+    Application.put_env(:aoc, :width, 3)
+    Application.put_env(:aoc, :height, 2)
     Screen.init
     assert Screen.as_string == """
     ...
@@ -13,8 +13,8 @@ defmodule ScreenTest do
   end
 
   test "works with test data" do
-    Application.put_env(:caster, :width, 7)
-    Application.put_env(:caster, :height, 3)
+    Application.put_env(:aoc, :width, 7)
+    Application.put_env(:aoc, :height, 3)
     Screen.init
     Screen.update(%{action: "rect", x: 3, y: 2})
     assert Screen.as_string == """
@@ -33,8 +33,8 @@ defmodule ScreenTest do
   end
 
   test "1 square works ok" do
-    Application.put_env(:caster, :width, 70)
-    Application.put_env(:caster, :height, 6)
+    Application.put_env(:aoc, :width, 70)
+    Application.put_env(:aoc, :height, 6)
     Screen.init
     Screen.update(%{action: "rect", x: 1, y: 1})
     assert Screen.as_string == "#.....................................................................\n......................................................................\n......................................................................\n......................................................................\n......................................................................\n......................................................................\n"
