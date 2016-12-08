@@ -29,4 +29,16 @@ defmodule AOCDay.Board do
   def at(matrix, x, y) do
     matrix[y][x]
   end
+
+  def at(x, y) do
+    current_state[y][x]
+  end
+
+  def as_string do
+    current_state
+    |> Matrix.to_list
+    |> Enum.map(&(Enum.join(&1)))
+    |> Enum.join("\n")
+    |> Kernel.<>("\n")
+  end
 end

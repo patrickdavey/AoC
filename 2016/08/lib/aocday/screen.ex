@@ -37,9 +37,6 @@ defmodule AOCDay.Screen do
   end
 
   def as_string do
-    Board.current_state
-    |> Matrix.to_list
-    |> Enum.map(&(Enum.join(&1)))
-    |> Enum.join("\n")
+    Board.as_string
   end
 end
