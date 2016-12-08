@@ -1,9 +1,12 @@
 defmodule AOCDay.Runner do
+  alias AOCDay.Screen
   def part_1 do
-    "part 1"
+    screen = Screen.init(50, 6)
     s = structured_data
-    require IEx
-    IEx.pry
+    structured_data
+    |> Enum.each(fn(command) -> update_screen(command, screen) end)
+
+    Screen.pixels_lit(screen)
   end
 
   def part_2 do
@@ -12,5 +15,9 @@ defmodule AOCDay.Runner do
 
   defp structured_data do
     AOCDay.Parser.parse
+  end
+
+  def update_screen(e, screen) do
+    Screen.update(screen, e)
   end
 end

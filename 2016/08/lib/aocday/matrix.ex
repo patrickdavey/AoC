@@ -48,4 +48,9 @@ defmodule AOCDay.AsyncMatrix do
     Agent.update(pid, fn (_old) -> new_value end)
     :ok
   end
+
+  def get(matrix, x, y) do
+    pid = matrix[x][y]
+    Agent.get(pid, fn (old) -> old end)
+  end
 end
