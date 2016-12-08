@@ -12,7 +12,7 @@ defmodule AOCDay.Runner do
   end
 
   def part_2 do
-    "part 2"
+    IO.puts(Screen.as_string)
   end
 
   defp structured_data do
@@ -20,11 +20,6 @@ defmodule AOCDay.Runner do
   end
 
   def update_screen(e) do
-    IO.puts("===============================\n")
-    IO.inspect(e)
-    IO.puts(Screen.as_string)
     Screen.update(e)
-    IO.puts(Screen.as_string)
-    IO.puts("===============================\n")
   end
 end
