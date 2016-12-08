@@ -1,51 +1,62 @@
 defmodule AOCDay.Screen do
-  @screen_height 6
-  @screen_width 50
-  alias AOCDay.AsyncMatrix
-
-  def init do
+  def start_link do
+    Agent.start_link(fn ->
     width = Application.get_env(:caster, :width)
     height = Application.get_env(:caster, :height)
-    empty_row = Enum.map 1..width, fn _ -> "." end
-    AsyncMatrix.from_list(Enum.map 1..height, fn _ -> empty_row end)
+    Matrix.new([], height, width, ".")
+    end, name: __MODULE__)
   end
 
-  def update(matrix, %{action: "rect", x: x, y: y}) do
+  def current_state do
+    Agent.get(__MODULE__, fn matrix -> matrix end)
+  end
+
+  def set(j, i, value) do
+    Agent.update(__MODULE__,
+    fn matrix ->
+      put_in matrix[j][i], value
+    end)
+  end
+
+  def init do
+    __MODULE__.start_link
+  end
+
+  def update(%{action: "rect", x: x, y: y}) do
     for i <- 0..(x - 1) do
       for j <- 0..(y - 1) do
-        require IEx
-        IEx.pry
-        AsyncMatrix.update(matrix, j, i, "#")
+        set(j, i, "#")
       end
     end
   end
 
-  def update(matrix, %{action: "column", column: x, amount: amount}) do
-    copy = AsyncMatrix.from_list(AsyncMatrix.to_list(matrix))
+  def update(%{action: "column", column: x, amount: amount}) do
+    copy = Matrix.from_rows(current_state |> Matrix.to_list)
     for j <- 0..(Application.get_env(:caster, :height) - 1) do
-      t = AsyncMatrix.get(copy, j, x)
-      AsyncMatrix.update(matrix, rem((j + amount), Application.get_env(:caster, :height)), x, t)
+      t = copy[j][x]
+      new_j = rem((j + amount), Application.get_env(:caster, :height))
+      set(new_j, x, t)
     end
   end
 
-  def update(matrix, %{action: "row", row: y, amount: amount}) do
-    copy = AsyncMatrix.from_list(AsyncMatrix.to_list(matrix))
+  def update(%{action: "row", row: y, amount: amount}) do
+    copy = Matrix.from_rows(current_state |> Matrix.to_list)
     for i <- 0..(Application.get_env(:caster, :width) - 1) do
-      t = AsyncMatrix.get(copy, y, i)
-      AsyncMatrix.update(matrix, y, rem((i + amount), Application.get_env(:caster, :width)), t)
+      t = copy[y][i]
+      new_i = rem((i + amount), Application.get_env(:caster, :width))
+      set(y, new_i, t)
     end
   end
 
-  def pixels_lit(matrix) do
-    matrix
-    |> as_string
+  def pixels_lit do
+    as_string
     |> String.graphemes
     |> Enum.count(&(&1 == "#"))
   end
 
-  def as_string(matrix) do
-    matrix
-    |> AsyncMatrix.to_list
+  def as_string do
+    __MODULE__.current_state
+    |> Matrix.to_list
     |> Enum.map(&(Enum.join(&1)))
     |> Enum.join("\n")
   end

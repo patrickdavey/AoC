@@ -3,12 +3,12 @@ defmodule AOCDay.Runner do
   def part_1 do
     Application.put_env(:caster, :width, 50)
     Application.put_env(:caster, :height, 6)
-    screen = Screen.init
-    s = structured_data
-    structured_data
-    |> Enum.each(fn(command) -> update_screen(command, screen) end)
+    Screen.init
 
-    Screen.pixels_lit(screen)
+    structured_data
+    |> Enum.each(fn(command) -> update_screen(command) end)
+
+    Screen.pixels_lit
   end
 
   def part_2 do
@@ -19,12 +19,12 @@ defmodule AOCDay.Runner do
     AOCDay.Parser.parse
   end
 
-  def update_screen(e, screen) do
+  def update_screen(e) do
     IO.puts("===============================\n")
     IO.inspect(e)
-    IO.puts(Screen.as_string(screen))
-    Screen.update(screen, e)
-    IO.puts(Screen.as_string(screen))
+    IO.puts(Screen.as_string)
+    Screen.update(e)
+    IO.puts(Screen.as_string)
     IO.puts("===============================\n")
   end
 end
