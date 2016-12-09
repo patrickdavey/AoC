@@ -4,8 +4,7 @@ defmodule AOCDay.Decompress do
   def word_length(input) do
     input
     |> String.trim
-    |> scan_it("")
-    |> String.length
+    |> scan_it(0)
   end
 
   defp scan_it(input, acc) do
@@ -14,12 +13,12 @@ defmodule AOCDay.Decompress do
       match ->
         [{start_offset, len}] = match
         captures = Regex.named_captures(@encoding, input)
-        acc = acc <> String.slice(input, 0, start_offset)
+        acc = acc + String.length(String.slice(input, 0, start_offset))
         after_capture = String.slice(input, start_offset + len, String.length(input))
         { repeat, rest } = repeated(after_capture, captures)
-        acc = acc <> repeat
+        acc = acc + String.length(repeat)
         scan_it(rest, acc)
-      :otherwise -> acc <> input
+      :otherwise -> acc + String.length(input)
     end
   end
 
