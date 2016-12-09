@@ -1,6 +1,8 @@
 defmodule AOCDay.Runner do
   def part_1 do
-    "part 1"
+    File.read!("./input.txt")
+    |> AOCDay.Decompress.word_length
+    |> IO.puts
   end
 
   def part_2 do
