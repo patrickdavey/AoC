@@ -28,4 +28,8 @@ defmodule AOCDay.Decompress do
       String.slice(input, len, String.length(input)) }
   end
 
+  def expand(input, %{"char_length" => len, "repeat_times" => repeat}) do
+    len = String.to_integer(len)
+    repeat = String.to_integer(repeat)
+  end
 end
