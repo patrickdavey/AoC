@@ -8,28 +8,39 @@ defmodule AOCDay.Decompress do
   end
 
   defp scan_it(input, acc) do
-    match = Regex.run(@encoding, input, return: :index, capture: :first)
+    match = nicer_captures(input)
     cond do
       match ->
-        [{start_offset, len}] = match
-        captures = Regex.named_captures(@encoding, input)
-        acc = acc <> String.slice(input, 0, start_offset)
-        after_capture = String.slice(input, start_offset + len, String.length(input))
-        { decompressed, rest } = repeated(after_capture, captures)
-        scan_it(decompressed <> rest, acc)
+        expand(input)
       :otherwise -> acc <> input
     end
   end
 
-  defp repeated(input, %{"char_length" => len, "repeat_times" => repeat}) do
-    len = String.to_integer(len)
-    repeat = String.to_integer(repeat)
-    { String.duplicate(String.slice(input, 0, len), repeat),
-      String.slice(input, len, String.length(input)) }
+  defp repeat(input, %{ char_length: len, repeat_times: repeat, start_offset: start_offset, capture_len: len2}) do
+    String.duplicate(String.slice(input, start_offset + len2, len), repeat)
   end
 
-  def expand(input, %{"char_length" => len, "repeat_times" => repeat}) do
-    len = String.to_integer(len)
-    repeat = String.to_integer(repeat)
+  def expand(input) do
+    match = nicer_captures(input)
+    cond do
+      match ->
+        before_capture = String.slice(input, 0, match.start_offset)
+        after_capture = String.slice(input, match.start_offset + match.capture_len + match.char_length , String.length(input))
+        mini = String.duplicate(String.slice(input, match.start_offset + match.capture_len, match.char_length), match.repeat_times)
+        expand(before_capture <> mini <> after_capture)
+      :otherwise -> input
+    end
+  end
+
+  def nicer_captures(input) do
+    match = Regex.named_captures(@encoding, input)
+    cond do
+      match ->
+        len = String.to_integer(match["char_length"])
+        repeat = String.to_integer(match["repeat_times"])
+        [{start_offset, len2}] = Regex.run(@encoding, input, return: :index, capture: :first)
+        %{ char_length: len, repeat_times: repeat, start_offset: start_offset, capture_len: len2}
+      :otherwise -> nil
+    end
   end
 end
