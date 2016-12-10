@@ -3,7 +3,7 @@ defmodule AOCDay.Bot do
     Agent.start_link(fn -> %{low: nil, high: nil, low_dest: nil, high_dest: nil} end)
   end
 
-  def receive_value(pid, value) do
+  def set_value(pid, value) do
     Agent.update(pid, fn( state = %{low: low, high: high, low_dest: low_dest, high_dest: high_dest} ) ->
       cond do
         low == nil && high == nil ->
@@ -13,6 +13,13 @@ defmodule AOCDay.Bot do
       end
      end)
   end
+
+  def set_dest_info(pid, values) do
+    Agent.update(pid, fn( state ) ->
+      Map.merge(state, values)
+     end)
+  end
+
 
   def get(pid) do
     Agent.get(pid, fn(n) -> n end)
