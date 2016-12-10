@@ -48,7 +48,9 @@ defmodule AOCDay.Runner do
     end)
   end
 
-  def instruction_in({bot, "output", value}), do: false
+  def instruction_in({output_id, "output", value}) do
+    IO.puts("output: #{output_id} is value: #{value}")
+  end
 
   def send_instruction(%{bot: bot, value: value}) do
     Bot.set_value(bots[bot], value)
