@@ -1,0 +1,22 @@
+Compiling 1 file (.ex)
+.
+
+input: a(3x3)ABCd, current_multiplier: 1, count: 0
+
+current_multiplier: 1, r:ABC, multiplier: 3, count: 1, rest: d
+
+
+input: ABC, current_multiplier: 3, count: 0
+
+returning 9
+
+
+input: d, current_multiplier: 1, count: 0
+
+returning 1
+.
+
+Finished in 0.02 seconds
+2 tests, 0 failures
+
+Randomized with seed 807321

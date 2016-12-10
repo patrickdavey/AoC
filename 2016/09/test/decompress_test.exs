@@ -21,14 +21,10 @@ defmodule DecompressTest do
 
   test "single decompression works" do
     assert Decompress.expand_length("ABC") == 3
-    assert Decompress.expand_length("(3x3)ABC") == 9
-    assert Decompress.expand_length("a(3x3)ABC") == 10
-    assert Decompress.expand_length("(8x2)(3x3)ABC") == 18
+    assert Decompress.expand_length("a(3x3)ABCd") == 11
+    assert Decompress.expand_length("(10x2)aa(3x3)ABC") == 22
     assert Decompress.expand_length("(27x12)(20x12)(13x14)(7x10)(1x12)A") == 241920
     assert Decompress.expand_length("(25x3)(3x3)ABC(2x3)XY(5x2)PQRSTX(18x9)(3x2)TWO(5x7)SEVEN") == 445
   end
 
-  test "clever multiply works" do
-    assert Decompress.expand_length("(8x2)(3x3)ABC") == 18
-  end
 end
