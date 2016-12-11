@@ -5,9 +5,8 @@ defmodule AOCDay.Decompress do
     match = nicer_captures(input)
     cond do
       match ->
-        offset = String.length(String.slice(input, 0, match.start_offset))
         { {r, multiplier}, rest } = repeat(input, match)
-        current_multiplier * (offset + expand_length(r, multiplier) + expand_length(rest))
+        current_multiplier * (match.start_offset + expand_length(r, multiplier) + expand_length(rest))
       :otherwise ->
         String.length(input) * current_multiplier
     end
