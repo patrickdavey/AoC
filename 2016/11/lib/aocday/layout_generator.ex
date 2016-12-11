@@ -1,16 +1,13 @@
 defmodule AOCDay.LayoutGenerator do
   alias AOCDay.Layout
   alias AOCDay.LayoutValidator
-  alias AOCDay.Visited
 
   def nodes(initial) do
-    Visited.add(initial)
     items_on_my_floor = Map.get(initial, String.to_atom("floor_#{initial.elevator}"))
     t = comb(2, items_on_my_floor) ++ comb(1, items_on_my_floor)
     |> Enum.map(&create(&1, initial))
     |> List.flatten
     |> Enum.filter(&LayoutValidator.valid?/1)
-    |> Enum.filter(&not_visited_yet?/1)
   end
 
   # def create(items_to_move, state = %{elevator: 0}) do
@@ -54,15 +51,6 @@ defmodule AOCDay.LayoutGenerator do
       end
 
     [s_up, s_down]
-  end
-
-  defp not_visited_yet?(struct) do
-    cond do
-      Visited.visited?(struct) -> false
-      :otherwise ->
-        Visited.add(struct)
-        true
-    end
   end
 
   def comb(0, _), do: [[]]

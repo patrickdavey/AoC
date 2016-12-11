@@ -3,27 +3,39 @@ defmodule AOCDay.Runner do
   alias AOCDay.LayoutGenerator
 
   def shortest_path(layout) do
-    AOCDay.Visited.init
+    visited = MapSet.new
     queue = []
     queue = List.insert_at(queue, -1, layout)
-    check(queue)
+    visited = MapSet.put(visited, Map.delete(layout, :steps))
+    check(queue, visited)
   end
 
-  defp check([%Layout{floor_0: [], floor_1: [], floor_2: [], steps: steps} | t]) do
-    steps
+  defp check([%Layout{floor_0: [], floor_1: [], floor_2: [], steps: steps} | t], _) do
+    answer = steps
     |> Enum.count
     |> Kernel.-(1)
+
+    answer
+    |> IO.puts
+
+    answer
   end
 
-  defp check([]), do: raise "nope"
+  defp check([], _), do: raise "nope"
 
-  defp check([state |t]) do
+  defp check([state |t], visited) do
     edges = LayoutGenerator.nodes(state)
+            |> Enum.filter(&(not_visited_yet?(visited, &1)))
+
+    visited = Enum.reduce(edges, visited, fn(x, acc) ->
+      MapSet.put(acc, Map.delete(x, :steps))
+    end)
+
     new_list = t ++ edges
     |> Enum.sort_by(&fancy_sort/1)
     |> Enum.reverse
 
-    check(new_list)
+    check(new_list, visited)
   end
 
   def fancy_sort(layout) do
@@ -31,6 +43,11 @@ defmodule AOCDay.Runner do
     (layout.floor_1 |> Enum.count) * 1.5 +
     (layout.floor_2 |> Enum.count) * 1.7 +
     (layout.floor_3 |> Enum.count) * 3
+  end
+
+  defp not_visited_yet?(mapset, struct) do
+    struct = Map.delete(struct, :steps)
+    MapSet.member?(mapset, struct) == false
   end
 
 end

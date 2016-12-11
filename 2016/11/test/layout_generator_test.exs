@@ -3,10 +3,8 @@ defmodule LayoutGeneratorTest do
   alias AOCDay.Layout
   alias AOCDay.LayoutValidator
   alias AOCDay.LayoutGenerator
-  alias AOCDay.Visited
 
   test "validates floor index" do
-    Visited.init
     layout = %Layout{
       steps: [],
       elevator: 0,
@@ -42,7 +40,6 @@ defmodule LayoutGeneratorTest do
   end
 
   test "ensure no duplicates generated" do
-    Visited.init
     layout = %Layout{
       steps: [],
       elevator: 0,
@@ -69,7 +66,6 @@ defmodule LayoutGeneratorTest do
   end
 
   test "second part works" do
-    Visited.init
     layout = %Layout{
       steps: [],
       elevator: 1,
@@ -92,7 +88,6 @@ defmodule LayoutGeneratorTest do
   end
 
   test "third part works" do
-    Visited.init
     layout = %Layout{
       steps: [],
       elevator: 2,
