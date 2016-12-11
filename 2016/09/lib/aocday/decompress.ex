@@ -1,17 +1,14 @@
 defmodule AOCDay.Decompress do
   @encoding ~r/\((?<char_length>\d+)x(?<repeat_times>\d+)\)/
 
-  def expand_length(input, current_multiplier \\ 1, count \\ 0) do
-    IO.puts "\n\ninput: #{input}, current_multiplier: #{current_multiplier}, count: #{count}"
+  def expand_length(input, current_multiplier \\ 1) do
     match = nicer_captures(input)
     cond do
       match ->
         offset = String.length(String.slice(input, 0, match.start_offset))
         { {r, multiplier}, rest } = repeat(input, match)
-        IO.puts "\noffset: #{offset}, current_multiplier: #{current_multiplier}, r:#{r}, multiplier: #{multiplier}, count: #{count}, rest: #{rest}"
-        offset + expand_length(r, current_multiplier * multiplier) + current_multiplier * expand_length(rest)
+        current_multiplier * (offset + expand_length(r, multiplier) + expand_length(rest))
       :otherwise ->
-        IO.puts "\nreturning #{(count + String.length(input)) * current_multiplier}"
         String.length(input) * current_multiplier
     end
   end
