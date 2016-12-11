@@ -2,3 +2,12 @@ The first floor contains a PG, a TG, a TM, a LG, a RG, a RM, a CG, and a CM.
 The second floor contains a PM and a LM.
 The third floor contains nothing relevant.
 The fourth floor contains nothing relevant.
+
+    layout = %Layout{
+      steps: [initial],
+      elevator: 0,
+      floor_0: ["CG", "CM", "LG", "PG", "RG", "RM", "TG", "TM"],
+      floor_1: ["LM", "PM"],
+      floor_2: [],
+      floor_3: []
+    }

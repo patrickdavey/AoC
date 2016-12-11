@@ -11,13 +11,17 @@ defmodule AOCDay.Runner do
 
   defp check([%Layout{floor_0: [], floor_1: [], floor_2: [], steps: steps} | t]) do
     steps
-    |> Enum.map(&(Map.delete(&1, :steps)))
-    |> IO.inspect
+    |> Enum.count
+    |> Kernel.-(1)
   end
-  defp check(queue = [state |t]) do
+
+  defp check([]), do: raise "nope"
+
+  defp check([state |t]) do
     edges = LayoutGenerator.nodes(state)
     check(t ++ edges)
   end
+
 end
 
 # procedure BFS(G,v) is // G is the graph, v is the start node

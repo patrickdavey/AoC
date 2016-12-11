@@ -20,6 +20,6 @@ defmodule RunnerTest do
       floor_2: ["LG"],
       floor_3: []
     }
-    assert Runner.shortest_path(layout) == 11
+    assert Runner.shortest_path(layout) == 9
   end
 end

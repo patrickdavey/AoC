@@ -8,7 +8,7 @@ defmodule LayoutGeneratorTest do
   test "validates floor index" do
     Visited.init
     layout = %Layout{
-      steps: 0,
+      steps: [],
       elevator: 0,
       floor_0: ["HM", "LM"],
       floor_1: ["HG"],
@@ -17,9 +17,10 @@ defmodule LayoutGeneratorTest do
     }
 
     nodes = LayoutGenerator.nodes(layout)
+            |> Enum.map(&(Map.put(&1, :steps, [])))
 
     layout2 = %Layout{
-      steps: 1,
+      steps: [],
       elevator: 1,
       floor_0: ["LM"],
       floor_1: ["HG", "HM"],
@@ -29,7 +30,7 @@ defmodule LayoutGeneratorTest do
     assert Enum.member?(nodes, layout2)
 
     assert Enum.member?(nodes, %Layout{
-      steps: 1,
+      steps: [],
       elevator: 1,
       floor_0: [],
       floor_1: ["HG", "HM", "LM"],
@@ -43,7 +44,7 @@ defmodule LayoutGeneratorTest do
   test "ensure no duplicates generated" do
     Visited.init
     layout = %Layout{
-      steps: 0,
+      steps: [],
       elevator: 0,
       floor_0: ["HM", "LM"],
       floor_1: ["HG"],
@@ -51,11 +52,12 @@ defmodule LayoutGeneratorTest do
       floor_3: []
     }
 
-    LayoutGenerator.nodes(layout)
+    nodes = LayoutGenerator.nodes(layout)
+            |> Enum.map(&(Map.put(&1, :steps, [])))
 
     layout2 = %Layout{
       elevator: 1,
-      steps: 1,
+      steps: [],
       floor_0: ["LM"],
       floor_1: ["HG", "HM"],
       floor_2: ["LG"],
@@ -69,7 +71,7 @@ defmodule LayoutGeneratorTest do
   test "second part works" do
     Visited.init
     layout = %Layout{
-      steps: 0,
+      steps: [],
       elevator: 1,
       floor_0: ["LM"],
       floor_1: ["HG", "HM"],
@@ -77,9 +79,10 @@ defmodule LayoutGeneratorTest do
       floor_3: []
     }
     nodes = LayoutGenerator.nodes(layout)
+            |> Enum.map(&(Map.put(&1, :steps, [])))
 
     assert Enum.member?(nodes, %Layout{
-      steps: 1,
+      steps: [],
       elevator: 2,
       floor_0: ["LM"],
       floor_1: [],
@@ -91,7 +94,7 @@ defmodule LayoutGeneratorTest do
   test "third part works" do
     Visited.init
     layout = %Layout{
-      steps: 2,
+      steps: [],
       elevator: 2,
       floor_0: ["LM"],
       floor_1: [],
@@ -99,9 +102,10 @@ defmodule LayoutGeneratorTest do
       floor_3: []
     }
     nodes = LayoutGenerator.nodes(layout)
+            |> Enum.map(&(Map.put(&1, :steps, [])))
 
     assert Enum.member?(nodes, %Layout{
-      steps: 3,
+      steps: [],
       elevator: 1,
       floor_0: ["LM"],
       floor_1: [ "HM"],
@@ -110,7 +114,7 @@ defmodule LayoutGeneratorTest do
     })
 
     assert Enum.member?(nodes, %Layout{
-      steps: 3,
+      steps: [],
       elevator: 1,
       floor_0: ["LM"],
       floor_1: [ "HG", "HM"],
@@ -119,7 +123,7 @@ defmodule LayoutGeneratorTest do
     })
 
     assert Enum.member?(nodes, %Layout{
-      steps: 3,
+      steps: [],
       elevator: 3,
       floor_0: ["LM"],
       floor_1: [],
@@ -128,7 +132,7 @@ defmodule LayoutGeneratorTest do
     })
 
     assert Enum.member?(nodes, %Layout{
-      steps: 3,
+      steps: [],
       elevator: 1,
       floor_0: ["LM"],
       floor_1: [ "LG" ],
