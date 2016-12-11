@@ -9,9 +9,12 @@ defmodule AOCDay.Runner do
     check(queue)
   end
 
-  defp check([%Layout{floor_0: [], floor_1: [], floor_2: [], steps: steps} | t]), do: steps
+  defp check([%Layout{floor_0: [], floor_1: [], floor_2: [], steps: steps} | t]) do
+    steps
+    |> Enum.map(&(Map.delete(&1, :steps)))
+    |> IO.inspect
+  end
   defp check(queue = [state |t]) do
-    IO.inspect(state)
     edges = LayoutGenerator.nodes(state)
     check(t ++ edges)
   end

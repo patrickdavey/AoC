@@ -24,8 +24,6 @@ defmodule AOCDay.LayoutGenerator do
     my_floor_id = String.to_atom("floor_#{x}")
     my_floor = Map.get(state, my_floor_id)
     old_floor = MapSet.difference(MapSet.new(my_floor), MapSet.new(items_to_move)) |> MapSet.to_list |> Enum.sort
-    new_steps = steps + 1
-
     s_up =
       cond do
         x + 1 < 4  ->
@@ -36,7 +34,7 @@ defmodule AOCDay.LayoutGenerator do
           s_up = Map.put(s_up, my_floor_id, old_floor)
           s_up = Map.put(s_up, above, new_floor)
           s_up = Map.put(s_up, above, new_floor)
-          s_up = Map.put(s_up, :steps, new_steps)
+          s_up = Map.put(s_up, :steps, List.insert_at(steps, -1, s_up))
           s_up
         :otherwise -> []
       end
@@ -50,7 +48,7 @@ defmodule AOCDay.LayoutGenerator do
           s_down = Map.put(state, :elevator, x - 1)
           s_down = Map.put(s_down, my_floor_id, old_floor)
           s_down = Map.put(s_down, below, new_floor)
-          s_down = Map.put(s_down, :steps, new_steps)
+          s_down = Map.put(s_down, :steps, List.insert_at(steps, -1, s_down))
           s_down
         :otherwise -> []
       end
