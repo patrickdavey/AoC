@@ -3,8 +3,10 @@ defmodule LayoutGeneratorTest do
   alias AOCDay.Layout
   alias AOCDay.LayoutValidator
   alias AOCDay.LayoutGenerator
+  alias AOCDay.Visited
 
   test "validates floor index" do
+    Visited.init
     layout = %Layout{
       elevator: 0,
       floor_0: ["HM", "LM"],
@@ -14,13 +16,15 @@ defmodule LayoutGeneratorTest do
     }
 
     nodes = LayoutGenerator.nodes(layout)
-    assert Enum.member?(nodes, %Layout{
+
+    layout2 = %Layout{
       elevator: 1,
       floor_0: ["LM"],
       floor_1: ["HG", "HM"],
       floor_2: ["LG"],
       floor_3: []
-    })
+    }
+    assert Enum.member?(nodes, layout2)
 
     assert Enum.member?(nodes, %Layout{
       elevator: 1,
@@ -33,7 +37,32 @@ defmodule LayoutGeneratorTest do
     assert Enum.count(nodes) == 2
   end
 
+  test "ensure no duplicates generated" do
+    Visited.init
+    layout = %Layout{
+      elevator: 0,
+      floor_0: ["HM", "LM"],
+      floor_1: ["HG"],
+      floor_2: ["LG"],
+      floor_3: []
+    }
+
+    LayoutGenerator.nodes(layout)
+
+    layout2 = %Layout{
+      elevator: 1,
+      floor_0: ["LM"],
+      floor_1: ["HG", "HM"],
+      floor_2: ["LG"],
+      floor_3: []
+    }
+
+    nodes = LayoutGenerator.nodes(layout2)
+    refute Enum.member?(nodes, layout)
+  end
+
   test "second part works" do
+    Visited.init
     layout = %Layout{
       elevator: 1,
       floor_0: ["LM"],
@@ -53,6 +82,7 @@ defmodule LayoutGeneratorTest do
   end
 
   test "third part works" do
+    Visited.init
     layout = %Layout{
       elevator: 2,
       floor_0: ["LM"],
