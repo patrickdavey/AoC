@@ -22,13 +22,6 @@ defmodule AOCDay.LayoutValidator do
     Regex.match?(~r/M.*G/, s) == false && Regex.match?(~r/G.*M/, s) == false
   end
 
-  defp safe?(item, []), do: true
-  defp safe?(<<element::binary-size(1), "M"::binary>>, others) do
-    require IEx
-    IEx.pry
-  end
-  defp safe?(item, _), do: false
-
   defp has_pair?(<<element::binary-size(1), "M"::binary>>, others) do
     Enum.member?(others, element <> "G")
   end

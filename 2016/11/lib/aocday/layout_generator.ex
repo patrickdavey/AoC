@@ -1,10 +1,9 @@
 defmodule AOCDay.LayoutGenerator do
-  alias AOCDay.Layout
   alias AOCDay.LayoutValidator
 
   def nodes(initial) do
     items_on_my_floor = Map.get(initial, String.to_atom("floor_#{initial.elevator}"))
-    t = comb(2, items_on_my_floor) ++ comb(1, items_on_my_floor)
+    comb(2, items_on_my_floor) ++ comb(1, items_on_my_floor)
     |> Enum.map(&create(&1, initial))
     |> List.flatten
     |> Enum.filter(&LayoutValidator.valid?/1)
@@ -20,7 +19,11 @@ defmodule AOCDay.LayoutGenerator do
   def create(items_to_move, state = %{elevator: x, steps: steps}) do
     my_floor_id = String.to_atom("floor_#{x}")
     my_floor = Map.get(state, my_floor_id)
-    old_floor = MapSet.difference(MapSet.new(my_floor), MapSet.new(items_to_move)) |> MapSet.to_list |> Enum.sort
+    old_floor = my_floor
+                |> MapSet.new
+                |> MapSet.difference(MapSet.new(items_to_move))
+                |> MapSet.to_list
+                |> Enum.sort
     s_up =
       cond do
         x + 1 < 4  ->

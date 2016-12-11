@@ -10,7 +10,7 @@ defmodule AOCDay.Runner do
     check(queue, visited)
   end
 
-  defp check([%Layout{floor_0: [], floor_1: [], floor_2: [], steps: steps} | t], _) do
+  defp check([%Layout{floor_0: [], floor_1: [], floor_2: [], steps: steps} | _t], _) do
     answer = steps
     |> Enum.count
     |> Kernel.-(1)
@@ -24,7 +24,8 @@ defmodule AOCDay.Runner do
   defp check([], _), do: raise "nope"
 
   defp check([state |t], visited) do
-    edges = LayoutGenerator.nodes(state)
+    edges = state
+            |> LayoutGenerator.nodes
             |> Enum.filter(&(not_visited_yet?(visited, &1)))
 
     visited = Enum.reduce(edges, visited, fn(x, acc) ->
@@ -49,26 +50,4 @@ defmodule AOCDay.Runner do
     struct = Map.delete(struct, :steps)
     MapSet.member?(mapset, struct) == false
   end
-
 end
-
-# procedure BFS(G,v) is // G is the graph, v is the start node
-#       create a queue Q
-#       create a vector set V
-#       enqueue v onto Q // put v into the queue
-#       add v to V // add v to the set of used nodes
-#       while Q is not empty loop
-#          t ← Q.dequeue() // remove the first element from the queue
-#          if t is what we are looking for then
-#             return t
-#         end if
-#         for all edges e in G.adjacentEdges(t) loop
-#            u ← G.adjacentVertex(t,e)
-#            if u is not in V then
-#                add u to V // all nodes connected the current node are
-#                enqueue u onto Q // added to the queue and to the set of used nodes
-#            end if
-#         end loop
-#      end loop
-#      return none
-#  end BFS
