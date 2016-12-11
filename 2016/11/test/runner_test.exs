@@ -5,6 +5,7 @@ defmodule RunnerTest do
 
   test "finds shortest path" do
     layout = %Layout{
+      steps: 0,
       elevator: 0,
       floor_0: ["HM", "LM"],
       floor_1: ["HG"],

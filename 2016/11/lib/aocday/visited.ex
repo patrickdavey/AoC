@@ -14,13 +14,13 @@ defmodule AOCDay.Visited do
   end
 
   def visited?(struct) do
-    Enum.member?(current_state, struct)
+    Enum.member?(current_state, Map.delete(struct, :steps))
   end
 
   def add(struct) do
     Agent.update(__MODULE__,
     fn mapset ->
-      MapSet.put(mapset, struct)
+      MapSet.put(mapset, Map.delete(struct, :steps))
     end)
   end
 end

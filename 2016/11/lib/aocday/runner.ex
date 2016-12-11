@@ -6,13 +6,14 @@ defmodule AOCDay.Runner do
     AOCDay.Visited.init
     queue = []
     queue = List.insert_at(queue, -1, layout)
-    check(queue, 1)
+    check(queue)
   end
 
-  defp check([%Layout{floor_0: [], floor_2: [], floor_3: []} | t], steps), do: steps
-  defp check(queue = [state |t], steps) do
+  defp check([%Layout{floor_0: [], floor_1: [], floor_2: [], steps: steps} | t]), do: steps
+  defp check(queue = [state |t]) do
+    IO.inspect(state)
     edges = LayoutGenerator.nodes(state)
-    check(t ++ edges, 1)
+    check(t ++ edges)
   end
 end
 

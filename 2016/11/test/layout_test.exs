@@ -5,6 +5,7 @@ defmodule LayoutTest do
 
   test "validates floor index" do
     layout = %Layout{
+      steps: 4,
       elevator: 4,
       floor_0: ["HM", "LM"],
       floor_1: ["HG"],
@@ -14,6 +15,7 @@ defmodule LayoutTest do
     refute LayoutValidator.valid?(layout)
 
     layout = %Layout{
+      steps: 4,
       elevator: -1,
       floor_0: ["HM", "LM"],
       floor_1: ["HG"],
@@ -23,6 +25,7 @@ defmodule LayoutTest do
     refute LayoutValidator.valid?(layout)
 
     layout = %Layout{
+      steps: 4,
       elevator: 0,
       floor_0: [],
       floor_1: [],
@@ -32,6 +35,7 @@ defmodule LayoutTest do
     assert LayoutValidator.valid?(layout)
 
     layout = %Layout{
+      steps: 4,
       elevator: 0,
       floor_0: ["HM"],
       floor_1: ["HG", "LM"],
@@ -41,6 +45,7 @@ defmodule LayoutTest do
     refute LayoutValidator.valid?(layout)
 
     layout = %Layout{
+      steps: 4,
       elevator: 0,
       floor_0: ["HM", "HG", "LM"],
       floor_1: [],
@@ -50,6 +55,7 @@ defmodule LayoutTest do
     assert LayoutValidator.valid?(layout)
 
     layout = %Layout{
+      steps: 4,
       elevator: 0,
       floor_0: [],
       floor_1: [],
@@ -59,6 +65,7 @@ defmodule LayoutTest do
     assert LayoutValidator.valid?(layout)
 
     layout = %Layout{
+      steps: 4,
       elevator: 0,
       floor_0: ["JM", "QM", "BM"],
       floor_1: ["AG", "BG"],
