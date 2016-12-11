@@ -1,4 +1,4 @@
-The first floor contains a PG, a TG, a TM, a PG, a RG, a RM, a CG, and a CM.
-The second floor contains a PM and a PM.
+The first floor contains a PG, a TG, a TM, a LG, a RG, a RM, a CG, and a CM.
+The second floor contains a PM and a LM.
 The third floor contains nothing relevant.
 The fourth floor contains nothing relevant.
