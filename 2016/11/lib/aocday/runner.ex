@@ -19,7 +19,18 @@ defmodule AOCDay.Runner do
 
   defp check([state |t]) do
     edges = LayoutGenerator.nodes(state)
-    check(t ++ edges)
+    new_list = t ++ edges
+    |> Enum.sort_by(&fancy_sort/1)
+    |> Enum.reverse
+
+    check(new_list)
+  end
+
+  def fancy_sort(layout) do
+    (layout.steps |> Enum.count) +
+    (layout.floor_1 |> Enum.count) * 1.5 +
+    (layout.floor_2 |> Enum.count) * 1.7 +
+    (layout.floor_3 |> Enum.count) * 3
   end
 
 end
