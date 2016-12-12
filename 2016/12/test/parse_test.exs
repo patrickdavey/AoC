@@ -16,6 +16,9 @@ defmodule ParseTest do
 
     instruction = Parser.parse(" jnz c -2 ")
     assert instruction == [c: {:jnz, -2}]
+
+    instruction = Parser.parse(" jnz c -2 ")
+    assert instruction == [c: {:jnz, -2}]
   end
 
   test "inc instruction works" do
