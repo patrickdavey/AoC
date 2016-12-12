@@ -3,7 +3,7 @@ defmodule AOCDay.Runner do
   def part_1 do
     Register.start_link(:a)
     Register.start_link(:b)
-    Register.start_link(:c)
+    Register.start_link(:c, 1)
     Register.start_link(:d)
 
     run_instruction(structured_data, 0)
@@ -52,16 +52,20 @@ defmodule AOCDay.Runner do
     end
   end
 
+  def run_instruction(instructions, index) when index < 0 do
+    IO.puts GenServer.call(:a, { :current_value })
+  end
+
   def run_instruction(instructions, index) do
     run_instruction(instructions, Enum.at(instructions, index), index)
   end
 
   defp tell(index) do
-    IO.puts"\nA is :#{GenServer.call(:a, {:current_value})}"
+    IO.puts"\nindex is: #{index}"
+    IO.puts"A is :#{GenServer.call(:a, {:current_value})}"
     IO.puts"B is :#{GenServer.call(:b, {:current_value})}"
     IO.puts"C is :#{GenServer.call(:c, {:current_value})}"
     IO.puts"D is :#{GenServer.call(:d, {:current_value})}"
-    IO.puts"index is: #{index}"
     IO.puts"\n\n\n"
   end
 end

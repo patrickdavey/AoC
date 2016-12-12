@@ -1,14 +1,14 @@
 defmodule AOCDay.Register do
   use GenServer
 
-  def start_link(name) do
-    GenServer.start_link(__MODULE__, :ok, [name: name])
+  def start_link(name, start \\ 0) do
+    GenServer.start_link(__MODULE__, start, [name: name])
   end
 
   ## Server Callbacks
 
-  def init(:ok) do
-    {:ok, 0 }
+  def init(start) do
+    {:ok, start }
   end
 
   def handle_call({:current_value}, _from, value) do
