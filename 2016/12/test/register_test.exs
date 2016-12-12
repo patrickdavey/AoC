@@ -4,14 +4,6 @@ defmodule RegisterTest do
 
   test "bots test register works" do
     Register.start_link(:a)
-    instructions = [
-      {:cpy, 41, :a},
-      {:inc, :a},
-      {:inc, :a},
-      {:dec, :a},
-      {:jnz, :a, 2},
-      {:dec, :a},
-    ]
 
     GenServer.call(:a, {:cpy, 41})
     assert GenServer.call(:a, { :current_value }) == 41

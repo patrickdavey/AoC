@@ -17,7 +17,32 @@ defmodule AOCDay.Parser do
     |> Enum.map(&formatted/1)
   end
 
-  def formatted(line) do
-    line
+  def formatted(<<"cpy "::binary, rest::binary>>) do
+    cond do
+      captures = Regex.named_captures(~r/(?<value>\d+) (?<register>\w)/, rest) ->
+        { String.to_atom(captures["register"]), { :cpy, String.to_integer(captures["value"])}}
+      captures = Regex.named_captures(~r/(?<value>\w) (?<register>\w)/, rest) ->
+        { String.to_atom(captures["register"]), { :cpy, String.to_atom(captures["value"])}}
+      :otherwise -> raise "badness"
+    end
+  end
+
+  def formatted(<<"jnz "::binary, rest::binary>>) do
+    captures = Regex.named_captures(~r/(?<register>\w) (?<minus>[-]*)(?<value>\d+)/, rest)
+
+    cond do
+      captures["minus"] == "-" ->
+        { String.to_atom(captures["register"]), { :jnz, String.to_integer(captures["value"]) * -1}}
+      :otherwise ->
+        { String.to_atom(captures["register"]), { :jnz, String.to_integer(captures["value"])}}
+    end
+  end
+
+  def formatted(<<"inc "::binary, register::binary>>) do
+    { String.to_atom(register), { :inc }}
+  end
+
+  def formatted(<<"dec "::binary, register::binary>>) do
+    { String.to_atom(register), { :dec }}
   end
 end
