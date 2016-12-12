@@ -11,14 +11,9 @@ defmodule AOCDay.Runner do
   end
 
   defp check([%Layout{floor_0: [], floor_1: [], floor_2: [], steps: steps} | _t], _) do
-    answer = steps
+    steps
     |> Enum.count
     |> Kernel.-(1)
-
-    answer
-    |> IO.puts
-
-    answer
   end
 
   defp check([], _), do: raise "nope"
