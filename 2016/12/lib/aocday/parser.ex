@@ -14,41 +14,31 @@ defmodule AOCDay.Parser do
     binary
     |> String.trim
     |> String.split("\n")
+    |> Enum.map(&String.split/1)
     |> Enum.map(&formatted/1)
   end
 
-  def formatted(<<"cpy "::binary, rest::binary>>) do
-    cond do
-      captures = Regex.named_captures(~r/(?<value>\d+) (?<register>\w)/, rest) ->
-        { String.to_atom(captures["register"]), { :cpy, String.to_integer(captures["value"])}}
-      captures = Regex.named_captures(~r/(?<value>\w) (?<register>\w)/, rest) ->
-        { String.to_atom(captures["register"]), { :cpy, String.to_atom(captures["value"])}}
-      :otherwise -> raise "badness"
-    end
+  def formatted(["cpy", value, destination]) do
+    {String.to_atom(destination), { :cpy, integer_or_atom(value)}}
   end
 
-  def formatted(<<"jnz "::binary, rest::binary>>) do
-    captures = Regex.named_captures(~r/(?<register>\w) (?<minus>[-]*)(?<value>\d+)/, rest)
-    register =
-      if Regex.match?(~r/\d+/, captures["register"]) do
-        String.to_integer(captures["register"])
-      else
-        String.to_atom(captures["register"])
-      end
-
-    cond do
-      captures["minus"] == "-" ->
-        { register, { :jnz, String.to_integer(captures["value"]) * -1}}
-      :otherwise ->
-        { register, { :jnz, String.to_integer(captures["value"])}}
-    end
+  def formatted(["jnz", test, offset]) do
+    {integer_or_atom(test), { :jnz, String.to_integer(offset)}}
   end
 
-  def formatted(<<"inc "::binary, register::binary>>) do
+  def formatted(["inc", register]) do
     { String.to_atom(register), { :inc }}
   end
 
-  def formatted(<<"dec "::binary, register::binary>>) do
+  def formatted(["dec", register]) do
     { String.to_atom(register), { :dec }}
   end
+
+  defp integer_or_atom(value) do
+    case Integer.parse(value) do
+      {x, _} -> x
+      :error -> String.to_atom(value)
+    end
+  end
+
 end
