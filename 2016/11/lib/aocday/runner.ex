@@ -34,16 +34,15 @@ defmodule AOCDay.Runner do
 
     new_list = t ++ edges
     |> Enum.sort_by(&fancy_sort/1)
-    |> Enum.reverse
 
     check(new_list, visited)
   end
 
   def fancy_sort(layout) do
-    (layout.steps |> Enum.count) +
-    (layout.floor_1 |> Enum.count) * 1.5 +
-    (layout.floor_2 |> Enum.count) * 1.7 +
-    (layout.floor_3 |> Enum.count) * 3
+    (layout.floor_0 |> Enum.count) * 3 +
+    (layout.floor_1 |> Enum.count) * 2 +
+    (layout.floor_2 |> Enum.count) * 1 +
+    (layout.floor_3 |> Enum.count) * 0
   end
 
   defp not_visited_yet?(mapset, struct) do
