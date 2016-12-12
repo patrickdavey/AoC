@@ -23,7 +23,12 @@ defmodule AOCDay.Parser do
   end
 
   def formatted(["jnz", test, offset]) do
-    {integer_or_atom(test), { :jnz, String.to_integer(offset)}}
+    offset = String.to_integer(offset)
+    register = case integer_or_atom(test) do
+                i when is_integer(i) -> :always_on
+                j -> j
+    end
+    {register, { :jnz, offset}}
   end
 
   def formatted(["inc", register]) do

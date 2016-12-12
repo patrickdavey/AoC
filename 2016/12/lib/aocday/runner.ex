@@ -5,6 +5,7 @@ defmodule AOCDay.Runner do
     Register.start_link(:b)
     Register.start_link(:c)
     Register.start_link(:d)
+    Register.start_link(:always_on, 10)
 
     run_instruction(structured_data, 0)
   end
@@ -26,15 +27,12 @@ defmodule AOCDay.Runner do
     IO.puts GenServer.call(:a, { :current_value })
   end
 
+  def run_instruction(instructions, index) do
+    run_instruction(instructions, Enum.at(instructions, index), index)
+  end
+
   def run_instruction(instructions, {reg, instruction}, index) when is_atom(reg) do
     run_instruction(instructions, GenServer.call(reg, Tuple.append(instruction, index)))
   end
 
-  def run_instruction(instructions, {value, {:jnz, offset}}, index) when is_integer(value) and value != 0 do
-    run_instruction(instructions, index + offset)
-  end
-
-  def run_instruction(instructions, index) do
-    run_instruction(instructions, Enum.at(instructions, index), index)
-  end
 end
