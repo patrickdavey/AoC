@@ -29,12 +29,18 @@ defmodule AOCDay.Parser do
 
   def formatted(<<"jnz "::binary, rest::binary>>) do
     captures = Regex.named_captures(~r/(?<register>\w) (?<minus>[-]*)(?<value>\d+)/, rest)
+    register =
+      if Regex.match?(~r/\d+/, captures["register"]) do
+        String.to_integer(captures["register"])
+      else
+        String.to_atom(captures["register"])
+      end
 
     cond do
       captures["minus"] == "-" ->
-        { String.to_atom(captures["register"]), { :jnz, String.to_integer(captures["value"]) * -1}}
+        { register, { :jnz, String.to_integer(captures["value"]) * -1}}
       :otherwise ->
-        { String.to_atom(captures["register"]), { :jnz, String.to_integer(captures["value"])}}
+        { register, { :jnz, String.to_integer(captures["value"])}}
     end
   end
 
