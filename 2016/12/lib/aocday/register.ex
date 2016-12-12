@@ -15,21 +15,29 @@ defmodule AOCDay.Register do
     {:reply, value, value}
   end
 
-  def handle_call({:inc}, _from, value) do
-    {:reply, value + 1, value + 1}
+  def handle_call({:inc, index}, _from, value) do
+    {:reply, index + 1, value + 1}
   end
 
-  def handle_call({:dec}, _from, value) do
-    {:reply, value - 1, value - 1}
+  def handle_call({:dec, index}, _from, value) do
+    {:reply, index + 1, value - 1}
   end
 
-  def handle_call({:cpy, new_value}, _from, value) when is_integer(new_value) do
-    {:reply, new_value, new_value }
+  def handle_call({:cpy, new_value, index}, _from, value) when is_integer(new_value) do
+    {:reply, index + 1, new_value }
   end
 
-  def handle_call({:cpy, register}, _from, value) do
+  def handle_call({:cpy, register, index}, _from, value) do
     register_value = GenServer.call(register, {:current_value})
-    {:reply, register_value, register_value }
+    {:reply, index + 1, register_value }
+  end
+
+  def handle_call({:jnz, offset, index}, _from, value) do
+    if value != 0 do
+      {:reply, index + offset, value }
+    else
+      {:reply, index + 1, value }
+    end
   end
 end
 
