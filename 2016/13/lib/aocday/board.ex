@@ -5,8 +5,8 @@ defmodule AOCDay.Board do
 
   def start_link do
     Agent.start_link(fn ->
-    width = Application.get_env(:caster, :width)
-    height = Application.get_env(:caster, :height)
+    width = Application.get_env(:aoc, :width)
+    height = Application.get_env(:aoc, :height)
     Matrix.new([], height, width, ".")
     end, name: __MODULE__)
   end
