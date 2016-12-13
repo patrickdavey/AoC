@@ -13,8 +13,11 @@ defmodule AOCDay.Runner do
   end
 
   def part_2 do
-    Application.put_env(:aoc, :x_dest, 90)
-    Application.put_env(:aoc, :y_dest, 90)
+    Application.put_env(:aoc, :print_map_x, 30)
+    Application.put_env(:aoc, :print_map_y, 30)
+    Application.put_env(:aoc, :input, 1352)
+    Application.put_env(:aoc, :x_dest, 51)
+    Application.put_env(:aoc, :y_dest, 51)
     Application.put_env(:aoc, :max_steps, 50)
     solve(&number_visited/2)
   end
@@ -28,22 +31,19 @@ defmodule AOCDay.Runner do
   end
 
   defp check(state = [%State{steps: steps} | _t], visited, wanted, max , callback) when length(steps) > max do
-    print_map(Enum.at(state,0), visited, wanted, true)
-    :timer.sleep(50000)
+    print_map(Enum.at(state,0), visited, wanted, :max_steps)
     callback.(Enum.at(state, 0), visited)
   end
 
   defp check(state = [%State{x: x, y: y} | _t], visited, wanted = {x, y}, _max, callback) do
-    print_map(Enum.at(state,0), visited, wanted, true)
-    :timer.sleep(50000)
-
+    print_map(Enum.at(state,0), visited, wanted, :shortest)
     callback.(Enum.at(state, 0), visited)
   end
 
   defp check([], _, _, _, _), do: raise "nope"
 
   defp check([state |t], visited, wanted, max, callback) do
-    print_map(state, visited, wanted)
+    print_map(state, visited, wanted, false)
     states = state
             |> MapGenerator.nodes
             |> Enum.filter(&(not_visited_yet?(visited, &1)))
@@ -78,7 +78,8 @@ defmodule AOCDay.Runner do
     maze = Enum.reduce(coords, [], fn({x, y}, acc) ->
       value = cond do
                 wanted == {x, y} -> destination("X")
-                Enum.member?(steps, {x, y}) && final -> blue("O")
+                Enum.member?(steps, {x, y}) && final == :shortest -> blue("O")
+                Enum.member?(visited, {x, y}) && final == :max_steps -> blue("O")
                 Enum.member?(steps, {x, y}) -> green("O")
                 MapSet.member?(visited, {x, y}) -> cyan("O")
                 :otherwise -> white(AOCDay.CoordinateChecker.type(x, y))
@@ -93,6 +94,10 @@ defmodule AOCDay.Runner do
     |> Kernel.<>("\n")
     |> IO.puts
     :timer.sleep(50)
+
+    # if final do
+    #   :timer.sleep(50000)
+    # end
   end
 
   defp cyan(s) do
