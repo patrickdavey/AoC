@@ -1,6 +1,5 @@
 defmodule AOCDay.MapGenerator do
   alias AOCDay.State
-  alias AOCDay.Board
   alias AOCDay.CoordinateChecker
 
   def nodes(initial = %State{x: x, y: y, steps: steps}) do
@@ -19,7 +18,7 @@ defmodule AOCDay.MapGenerator do
     cond do
       x > Application.get_env(:aoc, :width) -> false
       y > Application.get_env(:aoc, :height) -> false
-      :otherwise -> Board.at(x, y) == "."
+      :otherwise -> CoordinateChecker.type(x, y) == "."
     end
   end
 

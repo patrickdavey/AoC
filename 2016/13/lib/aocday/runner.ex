@@ -1,5 +1,4 @@
 defmodule AOCDay.Runner do
-  alias AOCDay.Board
   alias AOCDay.State
   alias AOCDay.MapGenerator
 
@@ -21,10 +20,6 @@ defmodule AOCDay.Runner do
   end
 
   def solve(callback) do
-    Board.init
-    Board.populate_initial
-    Board.set(1, 1, "#")
-
     state = %State{x: 1, y: 1, steps: 1}
     visited = MapSet.new
     visited = MapSet.put(visited, {1, 1})
