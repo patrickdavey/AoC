@@ -1,4 +1,6 @@
 defmodule AOCDay.Board do
+  alias AOCDay.CoordinateChecker
+
   def init do
     __MODULE__.start_link
   end
@@ -9,6 +11,13 @@ defmodule AOCDay.Board do
     height = Application.get_env(:aoc, :height)
     Matrix.new([], height, width, ".")
     end, name: __MODULE__)
+  end
+
+  def populate_initial do
+    coords = for x <- (0..Application.get_env(:aoc, :width) - 1),
+                 y <- (0..Application.get_env(:aoc, :height) - 1),
+                 do: { x, y }
+    Enum.each(coords, fn({x, y}) -> set(x, y, CoordinateChecker.type(x, y)) end)
   end
 
   def current_state do

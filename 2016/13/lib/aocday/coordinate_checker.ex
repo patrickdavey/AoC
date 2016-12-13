@@ -1,6 +1,6 @@
 defmodule AOCDay.CoordinateChecker do
   require Integer
-  def type?(x, y) do
+  def type(x, y) do
     initial = x*x + (3*x) + (2*x*y) + y + (y*y)
     initial + Application.get_env(:aoc, :input)
     |> bits
