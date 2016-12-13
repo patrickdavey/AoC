@@ -3,8 +3,8 @@ defmodule AOCDay.Runner do
   alias AOCDay.MapGenerator
 
   def part_1 do
-    Application.put_env(:aoc, :print_map_x, 50)
-    Application.put_env(:aoc, :print_map_y, 50)
+    Application.put_env(:aoc, :print_map_x, 60)
+    Application.put_env(:aoc, :print_map_y, 42)
     Application.put_env(:aoc, :input, 1352)
     Application.put_env(:aoc, :x_dest, 31)
     Application.put_env(:aoc, :y_dest, 39)
@@ -81,7 +81,7 @@ defmodule AOCDay.Runner do
                 Enum.member?(steps, {x, y}) && final == :shortest -> blue("O")
                 Enum.member?(visited, {x, y}) && final == :max_steps -> blue("O")
                 Enum.member?(steps, {x, y}) -> green("O")
-                MapSet.member?(visited, {x, y}) -> cyan("O")
+                MapSet.member?(visited, {x, y}) -> red("O")
                 :otherwise -> white(AOCDay.CoordinateChecker.type(x, y))
       end
       List.insert_at(acc, -1, value)
@@ -100,7 +100,7 @@ defmodule AOCDay.Runner do
     # end
   end
 
-  defp cyan(s) do
+  defp red(s) do
     "#{IO.ANSI.color(5, 0, 0)}#{s}"
   end
 
