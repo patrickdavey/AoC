@@ -4,21 +4,30 @@ defmodule AOCDay.Runner do
   alias AOCDay.CoordinateChecker
   alias AOCDay.MapGenerator
 
+  def part_1 do
+    Application.put_env(:aoc, :width, 100)
+    Application.put_env(:aoc, :height, 100)
+    Application.put_env(:aoc, :input, 1352)
+    shortest_path
+  end
+
   def shortest_path do
     Board.init
     Board.populate_initial
     Board.set(1, 1, "#")
     map = Board.current_state
 
-    state = %State{x: 1, y: 1, steps: 0}
+    state = %State{x: 1, y: 1, steps: [{1,1}]}
     visited = MapSet.new
     visited = MapSet.put(visited, {1, 1})
     queue = [state]
     check(queue, visited)
   end
 
-  defp check([%State{x: 7, y: 4, steps: steps} | t], visited) do
+  defp check([%State{x: 31, y: 39, steps: steps} | t], visited) do
     steps
+    |> Enum.count
+    |> Kernel.-(1)
   end
 
   defp check([], _), do: raise "nope"
