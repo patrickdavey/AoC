@@ -7,5 +7,7 @@ defmodule CoordinateCheckerTest do
     assert CoordinateChecker.type(0,0) == "."
     assert CoordinateChecker.type(1,0) == "#"
     assert CoordinateChecker.type(6,9) == "#"
+    assert CoordinateChecker.type(-16,10) == "#"
+    assert CoordinateChecker.type(-16,9) == "#"
   end
 end
