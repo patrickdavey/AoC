@@ -4,7 +4,7 @@ defmodule AOCDay.Runner do
 
   def part_1 do
     Application.put_env(:aoc, :print_map_x, 60)
-    Application.put_env(:aoc, :print_map_y, 42)
+    Application.put_env(:aoc, :print_map_y, 62)
     Application.put_env(:aoc, :input, 1352)
     Application.put_env(:aoc, :x_dest, 31)
     Application.put_env(:aoc, :y_dest, 39)
@@ -77,12 +77,14 @@ defmodule AOCDay.Runner do
 
     maze = Enum.reduce(coords, [], fn({x, y}, acc) ->
       value = cond do
-                wanted == {x, y} -> destination("X")
-                Enum.member?(steps, {x, y}) && final == :shortest -> blue("O")
-                Enum.member?(visited, {x, y}) && final == :max_steps -> blue("O")
-                Enum.member?(steps, {x, y}) -> green("O")
-                MapSet.member?(visited, {x, y}) -> red("O")
-                :otherwise -> white(AOCDay.CoordinateChecker.type(x, y))
+                wanted == {x, y} -> destination(to_string [11088])
+                Enum.member?(steps, {x, y}) && final == :shortest -> blue(to_string [12295])
+                Enum.member?(visited, {x, y}) && final == :max_steps -> blue(to_string [12295])
+                Enum.member?(steps, {x, y}) -> green(to_string [12295])
+                MapSet.member?(visited, {x, y}) -> red(to_string [12295])
+                AOCDay.CoordinateChecker.type(x, y) == "#" -> white(to_string [11035])
+                :otherwise -> black(to_string [11035])
+
       end
       List.insert_at(acc, -1, value)
     end)
@@ -93,7 +95,7 @@ defmodule AOCDay.Runner do
     |> Enum.join("\n")
     |> Kernel.<>("\n")
     |> IO.puts
-    :timer.sleep(50)
+    :timer.sleep(10)
 
     # if final do
     #   :timer.sleep(50000)
@@ -118,6 +120,10 @@ defmodule AOCDay.Runner do
 
   defp white(s) do
     "#{IO.ANSI.color(5, 5, 5)}#{s}"
+  end
+
+  defp black(s) do
+    "#{IO.ANSI.color(0, 0, 0)}#{s}"
   end
 
 end
