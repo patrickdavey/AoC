@@ -1,33 +1,26 @@
 defmodule AOCDay.Runner do
-  alias AOCDay.Hasher
+  alias AOCDay.Guesses
   @triple ~r/(.)\1\1/
   @one_time_pads_needed 64
-  @mds5_to_check 1000
 
-  def part_1 do
-    (0..999)
-      |> Enum.reduce(%{}, fn(i, acc) ->
-         Map.put(acc, i, Hasher.hash(i))
-      end)
-    |> find(_start_index = 0, _start_count = 0, @one_time_pads_needed)
+  def solve do
+    Guesses.start_link(:guesser)
+    find(_start_index = 0, _start_count = 0, @one_time_pads_needed)
   end
 
-  def find(_, index, count, max) when count == max do
+  def find(index, count, max) when count == max do
     index - 1
   end
 
-  def find(hashes, index, count, max) do
-    current = hashes[rem(index, @mds5_to_check)]
-    hashes = Map.update!(hashes, rem(index, @mds5_to_check), fn(_) ->
-      Hasher.hash(index + @mds5_to_check)
-    end)
+  def find(index, count, max) do
+    { current, next_1000 } = GenServer.call(:guesser, {:get_and_update, index})
 
     case triple_letter(current) do
-      nil -> find(hashes, index + 1, count, max)
+      nil -> find(index + 1, count, max)
       letter ->
-        Map.values(hashes)
+        next_1000
           |> Enum.any?(&(string_contains_run_of_5_letters?(&1, letter)))
-          |> next_find(hashes, index + 1, count, max)
+          |> next_find(index + 1, count, max)
     end
   end
 
@@ -43,10 +36,10 @@ defmodule AOCDay.Runner do
     String.contains?(string, String.duplicate(letter, 5))
   end
 
-  defp next_find(true, hashes, index, count, max) do
-    find(hashes, index, count + 1 , max)
+  defp next_find(true, index, count, max) do
+    find(index, count + 1 , max)
   end
-  defp next_find(false, hashes, index, count, max) do
-    find(hashes, index, count, max)
+  defp next_find(false, index, count, max) do
+    find(index, count, max)
   end
 end
