@@ -1,13 +1,15 @@
 defmodule AOCDay.Runner do
   alias AOCDay.Hasher
   @triple ~r/(.)\1\1/
+  @one_time_pads_needed 64
+  @mds5_to_check 1000
 
   def part_1 do
     (0..999)
       |> Enum.reduce(%{}, fn(i, acc) ->
          Map.put(acc, i, Hasher.hash(i))
       end)
-    |> find(0, 0, 64)
+    |> find(_start_index = 0, _start_count = 0, @one_time_pads_needed)
   end
 
   def find(_, index, count, max) when count == max do
@@ -15,9 +17,9 @@ defmodule AOCDay.Runner do
   end
 
   def find(hashes, index, count, max) do
-    current = hashes[rem(index, 1000)]
-    hashes = Map.update!(hashes, rem(index, 1000), fn(_) ->
-      Hasher.hash(index + 1000)
+    current = hashes[rem(index, @mds5_to_check)]
+    hashes = Map.update!(hashes, rem(index, @mds5_to_check), fn(_) ->
+      Hasher.hash(index + @mds5_to_check)
     end)
 
     case triple_letter(current) do
