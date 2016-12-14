@@ -23,9 +23,9 @@ defmodule AOCDay.Runner do
     case triple_letter(current) do
       nil -> find(hashes, index + 1, count, max)
       letter ->
-        match = Map.values(hashes)
-                |> Enum.any?(&(letter_matches_run_of_5?(&1, letter)))
-                |> next_find(hashes, index + 1, count, max)
+        Map.values(hashes)
+          |> Enum.any?(&(string_contains_run_of_5_letters?(&1, letter)))
+          |> next_find(hashes, index + 1, count, max)
     end
   end
 
@@ -37,7 +37,7 @@ defmodule AOCDay.Runner do
   defp letter_or_nil([letter]), do: letter
   defp letter_or_nil(_), do: nil
 
-  defp letter_matches_run_of_5?(string, letter) do
+  defp string_contains_run_of_5_letters?(string, letter) do
     String.contains?(string, String.duplicate(letter, 5))
   end
 
