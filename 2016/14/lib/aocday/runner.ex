@@ -3,33 +3,32 @@ defmodule AOCDay.Runner do
 
 
   def part_1 do
-    starting_hashes = (0..999)
-                      |> Enum.reduce(%{}, fn(i, acc) ->
-                        Map.put(acc, i, Hasher.hash(Application.get_env(:aoc, :salt), i))
-                      end)
-
-    find(0, 0, starting_hashes, 64)
+    (0..999)
+      |> Enum.reduce(%{}, fn(i, acc) ->
+         Map.put(acc, i, Hasher.hash(Application.get_env(:aoc, :salt), i))
+      end)
+    |> find(0, 0, 64)
   end
 
-  def find(index, count, _, max) when count == max do
+  def find(_, index, count, max) when count == max do
     index - 1
   end
 
-  def find(index, count, hashes, max) do
+  def find(hashes, index, count, max) do
     current = hashes[rem(index, 1000)]
     hashes = Map.update!(hashes, rem(index, 1000), fn(_) ->
       Hasher.hash(Application.get_env(:aoc, :salt), index + 1000)
     end)
 
     case Regex.run(~r/(.)\1\1/, current, capture: :all_but_first) do
-      nil -> find(index + 1, count, hashes, max)
+      nil -> find(hashes, index + 1, count, max)
       [hex] ->
         match = Map.values(hashes)
                 |> Enum.any?(&(String.contains?(&1, String.duplicate(hex, 5))))
         if match do
-          find(index + 1, count + 1, hashes, max)
+          find(hashes, index + 1, count + 1, max)
         else
-          find(index + 1, count, hashes, max)
+          find(hashes, index + 1, count, max)
         end
     end
   end
