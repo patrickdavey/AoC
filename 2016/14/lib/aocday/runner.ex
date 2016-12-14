@@ -5,7 +5,7 @@ defmodule AOCDay.Runner do
   def part_1 do
     (0..999)
       |> Enum.reduce(%{}, fn(i, acc) ->
-         Map.put(acc, i, Hasher.hash(Application.get_env(:aoc, :salt), i))
+         Map.put(acc, i, Hasher.hash(i))
       end)
     |> find(0, 0, 64)
   end
@@ -17,7 +17,7 @@ defmodule AOCDay.Runner do
   def find(hashes, index, count, max) do
     current = hashes[rem(index, 1000)]
     hashes = Map.update!(hashes, rem(index, 1000), fn(_) ->
-      Hasher.hash(Application.get_env(:aoc, :salt), index + 1000)
+      Hasher.hash(index + 1000)
     end)
 
     case triple_letter(current) do
