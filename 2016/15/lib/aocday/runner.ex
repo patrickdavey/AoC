@@ -6,7 +6,7 @@ defmodule AOCDay.Runner do
         %{disk | position: rem(position + starting_time, positions)}
     end)
 
-    check(disks, starting_time, level = 0, out = 2)
+    check(disks, starting_time, level = 0, out = 6)
   end
 
   defp check(disks, time, level, level ) do
