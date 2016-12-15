@@ -10,4 +10,17 @@ disks = [
   %Disc{number: 6, positions: 3, position: 0}
 ]
 Application.put_env(:aoc, :start_disks, disks)
+Application.put_env(:aoc, :final_position, 6)
+
 Runner.find_time
+|> fn(start_time) -> "Part 1 - start at time #{start_time}" end.()
+|> IO.puts
+
+disks = List.insert_at(disks, -1, %Disc{number: 7, positions: 11, position: 0})
+
+Application.put_env(:aoc, :start_disks, disks)
+Application.put_env(:aoc, :final_position, 7)
+
+Runner.find_time
+|> fn(start_time) -> "Part 2 - start at time #{start_time}" end.()
+|> IO.puts

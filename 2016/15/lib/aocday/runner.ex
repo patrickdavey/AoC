@@ -1,26 +1,20 @@
 defmodule AOCDay.Runner do
   def find_time(starting_time \\ 0) do
-    visited = MapSet.new
-
     disks = Enum.map(Application.get_env(:aoc, :start_disks), fn(disk = %{positions: positions, position: position}) ->
         %{disk | position: rem(position + starting_time, positions)}
     end)
 
-    check(disks, starting_time, level = 0, out = 6)
+    check(disks, starting_time, _level = 0,  Application.get_env(:aoc, :final_position))
   end
 
-  defp check(disks, time, level, level ) do
-    IO.puts "time #{time} worked"
-    time
-  end
+  defp check(_disks, time, out, out ), do: time
 
   defp check(disks, time, level, out) do
     disks = updated_disks(disks)
 
     cond do
       Enum.at(disks, level).position == 0 -> check(disks, time, level + 1, out)
-      :otherwise ->
-        find_time(time + 1)
+      :otherwise -> find_time(time + 1)
     end
   end
 
@@ -30,9 +24,3 @@ defmodule AOCDay.Runner do
     end)
   end
 end
-
-# 1  procedure DFS(G,v):
-# 2      label v as discovered
-# 3      for all edges from v to w in G.adjacentEdges(v) do
-# 4          if vertex w is not labeled as discovered then
-# 5              recursively call DFS(G,w)

@@ -1,7 +1,6 @@
 defmodule RunnerTest do
   use ExUnit.Case
   alias AOCDay.Runner
-  alias AOCDay.Parser
   alias AOCDay.Disc
 
   test "test input correctly moves on" do
@@ -22,6 +21,7 @@ defmodule RunnerTest do
       %Disc{number: 2, positions: 2, position: 1}
     ]
     Application.put_env(:aoc, :start_disks, disks)
+    Application.put_env(:aoc, :final_position, 2)
     assert Runner.find_time == 5
   end
 end
