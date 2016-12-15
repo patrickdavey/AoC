@@ -1,8 +1,8 @@
 defmodule AOCDay.Runner do
-  def find_time(disks, starting_time) do
+  def find_time(starting_time \\ 0) do
     visited = MapSet.new
 
-    disks = Enum.map(disks, fn(disk = %{positions: positions, position: position}) ->
+    disks = Enum.map(Application.get_env(:aoc, :start_disks), fn(disk = %{positions: positions, position: position}) ->
         %{disk | position: rem(position + starting_time, positions)}
     end)
 
@@ -20,8 +20,7 @@ defmodule AOCDay.Runner do
     cond do
       Enum.at(disks, level).position == 0 -> check(disks, time, level + 1, out)
       :otherwise ->
-        raise "fail"
-        #fail
+        find_time(time + 1)
     end
   end
 

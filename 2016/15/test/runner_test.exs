@@ -21,6 +21,7 @@ defmodule RunnerTest do
       %Disc{number: 1, positions: 5, position: 4},
       %Disc{number: 2, positions: 2, position: 1}
     ]
-    assert Runner.find_time(disks, 5) == 5
+    Application.put_env(:aoc, :start_disks, disks)
+    assert Runner.find_time == 5
   end
 end
