@@ -1,6 +1,5 @@
 defmodule AOCDay.Runner do
-  alias AOCDay.DragonEncoder
-  alias AOCDay.Checksum
+  alias AOCDay.{DragonEncoder, Checksum}
 
   def find_checksum_for(init, length) do
     DragonEncoder.encode(init)
