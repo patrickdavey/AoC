@@ -77,11 +77,11 @@ defmodule AOCDay.Runner do
 
     maze = Enum.reduce(coords, [], fn({x, y}, acc) ->
       value = cond do
-                wanted == {x, y} -> destination(to_string [11088])
-                Enum.member?(steps, {x, y}) && final == :shortest -> blue(to_string [12295])
-                Enum.member?(visited, {x, y}) && final == :max_steps -> blue(to_string [12295])
-                Enum.member?(steps, {x, y}) -> green(to_string [12295])
-                MapSet.member?(visited, {x, y}) -> red(to_string [12295])
+                wanted == {x, y} -> destination(to_string [11035])
+                Enum.member?(steps, {x, y}) && final == :shortest -> blue(to_string [11035])
+                Enum.member?(visited, {x, y}) && final == :max_steps -> blue(to_string [11035])
+                Enum.member?(steps, {x, y}) -> green(to_string [11035])
+                MapSet.member?(visited, {x, y}) -> red(to_string [11035])
                 AOCDay.CoordinateChecker.type(x, y) == "#" -> white(to_string [11035])
                 :otherwise -> black(to_string [11035])
 
@@ -115,7 +115,7 @@ defmodule AOCDay.Runner do
   end
 
   defp destination(s) do
-    "#{IO.ANSI.color(5, 5, 0)}#{s}"
+    "#{IO.ANSI.color(1, 5, 5)}#{s}"
   end
 
   defp white(s) do
