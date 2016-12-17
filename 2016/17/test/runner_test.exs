@@ -4,7 +4,5 @@ defmodule RunnerTest do
   alias AOCDay.Parser
 
   test " blah" do
-    require IEx
-    IEx.pry
   end
 end
