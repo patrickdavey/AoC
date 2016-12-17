@@ -1,7 +1,7 @@
 defmodule AOCDay.PathGenerator do
   alias AOCDay.PathChecker
 
-  def available_from(string, current_position) do
+  def available_from({string, current_position}) do
     PathChecker.possible(string)
     |> Enum.map(&(next_position(&1, current_position, string)))
     |> Enum.filter(&allowed?/1)
