@@ -5,4 +5,5 @@ defmodule PathCheckerTest do
   test "correctly answers the test data" do
     assert PathChecker.possible("hijkl") == ["U", "D", "L"]
   end
+
 end
