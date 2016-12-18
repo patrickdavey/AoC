@@ -10,5 +10,4 @@ defmodule AOCDay.TileTest do
     assert Tile.tile_at(3, previous_tiles) == "^"
     assert Tile.tile_at(4, previous_tiles) == "^"
   end
-
 end
