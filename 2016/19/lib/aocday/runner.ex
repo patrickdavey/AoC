@@ -5,7 +5,8 @@ defmodule AOCDay.Runner do
   end
 
   def last_elf_standing([h | []]), do: h
-  def last_elf_standing([h | [h2 |t]]) do
-    last_elf_standing(t ++ [h])
+  def last_elf_standing([h | [h2 | t]]) do
+    l = Enum.take_every(t ++ [h], 2)
+    last_elf_standing(l)
   end
 end
