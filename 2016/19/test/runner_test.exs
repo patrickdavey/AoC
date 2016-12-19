@@ -3,7 +3,6 @@ defmodule RunnerTest do
   alias AOCDay.Runner
 
   test "sample data works" do
-    assert Runner.who_has_all_presents?(5) == 3
-    assert Runner.who_has_all_presents?(6) == 5
+    assert Runner.who_has_all_presents?(5) == 2
   end
 end
