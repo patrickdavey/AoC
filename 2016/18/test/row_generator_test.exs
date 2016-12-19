@@ -10,4 +10,10 @@ defmodule AOCDay.RowGeneratorTest do
     row = RowGenerator.next_row(row)
     assert row |> Enum.join == "^^..^"
   end
+
+  test "large sample is OK" do
+    row = String.graphemes(".^^.^.^^^^")
+    row = RowGenerator.next_row(row)
+    assert row |> Enum.join == "^^^...^..^"
+  end
 end
