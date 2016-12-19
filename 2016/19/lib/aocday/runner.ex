@@ -1,13 +1,11 @@
 defmodule AOCDay.Runner do
-  def part_1 do
-    "part 1"
+  def who_has_all_presents?(number_elves) do
+    elves_in_game = Enum.to_list(1..number_elves)
+    last_elf_standing(elves_in_game)
   end
 
-  def part_2 do
-    "part 2"
-  end
-
-  defp structured_data do
-    AOCDay.Parser.parse
+  def last_elf_standing([h | []]), do: h
+  def last_elf_standing([h | [h2 |t]]) do
+    last_elf_standing(t ++ [h])
   end
 end
