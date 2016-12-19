@@ -9,8 +9,7 @@ defmodule AOCDay.Runner do
     l = Enum.take_every(elves_in_game, 2)
     last_elf_standing(l)
   end
-  def last_elf_standing(blah = [h | t]) do
-    IO.puts length(blah)
+  def last_elf_standing([h | t]) do
     list = [h] ++ t ++ [h] # ourself at the end
     element_to_drop = MapSet.new(Enum.drop_every(list, 2))
     list = Enum.reject(list, &(MapSet.member?(element_to_drop, &1)))
