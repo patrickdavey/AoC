@@ -11,13 +11,12 @@ defmodule AOCDay.Parser do
   end
 
   defp _parse(binary) do
-    initial = binary
+    something = binary
     |> String.trim
     |> String.split("\n")
     |> Enum.map(&formatted/1)
     |> Enum.reduce(MapSet.new, &accumulate_ranges/2)
-
-    reduce_further(initial, MapSet.size(initial))
+    |> reduce_further
   end
 
   def formatted(line) do
@@ -33,6 +32,7 @@ defmodule AOCDay.Parser do
     acc = MapSet.to_list(mapset) # there must be a nicer way to do this, can't think
     start_overlap = Enum.find(acc, &(Enum.member?(&1, a)))
     end_overlap = Enum.find(acc, &(Enum.member?(&1, b)))
+
     cond do
       start_overlap == nil && end_overlap == nil ->
         MapSet.put(mapset, a..b)
@@ -47,7 +47,7 @@ defmodule AOCDay.Parser do
         mapset = MapSet.delete(mapset, end_overlap)
         MapSet.put(mapset, a..end_over)
       :otherwise ->
-        if (a..b) == start_overlap && (a..b) == end_overlap do
+        if (a..b) == start_overlap || (a..b) == end_overlap do
           mapset
         else
           MapSet.delete(mapset, a..b)
@@ -55,14 +55,26 @@ defmodule AOCDay.Parser do
     end
   end
 
-  defp reduce_further(mapset, size) do
+  def reduce_further(mapset) do
+    IO.puts "reducing further"
     list = MapSet.to_list(mapset)
     next = Enum.reduce(list, mapset, &accumulate_ranges/2)
+    list = MapSet.to_list(next)
+    list2 = Enum.reject(list, fn(r) -> range_contained?(r, MapSet.delete(next, r) |> MapSet.to_list) end)
+    next = MapSet.new(list2)
 
-    if MapSet.size(next) == size do
-      mapset
+    if next != mapset do
+      reduce_further(next)
     else
-      reduce_further(next, MapSet.size(next))
+      mapset
     end
+  end
+
+  def range_contained?(a..b, list) do
+    t = Enum.any?(list, fn(c..d) -> c <= a && b <= d end)
+    IO.puts t
+    t
+
+
   end
 end
