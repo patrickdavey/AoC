@@ -20,8 +20,7 @@ defmodule RunnerTest do
       %Disc{number: 1, positions: 5, position: 4},
       %Disc{number: 2, positions: 2, position: 1}
     ]
-    Application.put_env(:aoc, :start_disks, disks)
     Application.put_env(:aoc, :final_position, 2)
-    assert Runner.find_time == 5
+    assert Runner.find_time_alignment(disks, 0)
   end
 end

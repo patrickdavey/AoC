@@ -1,20 +1,18 @@
 defmodule AOCDay.Runner do
-  def find_time(starting_time \\ 0) do
-    disks = Enum.map(Application.get_env(:aoc, :start_disks), fn(disk = %{positions: positions, position: position}) ->
-        %{disk | position: rem(position + starting_time, positions)}
-    end)
-
-    check(disks, starting_time, _level = 0,  Application.get_env(:aoc, :final_position))
+  def find_time_alignment(disks, time) do
+    puts "attempting #{time}"
+    if disks_aligned?(disks, time, _level = 0,  Application.get_env(:aoc, :final_position)) do
+      time
+    else
+      find_time_alignment(disks, time + 1)
+    end
   end
 
-  defp check(_disks, time, out, out ), do: time
-
-  defp check(disks, time, level, out) do
-    disks = updated_disks(disks)
-
+  defp disks_aligned?(_disks, _time, out, out ), do: true
+  defp disks_aligned?(disks, time, level, out) do
     cond do
-      Enum.at(disks, level).position == 0 -> check(disks, time, level + 1, out)
-      :otherwise -> find_time(time + 1)
+      Enum.at(disks, level).position == 0 -> disks_aligned?(disks, time + 1, level + 1, out)
+      :otherwise -> false
     end
   end
 
