@@ -1,6 +1,4 @@
 defmodule AOCDay.Parser do
-  @capture ~r/(?<letters>\D+)(?<sector>\d+)\[(?<check>\w+)\]/
-
   def parse do
     {:ok, binary} = File.read("./input.txt")
     _parse(binary)
@@ -11,12 +9,16 @@ defmodule AOCDay.Parser do
   end
 
   defp _parse(binary) do
-    something = binary
+    ranges_in_file = binary
     |> String.trim
     |> String.split("\n")
     |> Enum.map(&formatted/1)
-    |> Enum.reduce(MapSet.new, &accumulate_ranges/2)
-    |> reduce_further
+    |> Enum.sort_by(fn(a.._b) -> a end)
+    |> Enum.to_list
+    |> MapSet.new
+
+    all = Enum.reduce(MapSet.to_list(ranges_in_file), ranges_in_file, &accumulate_ranges/2) |> MapSet.to_list
+    Enum.reject(all, &(range_included?(&1, all)))
   end
 
   def formatted(line) do
@@ -30,51 +32,15 @@ defmodule AOCDay.Parser do
 
   defp accumulate_ranges(a..b, mapset) do
     acc = MapSet.to_list(mapset) # there must be a nicer way to do this, can't think
-    start_overlap = Enum.find(acc, &(Enum.member?(&1, a)))
-    end_overlap = Enum.find(acc, &(Enum.member?(&1, b)))
+    start_overlaps = Enum.filter(acc, &(Enum.member?(&1, a)))
+    end_overlaps = Enum.filter(acc, &(Enum.member?(&1, b)))
+    end_overlap = end_overlaps |> Enum.map(fn(_a..b) -> b end) |> Enum.max
+    start_overlap = start_overlaps |> Enum.map(fn(a.._b) -> a end) |> Enum.min
 
-    cond do
-      start_overlap == nil && end_overlap == nil ->
-        MapSet.put(mapset, a..b)
-      start_overlap != nil && end_overlap == nil ->
-        start_over..end_over = start_overlap
-        mapset = MapSet.delete(mapset, start_overlap)
-        MapSet.put(mapset, start_over..b)
-      start_overlap == nil && end_overlap != nil ->
-        # we know that b is inside the end of a range,
-        # therefore we extend the _start_ of that range by a
-        start_over..end_over = end_overlap
-        mapset = MapSet.delete(mapset, end_overlap)
-        MapSet.put(mapset, a..end_over)
-      :otherwise ->
-        if (a..b) == start_overlap || (a..b) == end_overlap do
-          mapset
-        else
-          MapSet.delete(mapset, a..b)
-        end
-    end
+    MapSet.put(mapset, start_overlap..end_overlap)
   end
 
-  def reduce_further(mapset) do
-    IO.puts "reducing further"
-    list = MapSet.to_list(mapset)
-    next = Enum.reduce(list, mapset, &accumulate_ranges/2)
-    list = MapSet.to_list(next)
-    list2 = Enum.reject(list, fn(r) -> range_contained?(r, MapSet.delete(next, r) |> MapSet.to_list) end)
-    next = MapSet.new(list2)
-
-    if next != mapset do
-      reduce_further(next)
-    else
-      mapset
-    end
-  end
-
-  def range_contained?(a..b, list) do
-    t = Enum.any?(list, fn(c..d) -> c <= a && b <= d end)
-    IO.puts t
-    t
-
-
+  def range_included?(a..b, list) do
+    Enum.any?(list, fn(c..d) -> (c <= a && d >= b) && (c != a || d != b) end)
   end
 end
