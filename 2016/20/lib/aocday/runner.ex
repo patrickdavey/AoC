@@ -2,7 +2,7 @@ defmodule AOCDay.Runner do
   def part_1 do
     s = structured_data
     Stream.iterate(0, &(&1+1))
-    |> Stream.drop_while(fn(i) -> Enum.any?(s, &(Enum.member?(&1, i))))
+    |> Stream.drop_while(fn(i) -> Enum.any?(s, &(Enum.member?(&1, i))) end)
     |> Enum.take(1)
   end
 
