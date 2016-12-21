@@ -42,6 +42,22 @@ defmodule AOCDay.PasswordGenerator do
     {:reply, :ok, password}
   end
 
+  def handle_call(<<"move position "::utf8, p1::utf8, " to position "::utf8, p2::utf8>>,_from, password) do
+    p1 = String.to_integer(<<p1>>)
+    p2 = String.to_integer(<<p2>>)
+    element = Enum.at(password, p1)
+    password = List.delete_at(password, p1)
+
+    password = if p1 < p2 do
+      List.insert_at(password, p2, element)
+    else
+      List.insert_at(password, p2, element)
+    end
+    require IEx
+    IEx.pry
+    {:reply, :ok, password}
+  end
+
   def handle_call(<<"rotate right "::utf8, amount::utf8, " step">>,_from, password) do
     amount = String.to_integer <<amount>>
     password_len = Enum.count password

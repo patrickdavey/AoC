@@ -29,5 +29,17 @@ defmodule PasswordGeneratorTest do
 
     GenServer.call(:generator, "rotate right 2 step", 10000000)
     assert GenServer.call(:generator, :current_password) == "bcdea"
+
+    GenServer.call(:generator, "move position 1 to position 4", 10000000)
+    assert GenServer.call(:generator, :current_password) == "bdeac"
+
+    GenServer.call(:generator, "move position 3 to position 0", 10000000)
+    assert GenServer.call(:generator, :current_password) == "abdec"
+
+    GenServer.call(:generator, "move position 4 to position 0", 10000000)
+    assert GenServer.call(:generator, :current_password) == "cabde"
+
+    GenServer.call(:generator, "move position 0 to position 4", 10000000)
+    assert GenServer.call(:generator, :current_password) == "abdec"
   end
 end
