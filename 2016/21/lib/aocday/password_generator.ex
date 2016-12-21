@@ -42,6 +42,28 @@ defmodule AOCDay.PasswordGenerator do
     {:reply, :ok, password}
   end
 
+  def handle_call(<<"rotate right "::utf8, amount::utf8, " step">>,_from, password) do
+    amount = String.to_integer <<amount>>
+    password_len = Enum.count password
+    password = Enum.zip(password, 0..password_len)
+                      |> Enum.map(fn({letter, index}) ->
+                        {letter, rem(password_len + index + amount, password_len) }
+                      end)
+                      |> Enum.reduce(password, &put_letter_at_position/2)
+    {:reply, :ok, password}
+  end
+
+  def handle_call(<<"rotate left "::utf8, amount::utf8, " step">>,_from, password) do
+    amount = String.to_integer <<amount>>
+    password_len = Enum.count password
+    password = Enum.zip(password, 0..password_len)
+                      |> Enum.map(fn({letter, index}) ->
+                        {letter, rem(password_len + index - amount, password_len) }
+                      end)
+                      |> Enum.reduce(password, &put_letter_at_position/2)
+    {:reply, :ok, password}
+  end
+
   defp swap_positions(password, p1, p2) do
     first = Enum.at(password, p1)
     last = Enum.at(password, p2)
