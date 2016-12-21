@@ -1,5 +1,6 @@
 defmodule AOCDay.Parser do
-  @capture ~r/(?<letters>\D+)(?<sector>\d+)\[(?<check>\w+)\]/
+  @rotate_capture ~r/rotate (?<dir>(left|right)) (?<amount>\d+) steps/
+  @rotate_letter ~r/rotate based on position of letter (?<letter>[a-z])/
 
   def parse do
     {:ok, binary} = File.read("./input.txt")
