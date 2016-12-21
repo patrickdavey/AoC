@@ -34,11 +34,8 @@ defmodule AOCDay.PasswordGenerator do
   def handle_call(<<"reverse positions "::utf8, start::utf8, " through "::utf8, finish::utf8>>, _from, password) do
     start = String.to_integer <<start>>
     finish = String.to_integer <<finish>>
-    password = Enum.slice(password, start..finish)
-            |> Enum.reverse
-            |> Enum.zip(start..finish)
-            |> Enum.reduce(password, &put_letter_at_position/2)
 
+    password = Enum.reverse_slice(password, start, finish - start + 1)
     {:reply, :ok, password}
   end
 
@@ -60,13 +57,14 @@ defmodule AOCDay.PasswordGenerator do
 
     l1 = <<pos>>
     i1 = Enum.find_index(password, &(&1 == l1))
-    i1 = 1 + i1
-    if i1 >= 4 do
-      i1 = i1 + 1
-    end
-    i1 = rem(i1, length(password))
 
-    {:reply, :ok, rotate_right(password, i1)}
+    password = rotate_right(password, 1)
+    password = rotate_right(password, i1)
+    if i1 >= 4 do
+      password = rotate_right(password, 1)
+    end
+
+    {:reply, :ok, password}
   end
 
   def handle_call(<<"rotate right "::utf8, amount::utf8, " steps">>,_from, password) do

@@ -2,9 +2,10 @@ defmodule AOCDay.Runner do
   alias AOCDay.PasswordGenerator
 
   def part_1 do
-    i = structured_data
     PasswordGenerator.start_link("abcdefgh", :generator)
-    Enum.each(structured_data, fn(i) -> GenServer.call(:generator, i) end)
+    Enum.each(structured_data, fn(i) -> 
+      GenServer.call(:generator, i)
+    end)
 
     GenServer.call(:generator, :current_password)
     |> IO.puts
