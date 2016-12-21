@@ -69,12 +69,12 @@ defmodule AOCDay.PasswordGenerator do
     {:reply, :ok, rotate_right(password, i1)}
   end
 
-  def handle_call(<<"rotate right "::utf8, amount::utf8, " step">>,_from, password) do
+  def handle_call(<<"rotate right "::utf8, amount::utf8, " steps">>,_from, password) do
     amount = String.to_integer <<amount>>
     {:reply, :ok, rotate_right(password, amount)}
   end
 
-  def handle_call(<<"rotate left "::utf8, amount::utf8, " step">>,_from, password) do
+  def handle_call(<<"rotate left "::utf8, amount::utf8, " steps">>,_from, password) do
     amount = String.to_integer <<amount>>
     password_len = Enum.count password
     password = Enum.zip(password, 0..password_len)

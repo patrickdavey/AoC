@@ -68,7 +68,7 @@ swap letter c with letter a
 swap position 7 with position 3
 swap letter a with letter f
 reverse positions 3 through 7
-rotate right 1 step
+rotate right 1 steps
 swap letter h with letter c
 move position 1 to position 3
 swap position 4 with position 2

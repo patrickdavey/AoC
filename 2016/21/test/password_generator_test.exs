@@ -21,13 +21,13 @@ defmodule PasswordGeneratorTest do
     GenServer.call(:generator, "reverse positions 0 through 1", 10000000)
     assert GenServer.call(:generator, :current_password) == "abcde"
 
-    GenServer.call(:generator, "rotate left 1 step")
+    GenServer.call(:generator, "rotate left 1 steps")
     assert GenServer.call(:generator, :current_password) == "bcdea"
 
-    GenServer.call(:generator, "rotate left 2 step")
+    GenServer.call(:generator, "rotate left 2 steps")
     assert GenServer.call(:generator, :current_password) == "deabc"
 
-    GenServer.call(:generator, "rotate right 2 step", 10000000)
+    GenServer.call(:generator, "rotate right 2 steps", 10000000)
     assert GenServer.call(:generator, :current_password) == "bcdea"
 
     GenServer.call(:generator, "move position 1 to position 4", 10000000)
