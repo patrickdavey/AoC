@@ -8,5 +8,8 @@ defmodule PasswordGeneratorTest do
     GenServer.call(:generator, "swap position 4 with position 0", 10000000)
 
     assert GenServer.call(:generator, :current_password) == "ebcda"
+
+    GenServer.call(:generator, "swap letter d with letter b", 10000000)
+    assert GenServer.call(:generator, :current_password) == "edcba"
   end
 end
