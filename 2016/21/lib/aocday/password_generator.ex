@@ -53,20 +53,25 @@ defmodule AOCDay.PasswordGenerator do
     else
       List.insert_at(password, p2, element)
     end
-    require IEx
-    IEx.pry
     {:reply, :ok, password}
+  end
+
+  def handle_call(<<"rotate based on position of letter "::utf8, pos::utf8>>, _from, password) do
+
+    l1 = <<pos>>
+    i1 = Enum.find_index(password, &(&1 == l1))
+    i1 = 1 + i1
+    if i1 >= 4 do
+      i1 = i1 + 1
+    end
+    i1 = rem(i1, length(password))
+
+    {:reply, :ok, rotate_right(password, i1)}
   end
 
   def handle_call(<<"rotate right "::utf8, amount::utf8, " step">>,_from, password) do
     amount = String.to_integer <<amount>>
-    password_len = Enum.count password
-    password = Enum.zip(password, 0..password_len)
-                      |> Enum.map(fn({letter, index}) ->
-                        {letter, rem(password_len + index + amount, password_len) }
-                      end)
-                      |> Enum.reduce(password, &put_letter_at_position/2)
-    {:reply, :ok, password}
+    {:reply, :ok, rotate_right(password, amount)}
   end
 
   def handle_call(<<"rotate left "::utf8, amount::utf8, " step">>,_from, password) do
@@ -90,6 +95,15 @@ defmodule AOCDay.PasswordGenerator do
 
   defp put_letter_at_position({letter, index}, password) do
     List.replace_at(password, index, letter)
+  end
+
+  defp rotate_right(password, amount) do
+    password_len = Enum.count password
+    password = Enum.zip(password, 0..password_len)
+                      |> Enum.map(fn({letter, index}) ->
+                        {letter, rem(password_len + index + amount, password_len) }
+                      end)
+                      |> Enum.reduce(password, &put_letter_at_position/2)
   end
 end
 
