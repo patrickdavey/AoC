@@ -12,15 +12,26 @@ defmodule AOCDay.Runner do
       end
     end)
     |> Enum.sum
-
-  require IEx
-  IEx.pry
-
-    "part 1"
   end
 
   def part_2 do
-    "part 2"
+    c = for y <- (0..27), x <- (0..37), do:  {x, y}
+    s = structured_data
+    o = Enum.map(c, fn({x, y}) ->
+      {size, used, avail} = Map.get(s, {x, y})
+      cond do
+        x == 0 && y == 0 -> "X"
+        x == 37 && y == 0 -> "G"
+        used == 0 -> "E"
+        size < 100 -> "."
+        size > 100 -> "F"
+      end
+    end)
+    o
+    |> Enum.chunk(38)
+    |> Enum.join("\n")
+    |> IO.puts
+
   end
 
   defp structured_data do
