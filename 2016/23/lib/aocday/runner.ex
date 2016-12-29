@@ -1,38 +1,73 @@
 defmodule AOCDay.Runner do
-  alias AOCDay.Register
-  def part_1 do
-    Register.start_link(:a)
-    Register.start_link(:b)
-    Register.start_link(:c)
-    Register.start_link(:d)
-    Register.start_link(:always_on, 10)
+  @valid_registers ["a", "b", "c", "d"]
 
-    run_instruction(structured_data, 0)
+  def part_1 do
+    registers = %{"a" => 0, "b" => 0, "c" => 0, "d" => 0}
+    run(structured_data, 0, registers)
   end
 
   def part_2 do
-    GenServer.call(:a, {:cpy, 0, 0})
-    GenServer.call(:b, {:cpy, 0, 0 })
-    GenServer.call(:c, {:cpy, 1, 0 })
-    GenServer.call(:d, {:cpy, 0, 0 })
+    registers = %{"a" => 0, "b" => 0, "c" => 1, "d" => 0}
+    run(structured_data, 0, registers)
+  end
 
-    run_instruction(structured_data, 0)
+  def run(instructions, index, registers) when index >= length(instructions) do
+    registers
+  end
+
+  def run(instructions, index, registers) do
+    instruction = Enum.at(instructions, index)
+    { offset, registers } = apply(__MODULE__, :inst, instruction ++ [registers])
+
+    run(instructions, index + offset, registers)
+  end
+
+  def inst("cpy", source_reg, register, registers) when source_reg in @valid_registers do
+    value = registers[source_reg]
+    { 1, Map.put(registers, register, value) }
+  end
+
+  def inst("cpy", value, register, registers) do
+    value = String.to_integer(value)
+    { 1, Map.put(registers, register, value) }
+  end
+
+  def inst("inc", register, registers) when register in @valid_registers do
+    { 1, Map.update!(registers, register, fn(current_value) ->
+      current_value + 1
+    end) }
+  end
+
+  def inst("dec", register, registers) when register in @valid_registers do
+    { 1, Map.update!(registers, register, fn(current_value) ->
+      current_value - 1
+    end) }
+  end
+
+  def inst("jnz", register, value, registers) when register in @valid_registers do
+    if registers[register] != 0 do
+      { String.to_integer(value), registers }
+    else
+      { 1, registers }
+    end
+  end
+
+  def inst("jnz", number, value, registers) do
+    if String.to_integer(number) != 0 do
+      { String.to_integer(value), registers }
+    else
+      { 1, registers }
+    end
   end
 
   defp structured_data do
     AOCDay.Parser.parse
   end
 
-  def run_instruction(_instructions, nil, _index) do
-    IO.puts GenServer.call(:a, { :current_value })
-  end
-
-  def run_instruction(instructions, index) do
-    run_instruction(instructions, Enum.at(instructions, index), index)
-  end
-
-  def run_instruction(instructions, {reg, instruction}, index) when is_atom(reg) do
-    run_instruction(instructions, GenServer.call(reg, Tuple.append(instruction, index)))
-  end
-
+  # defp value(x, regs) do
+  #   case Integer.parse(x) do
+  #     {n, _} -> n
+  #     :error -> regs[String.to_atom(x)]
+  #   end
+  # end
 end
