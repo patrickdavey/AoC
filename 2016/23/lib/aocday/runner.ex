@@ -17,48 +17,84 @@ defmodule AOCDay.Runner do
 
   def run(instructions, index, registers) do
     instruction = Enum.at(instructions, index)
-    { offset, registers } = apply(__MODULE__, :inst, instruction ++ [registers])
+    { next_index, registers, instructions } = apply(__MODULE__, :inst, instruction ++ [registers, index, instructions])
 
-    run(instructions, index + offset, registers)
+    run(instructions, next_index, registers)
   end
 
-  def inst("cpy", source_reg, register, registers) when source_reg in @valid_registers do
+  def inst("cpy", source_reg, register, registers, current_index, instructions) when source_reg in @valid_registers do
     value = registers[source_reg]
-    { 1, Map.put(registers, register, value) }
+    { current_index + 1, Map.put(registers, register, value), instructions }
   end
 
-  def inst("cpy", value, register, registers) do
+  def inst("cpy", value, register, registers, current_index, instructions) do
     value = String.to_integer(value)
-    { 1, Map.put(registers, register, value) }
+    { current_index + 1, Map.put(registers, register, value), instructions }
   end
 
-  def inst("inc", register, registers) when register in @valid_registers do
-    { 1, Map.update!(registers, register, fn(current_value) ->
+  def inst("inc", register, registers, current_index, instructions) when register in @valid_registers do
+    { current_index + 1, Map.update!(registers, register, fn(current_value) ->
       current_value + 1
-    end) }
+    end), instructions }
   end
 
-  def inst("dec", register, registers) when register in @valid_registers do
-    { 1, Map.update!(registers, register, fn(current_value) ->
+  def inst("dec", register, registers, current_index, instructions) when register in @valid_registers do
+    { current_index + 1, Map.update!(registers, register, fn(current_value) ->
       current_value - 1
-    end) }
+    end), instructions }
   end
 
-  def inst("jnz", register, value, registers) when register in @valid_registers do
+  def inst("jnz", register, value, registers, current_index, instructions) when register in @valid_registers and value in @valid_registers do
     if registers[register] != 0 do
-      { String.to_integer(value), registers }
+      { current_index + registers[value], registers, instructions }
     else
-      { 1, registers }
+      { current_index +  1, registers, instructions }
     end
   end
 
-  def inst("jnz", number, value, registers) do
-    if String.to_integer(number) != 0 do
-      { String.to_integer(value), registers }
+  def inst("jnz", register, value, registers, current_index, instructions) when register in @valid_registers do
+    if registers[register] != 0 do
+      { current_index + String.to_integer(value), registers, instructions }
     else
-      { 1, registers }
+      { current_index +  1, registers, instructions }
     end
   end
+
+  def inst("jnz", number, value, registers, current_index, instructions) when value in @valid_registers do
+    if String.to_integer(number) > 0 do
+      { current_index + registers[value], registers, instructions }
+    else
+      { current_index +  1, registers, instructions }
+    end
+  end
+
+  def inst("jnz", number, value, registers, current_index, instructions) do
+    if String.to_integer(number) > 0 do
+      { current_index + String.to_integer(value), registers, instructions }
+    else
+      { current_index +  1, registers, instructions }
+    end
+  end
+
+
+
+  def inst("tgl", register, registers, current_index, instructions) when register in @valid_registers do
+    offset = registers[register]
+    target_instruction = Enum.at(instructions, current_index + offset)
+    if target_instruction do
+      new_instruction = new_instruction(target_instruction)
+      instructions= List.replace_at(instructions, current_index + offset, new_instruction)
+      { current_index +  1, registers, instructions }
+    else
+      { current_index +  1, registers, instructions }
+    end
+  end
+
+  defp new_instruction(["tgl" | rest]), do: ["inc"] ++ rest
+  defp new_instruction(["inc" | rest]), do: ["dec"] ++ rest
+  defp new_instruction(["dec" | rest]), do: ["inc"] ++ rest
+  defp new_instruction(["cpy" | rest]), do: ["jnz"] ++ rest
+  defp new_instruction(["jnz" | rest]), do: ["cpy"] ++ rest
 
   defp structured_data do
     AOCDay.Parser.parse
