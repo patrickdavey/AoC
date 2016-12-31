@@ -8,7 +8,7 @@ defmodule RunnerTest do
 #.#######.#
 #4.......3#
 ###########"
-    map = Parser.parse(input)
-    assert map.dimensions == { 11, 5 }
+    shortest_path = AOCDay.Runner.part_1(input)
+    assert shortest_path == 14
   end
 end

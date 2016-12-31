@@ -21,6 +21,9 @@ defmodule AOCDay.Parser do
     |> Enum.map(&set_line/1)
     |> List.flatten
     |> Enum.reject(&(&1 == nil))
+    |> Enum.reduce(%{}, fn({point, {x, y}}, acc) ->
+      Map.put(acc, point, {x, y})
+    end)
   end
 
   defp set_line({line, y}) do

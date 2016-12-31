@@ -13,6 +13,13 @@ defmodule AOCDay.Board do
     Agent.get(__MODULE__, fn state -> state end)
   end
 
+  def set_state(new_state) do
+    Agent.update(__MODULE__,
+    fn _matrix ->
+      new_state
+    end)
+  end
+
   def set(x, y, value) do
     Agent.update(__MODULE__,
     fn matrix ->
