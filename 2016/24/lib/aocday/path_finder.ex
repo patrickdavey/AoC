@@ -5,16 +5,14 @@ defmodule AOCDay.PathFinder do
   def paths_between_points(points) do
     initial_board_state = Board.current_state
     find_all_distances(points, initial_board_state)
+    |> overall_shortest_path(points)
   end
 
   defp find_all_distances(points, initial_board_state) do
-    t = points
+    points
     |> Map.keys
     |> CombinePermute.comb(2)
     |> Enum.reduce(%{}, &(find_shortest(&1, &2, points, initial_board_state)))
-
-    require IEx
-    IEx.pry
   end
 
   defp find_shortest([a, b], acc, points, initial_board_state) do
@@ -25,6 +23,27 @@ defmodule AOCDay.PathFinder do
     |> Map.put({b, a}, answer)
   end
 
+  defp overall_shortest_path(distances_between_points, points) do
+    t = route_possibilities(points)
+    |> Enum.map(&(path_distance(&1, distances_between_points)))
+    |> Enum.min
+  end
+
+  defp route_possibilities(points) do
+    points
+    |> Map.keys
+    |> Enum.reject(&(&1 == "0"))
+    |> CombinePermute.permute
+    |> Enum.map(&(List.insert_at(&1, 0, "0")))
+    |> Enum.map(&(Enum.chunk(&1, 2, 1)))
+  end
+
+  defp path_distance(path, distances_between_points) do
+    path
+    |> Enum.reduce(0, fn([a, b], acc) ->
+      acc + Map.get(distances_between_points, {a, b})
+    end)
+  end
 end
 
 defmodule CombinePermute do
