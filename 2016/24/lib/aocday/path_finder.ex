@@ -1,27 +1,37 @@
 defmodule AOCDay.PathFinder do
   alias AOCDay.Board
+  alias AOCDay.BFS
 
   def paths_between_points(points) do
     initial_board_state = Board.current_state
-    IO.puts Board.as_string
-    all_permutations(points)
+    find_all_distances(points, initial_board_state)
   end
 
-  defp all_permutations(points) do
-    points
+  defp find_all_distances(points, initial_board_state) do
+    t = points
     |> Map.keys
-    |> Enum.reject(&(&1 == "0"))
-    |> CombinePermute.permute
-    |> Enum.map(&(["0"] ++ &1))
+    |> CombinePermute.comb(2)
+    |> Enum.reduce(%{}, &(find_shortest(&1, &2, points, initial_board_state)))
+
+    require IEx
+    IEx.pry
+  end
+
+  defp find_shortest([a, b], acc, points, initial_board_state) do
+    Board.set_state(initial_board_state) #reset the board
+    answer = BFS.shortest_path(Map.fetch!(points, a), Map.fetch!(points, b))
+    acc
+    |> Map.put({a, b}, answer)
+    |> Map.put({b, a}, answer)
   end
 
 end
 
 defmodule CombinePermute do
-  def comb(0, _), do: [[]]
-  def comb(_, []), do: []
-  def comb(m, [h|t]) do
-    (for l <- comb(m-1, t), do: [h|l]) ++ comb(m, t)
+  def comb(_, 0), do: [[]]
+  def comb([], _), do: []
+  def comb([h|t], m) do
+    (for l <- comb(t, m - 1), do: [h|l]) ++ comb(t, m)
   end
 
   def permute([]), do: [[]]
