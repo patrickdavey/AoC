@@ -34,7 +34,16 @@ defmodule AOCDay.PathFinder do
     |> Map.keys
     |> Enum.reject(&(&1 == "0"))
     |> CombinePermute.permute
-    |> Enum.map(&(List.insert_at(&1, 0, "0")))
+    |> Enum.map(fn(points) ->
+      points = points
+      |> List.insert_at(0, "0")
+
+      if (Application.get_env(:aoc, :back_again) == true) do
+        points = points
+        |> List.insert_at(-1, "0")
+      end
+      points
+    end)
     |> Enum.map(&(Enum.chunk(&1, 2, 1)))
   end
 

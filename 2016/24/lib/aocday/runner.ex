@@ -3,7 +3,8 @@ defmodule AOCDay.Runner do
   alias AOCDay.PathFinder
 
   def part_1 do
-    "part 1"
+    structured_data
+    |> PathFinder.paths_between_points
   end
 
   def part_1(input) do
@@ -12,7 +13,10 @@ defmodule AOCDay.Runner do
   end
 
   def part_2 do
-    "part 2"
+    # really should cache the results, but I'm lazy
+    Application.put_env(:aoc, :back_again, true)
+    structured_data
+    |> PathFinder.paths_between_points
   end
 
   defp structured_data do
