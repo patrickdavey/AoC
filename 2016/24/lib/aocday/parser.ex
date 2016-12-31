@@ -1,6 +1,5 @@
 defmodule AOCDay.Parser do
-  @capture ~r/(?<letters>\D+)(?<sector>\d+)\[(?<check>\w+)\]/
-
+  alias AOCDay.Board
   def parse do
     {:ok, binary} = File.read("./input.txt")
     _parse(binary)
@@ -11,13 +10,34 @@ defmodule AOCDay.Parser do
   end
 
   defp _parse(binary) do
-    binary
-    |> String.trim
-    |> String.split("\n")
-    |> Enum.map(&formatted/1)
+    lines = binary
+          |> String.trim
+          |> String.split("\n")
+    { width, height } = { String.length(Enum.at(lines, 0)), length(lines)}
+    Board.init(width, height)
+
+    lines
+    |> Enum.with_index
+    |> Enum.map(&set_line/1)
+    |> List.flatten
+    |> Enum.reject(&(&1 == nil))
   end
 
-  def formatted(line) do
+  defp set_line({line, y}) do
     line
+    |> String.graphemes
+    |> Enum.with_index
+    |> Enum.map(&(insert_point(&1, y)))
   end
+
+  defp insert_point({map_state, x}, y) when map_state in ["#", "."] do
+    Board.set(x, y, map_state)
+    nil
+  end
+
+  defp insert_point({to_visit, x}, y) do
+    Board.set(x, y, ".") #set the point to empty
+    {to_visit, {x, y}}
+  end
+
 end
