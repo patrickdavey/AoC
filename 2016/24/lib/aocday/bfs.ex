@@ -1,6 +1,7 @@
 defmodule AOCDay.BFS do
   alias AOCDay.State
   alias AOCDay.MapGenerator
+  alias AOCDay.Board
 
   def shortest_path(a, b) do
     solve(a, b)
@@ -24,7 +25,7 @@ defmodule AOCDay.BFS do
 
   defp check([state |t], visited, wanted) do
     states = state
-            |> MapGenerator.nodes
+            |> MapGenerator.nodes(Board.current_state)
             |> Enum.filter(&(not_visited_yet?(visited, &1)))
     visited = Enum.reduce(states, visited, fn(%State{x: x, y: y }, acc) ->
       MapSet.put(acc, {x, y})
