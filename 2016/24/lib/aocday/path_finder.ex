@@ -7,10 +7,12 @@ defmodule AOCDay.PathFinder do
   end
 
   defp find_all_distances(points) do
-    points
+    a = points
     |> Map.keys
     |> CombinePermute.comb(2)
-    |> Enum.reduce(%{}, &(find_shortest(&1, &2, points)))
+    |> Enum.map(&(Task.async(fn -> find_shortest(&1, %{}, points) end)))
+    |> Enum.map(&(Task.await(&1, 100000000)))
+    |> Enum.reduce(%{}, fn(x, acc) -> Map.merge(acc, x) end)
   end
 
   defp find_shortest([a, b], acc, points) do
