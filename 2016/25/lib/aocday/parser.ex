@@ -1,6 +1,4 @@
 defmodule AOCDay.Parser do
-  @capture ~r/(?<letters>\D+)(?<sector>\d+)\[(?<check>\w+)\]/
-
   def parse do
     {:ok, binary} = File.read("./input.txt")
     _parse(binary)
@@ -14,10 +12,18 @@ defmodule AOCDay.Parser do
     binary
     |> String.trim
     |> String.split("\n")
-    |> Enum.map(&formatted/1)
+    |> Enum.map(&String.split/1)
+    |> Enum.map(&set_values/1)
   end
 
-  def formatted(line) do
-    line
+  defp set_values([inst, a, b]) do
+    [inst, get_value(a), get_value(b)]
   end
+
+  defp set_values([inst, a]) do
+    [inst, get_value(a)]
+  end
+
+  defp get_value(val) when val in ["a", "b", "c", "d"], do: val
+  defp get_value(val), do: String.to_integer(val)
 end
