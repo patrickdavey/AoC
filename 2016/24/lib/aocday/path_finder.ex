@@ -11,16 +11,18 @@ defmodule AOCDay.PathFinder do
   end
 
   defp find_all_distances(points) do
+    initial_board = AOCDay.Board.current_state
+
     a = points
     |> Map.keys
     |> CombinePermute.comb(2)
-    |> Enum.map(&(Task.async(fn -> find_shortest(&1, %{}, points) end)))
+    |> Enum.map(&(Task.async(fn -> find_shortest(&1, %{}, points, initial_board) end)))
     |> Enum.map(&(Task.await(&1, 100000000)))
     |> Enum.reduce(%{}, fn(x, acc) -> Map.merge(acc, x) end)
   end
 
-  defp find_shortest([a, b], acc, points) do
-    answer = BFS.shortest_path(Map.fetch!(points, a), Map.fetch!(points, b))
+  defp find_shortest([a, b], acc, points, current_state) do
+    answer = BFS.shortest_path(Map.fetch!(points, a), Map.fetch!(points, b), current_state)
     acc
     |> Map.put({a, b}, answer)
     |> Map.put({b, a}, answer)

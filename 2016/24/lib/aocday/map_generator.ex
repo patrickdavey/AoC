@@ -19,6 +19,6 @@ defmodule AOCDay.MapGenerator do
   end
 
   defp create({x, y}, steps) do
-    %State{x: x, y: y, steps: List.insert_at(steps, -1, {x, y})}
+    %State{x: x, y: y, steps: steps + 1}
   end
 end
