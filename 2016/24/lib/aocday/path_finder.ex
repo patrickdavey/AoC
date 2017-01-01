@@ -1,22 +1,19 @@
 defmodule AOCDay.PathFinder do
-  alias AOCDay.Board
   alias AOCDay.BFS
 
   def paths_between_points(points) do
-    initial_board_state = Board.current_state
-    find_all_distances(points, initial_board_state)
+    find_all_distances(points)
     |> overall_shortest_path(points)
   end
 
-  defp find_all_distances(points, initial_board_state) do
+  defp find_all_distances(points) do
     points
     |> Map.keys
     |> CombinePermute.comb(2)
-    |> Enum.reduce(%{}, &(find_shortest(&1, &2, points, initial_board_state)))
+    |> Enum.reduce(%{}, &(find_shortest(&1, &2, points)))
   end
 
-  defp find_shortest([a, b], acc, points, initial_board_state) do
-    Board.set_state(initial_board_state) #reset the board
+  defp find_shortest([a, b], acc, points) do
     answer = BFS.shortest_path(Map.fetch!(points, a), Map.fetch!(points, b))
     acc
     |> Map.put({a, b}, answer)
