@@ -1,8 +1,12 @@
 defmodule AOCDay.PathFinder do
   alias AOCDay.BFS
 
-  def paths_between_points(points) do
+  def all_distances(points) do
     find_all_distances(points)
+  end
+
+  def paths_between_points(points, distances) do
+    distances
     |> overall_shortest_path(points)
   end
 
