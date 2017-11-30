@@ -1,4 +1,4 @@
-import { transpose, permutation, combination } from "../lib/utils";
+import { transpose, permutation, combination, bin, charCount } from "../lib/utils";
 
 describe("Utils", () => {
   test("transpose works", () => {
@@ -40,4 +40,14 @@ describe("Utils", () => {
   test("combination gives us the correct size", () => {
     expect(combination([1, 2, 3], 2).length).toEqual(3);
   });
+
+  test("binary representation of a numbers", () => {
+    expect(bin(4)).toEqual("100");
+  })
+
+  // not particularly safe, as you can actually pass in anything
+  // and it's not counting overlaps. Still, can change if necessary
+  test("count of char in string", () => {
+    expect(charCount("1000", "0")).toEqual(3);
+  })
 });
