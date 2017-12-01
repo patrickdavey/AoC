@@ -15,9 +15,8 @@ const toDecimal = (string) => {
 }
 
 const halfwayMatch = (value, index, collection) => {
-  let offset = (collection.length / 2);
-  let doubleLengthArray = flatten([collection, collection]);
-  return value === doubleLengthArray[index + offset] ? toDecimal(value) : 0;
+  let offset = collection.length / 2;
+  return value === collection[(index + offset) % collection.length] ? toDecimal(value) : 0;
 }
 
 export const part1 = (input) => {
