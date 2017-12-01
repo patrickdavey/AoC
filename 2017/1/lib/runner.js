@@ -1,4 +1,14 @@
-import { chain, flatten, toDecimal } from "./utils"
+import { toDecimal } from "./utils"
+import { map, reduce, thru } from 'lodash'
+import flow from 'lodash/fp/flow'
+import curry from 'lodash/fp/curry'
+import convert from 'lodash/fp/convert'
+
+let fp = convert({
+   map, reduce, thru
+})
+
+const iteratreeMap = fp.map.convert({cap: false})
 
 const DUPLICATE_MATCH = /(.)(?=\1)/g
 
@@ -16,17 +26,17 @@ const halfwayMatch = (value, index, collection) => {
 }
 
 export const part1 = (input) => {
-  return chain(input)
-        .thru(addEndToBeginning)
-        .thru(duplicates)
-        .map(toDecimal)
-        .reduce((sum, value) => sum + value, 0)
-        .value()
+  return flow(
+        fp.thru(addEndToBeginning),
+        fp.thru(duplicates),
+        fp.map(toDecimal),
+        fp.reduce((sum, value) => sum + value, 0)
+  )(input)
 }
 
 export const part2 = (input) => {
-  return chain([...input])
-        .map(halfwayMatch)
-        .reduce((sum, value) => sum + value, 0)
-        .value()
+  return flow(
+        iteratreeMap(halfwayMatch),
+        fp.reduce((sum, value) => sum + value, 0)
+  )(input)
 }
