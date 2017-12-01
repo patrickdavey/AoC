@@ -1,4 +1,4 @@
-import { transpose, permutation, combination, bin, charCount } from "../lib/utils";
+import { transpose, permutation, combination, bin, charCount, toDecimal } from "../lib/utils";
 
 describe("Utils", () => {
   test("transpose works", () => {
@@ -49,5 +49,9 @@ describe("Utils", () => {
   // and it's not counting overlaps. Still, can change if necessary
   test("count of char in string", () => {
     expect(charCount("1000", "0")).toEqual(3);
+  })
+
+  test("toDecimal works", () => {
+    expect(toDecimal("1000")).toEqual(1000);
   })
 });

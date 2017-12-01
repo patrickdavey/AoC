@@ -1,4 +1,4 @@
-import { chain, flatten } from "./utils"
+import { chain, flatten, toDecimal } from "./utils"
 
 const DUPLICATE_MATCH = /(.)(?=\1)/g
 
@@ -8,10 +8,6 @@ const addEndToBeginning = (string) => {
 
 const duplicates = (string) => {
   return string.match(DUPLICATE_MATCH);
-}
-
-const toDecimal = (string) => {
-  return Number.parseInt(string, 10);
 }
 
 const halfwayMatch = (value, index, collection) => {
