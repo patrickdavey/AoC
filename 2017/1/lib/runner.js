@@ -1,11 +1,11 @@
 import { toDecimal } from "./utils"
-import { map, reduce, thru } from 'lodash'
+import { map, reduce, thru, tap } from 'lodash'
 import flow from 'lodash/fp/flow'
 import curry from 'lodash/fp/curry'
 import convert from 'lodash/fp/convert'
 
 let fp = convert({
-   map, reduce, thru
+   map, reduce, thru, tap
 })
 
 const iteratreeMap = fp.map.convert({cap: false})
@@ -29,6 +29,7 @@ export const part1 = (input) => {
   return flow(
         fp.thru(addEndToBeginning),
         fp.thru(duplicates),
+        fp.tap(console.log),
         fp.map(toDecimal),
         fp.reduce((sum, value) => sum + value, 0)
   )(input)
