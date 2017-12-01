@@ -45,7 +45,7 @@
   },
   "scripts": {
     "test": "jest --no-cache ./*",
-    "start": "babel-node main.js --presets es2015,stage-2",
+    "runner": "babel-node main.js --presets es2015,stage-2",
     "watch": "jest --no-cache --watch ./*",
     "lint": "eslint .",
     "lint-test": "eslint . && jest --no-cache ./* "
