@@ -1,4 +1,4 @@
-import { unzip } from "lodash";
+import { unzip, chain } from "lodash";
 var Combinatorics = require('js-combinatorics');
 
 const transpose = (matrix) => unzip(matrix);
@@ -7,4 +7,4 @@ const charCount = (string, char) => (string.match(RegExp(char, "g")) || []).leng
 const permutation = Combinatorics.permutation;
 const combination = Combinatorics.combination;
 
-export  { transpose, permutation, combination, bin, charCount };
+export  { transpose, permutation, combination, bin, charCount, chain };
