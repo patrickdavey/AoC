@@ -1,4 +1,4 @@
-import { chain } from "./utils"
+import { chain, flatten } from "./utils"
 
 const DUPLICATE_MATCH = /(.)(?=\1)/g
 
@@ -14,11 +14,24 @@ const toDecimal = (string) => {
   return Number.parseInt(string, 10);
 }
 
+const halfwayMatch = (value, index, collection) => {
+  let offset = (collection.length / 2);
+  let doubleLengthArray = flatten([collection, collection]);
+  return value === doubleLengthArray[index + offset] ? toDecimal(value) : 0;
+}
+
 export const part1 = (input) => {
   return chain(input)
         .thru(addEndToBeginning)
         .thru(duplicates)
         .map(toDecimal)
+        .reduce((sum, value) => sum + value, 0)
+        .value()
+}
+
+export const part2 = (input) => {
+  return chain([...input])
+        .map(halfwayMatch)
         .reduce((sum, value) => sum + value, 0)
         .value()
 }
