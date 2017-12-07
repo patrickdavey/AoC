@@ -1,8 +1,7 @@
 import { parse } from "../lib/parser";
-import { part1, part2 } from "../lib/runner";
 
-describe("Runner", () => {
-  test("part 1 passes tests cases", () => {
+describe("Parser", () => {
+  test("can parse test data", () => {
     let data = parse(` pbga (66)
     xhth (57)
     ebii (61)
@@ -17,10 +16,8 @@ describe("Runner", () => {
     gyxo (61)
     cntj (57)`);
 
-    expect(part1(data).name).toEqual("tknk");
-
-  });
-
-  test("part 2 passes tests cases", () => {
+    expect(data["xhth"].weight).toEqual(57);
+    expect(data["ugml"].weight).toEqual(68);
+    expect(data["ugml"].children).toEqual(['gyxo', 'ebii', 'jptl']);
   });
 });

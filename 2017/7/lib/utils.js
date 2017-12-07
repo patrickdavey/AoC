@@ -1,4 +1,5 @@
 import {
+  isEmpty,
   chain,
   each,
   find,
@@ -42,6 +43,7 @@ export {
   find,
   flatten,
   intoLines,
+  isEmpty,
   join,
   max,
   min,
