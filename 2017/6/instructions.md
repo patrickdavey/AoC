@@ -52,8 +52,6 @@ produced that has been seen before?
 
 Your puzzle answer was `14029`.
 
-The first half of this puzzle is complete! It provides one gold star: \*
-
 --- Part Two ---
 ----------------
 
@@ -68,13 +66,18 @@ the answer in that example would be `4`.
 *How many cycles* are in the infinite loop that arises from the
 configuration in your puzzle input?
 
-Although it hasn't changed, you can still [get your puzzle
-input](6/input).
+Your puzzle answer was `2765`.
 
-Answer:
+Both parts of this puzzle are complete! They provide two gold stars:
+\*\*
+
+At this point, you should [return to your advent calendar](/2017) and
+try another puzzle.
+
+If you still want to see it, you can [get your puzzle input](6/input).
 
 You can also [\[Share[on
-[Twitter](https://twitter.com/intent/tweet?text=I%27ve+completed+Part+One+of+%22Memory+Reallocation%22+%2D+Day+6+%2D+Advent+of+Code+2017&url=http%3A%2F%2Fadventofcode%2Ecom%2F2017%2Fday%2F6&related=ericwastl&hashtags=AdventOfCode)
+[Twitter](https://twitter.com/intent/tweet?text=I%27ve+completed+%22Memory+Reallocation%22+%2D+Day+6+%2D+Advent+of+Code+2017&url=http%3A%2F%2Fadventofcode%2Ecom%2F2017%2Fday%2F6&related=ericwastl&hashtags=AdventOfCode)
 [Google+](https://plus.google.com/share?url=http%3A%2F%2Fadventofcode%2Ecom%2F2017%2Fday%2F6)
-[Reddit](http://www.reddit.com/submit?url=http%3A%2F%2Fadventofcode%2Ecom%2F2017%2Fday%2F6&title=I%27ve+completed+Part+One+of+%22Memory+Reallocation%22+%2D+Day+6+%2D+Advent+of+Code+2017)]{.share-content}\]]{.share}
+[Reddit](http://www.reddit.com/submit?url=http%3A%2F%2Fadventofcode%2Ecom%2F2017%2Fday%2F6&title=I%27ve+completed+%22Memory+Reallocation%22+%2D+Day+6+%2D+Advent+of+Code+2017)]{.share-content}\]]{.share}
 this puzzle.
