@@ -4,20 +4,14 @@ import { chain, isEmpty } from "./utils";
 const hasChildren = tower => !isEmpty(tower.children);
 let towers = null;
 
-const findTotalWeight = (weight, remainingChildren) => {
-  const child = remainingChildren.pop();
-  if (child) {
-    weight += towers[child].weight;
-    remainingChildren.push(...towers[child].children);
-    return findTotalWeight(weight, remainingChildren);
-  }
-
-  return weight;
+const getNodeWeight = (name) => {
+  const node = towers[name];
+  return node.weight + node.children.reduce((a, b) => a + getNodeWeight(b), 0);
 };
 
 const findWeights = (root, desiredWeight) => {
   const childWeights = map(towers[root].children, (value) => {
-    return { name: value, value: findTotalWeight(towers[value].weight, clone(towers[value].children)) };
+    return { name: value, value: getNodeWeight(value)};
   });
 
   const groups = groupBy(childWeights, obj => obj.value);
