@@ -1,20 +1,24 @@
-import { cycle } from "../lib/cycle";
+import { cycleGenerator } from "../lib/cycle";
 
 export const part1 = (input) => {
+  let gen = cycleGenerator(input);
   let seenBefore = {};
   let steps = 0;
   seenBefore[input] = true;
-  input = cycle(input);
+  input = gen.next().value
   while(!seenBefore[input]) {
     seenBefore[input] = true;
     steps += 1;
-    input = cycle(input);
+    input = gen.next().value
   }
 
-  return steps + 1;
+  return {
+    stepsTaken: steps + 1,
+    duplicate: input
+  };
 };
 
 export const part2 = (input) => {
-  part1(input);
-  return part1(input);
+  let duplicate = part1(input).duplicate;
+  return part1(duplicate);
 };
