@@ -1,16 +1,42 @@
-import { filter, chain, isEmpty } from "./utils";
-import { some, find, includes, pickBy } from "lodash";
+import { keys, minBy, maxBy, groupBy, clone, values, map, some, includes } from "lodash";
+import { chain, isEmpty } from "./utils";
 
-const hasChildren = (tower) => !(isEmpty(tower.children))
+const hasChildren = tower => !isEmpty(tower.children);
 
-const notContainedInOtherChildren = (_value, key, collection) => {
-  let found = some(collection, (value, _k) => {
-    return includes(value.children, key);
+const findTotalWeight = (weight, remainingChildren, towers) => {
+  const child = remainingChildren.pop();
+  if (child) {
+    weight += towers[child].weight;
+    remainingChildren.push(...towers[child].children);
+    return findTotalWeight(weight, remainingChildren, towers);
+  }
+
+  return weight;
+};
+
+const findWeights = (root, towers, desiredWeight) => {
+  let childWeights = map(towers[root].children, (value) => {
+    return { name: value, value: findTotalWeight(towers[value].weight, clone(towers[value].children), towers) };
   });
-
-  return !found;
+  let groups = groupBy(childWeights, (obj) => obj.value)
+  if (keys(groups).length === 1) {
+    // then we have an unbalanced node where the children are all balanced
+    // that is, we have found the bad one.
+    let difference = desiredWeight - towers[root].weight - (childWeights.length * childWeights[0].value);
+    return towers[root].weight + difference;
+  }
+  let unbalancedNode = (minBy(values(groups), (g) => g.length))[0];
+  let siblingsWeight = (maxBy(values(groups), (g) => g.length))[0];
+  return findWeights(unbalancedNode.name, towers, siblingsWeight.value);
 }
 
+const notContainedInOtherChildren = (_value, key, collection) => !some(collection, (value) => includes(value.children, key))
+
+/* this is awful. I find the parent that is not contained in other children. Awful. Step back and think,
+ * If I had parsed the data and kept a list of parents then I could have walked up it. Much nicer.
+ *
+ * Ok, nicer still would have just been grabbing a list of the identifiers and uniquing them... heh not my solution,
+ * but wow, super elegant */
 export const part1 = (input) => {
   return chain(input)
     .pickBy(hasChildren)
@@ -18,5 +44,6 @@ export const part1 = (input) => {
     .value();
 };
 
-export const part2 = (input) => {
+export const part2 = (root, towers) => {
+  return findWeights(root, towers, 0);
 };
