@@ -1,6 +1,6 @@
 import { map, values, max } from "./utils";
 
-let allTimeMax = 0;
+let allTimeMax = Number.MIN_VALUE;
 
 const handler = {
   get(target, name) {
