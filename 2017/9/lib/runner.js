@@ -4,20 +4,23 @@ const removeCancelled = s => s.replace(/!./g, "")
 const removeGarbage = s => s.replace(/<[^>]+>/g, "")
 
 const countScore = (string) => {
-  const splitString = Array(...string);
   let level = 0;
   let sum = 0;
-  for (let i = 0; i < splitString.length; i++ ){
-    if (splitString[i] == "{") {
+
+  for (const char of Array(...string)) {
+    if (char === "{") {
       level += 1;
-      sum = sum + level;
-    } else if (splitString[i] == "}") {
+      sum += level;
+    } else if (char === "}") {
       level -= 1;
     }
   }
 
   return sum;
 };
+
+const extractGarbage = s => s.match(/<[^>]*>/g)
+
 export const part1 = (input) => {
   return chain(input)
     .thru(removeCancelled)
@@ -28,7 +31,9 @@ export const part1 = (input) => {
 
 export const part2 = (input) => {
   return chain(input)
-    .thru(removeCancels)
-    .thru((s) => countGarbage(s, 0, 0))
+    .thru(removeCancelled)
+    .thru(extractGarbage)
+    .map(g => g.length - 2)
+    .reduce((sum, value) => sum + value, 0)
     .value();
 };
