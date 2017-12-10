@@ -1,7 +1,9 @@
 import { chain, filter } from "./utils";
-import { removeCancels, countGarbage, removeGarbage, tidyCancel } from "./tidy_cancel";
 
-const getScore = (string) => {
+const removeCancelled = s => s.replace(/!./g, "")
+const removeGarbage = s => s.replace(/<[^>]+>/g, "")
+
+const countScore = (string) => {
   const splitString = Array(...string);
   let level = 0;
   let sum = 0;
@@ -16,12 +18,11 @@ const getScore = (string) => {
 
   return sum;
 };
-
 export const part1 = (input) => {
   return chain(input)
-    .thru(tidyCancel)
+    .thru(removeCancelled)
     .thru(removeGarbage)
-    .thru((s) => getScore(s, 0, 0, 0))
+    .thru(countScore)
     .value();
 };
 
