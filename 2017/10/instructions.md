@@ -87,8 +87,6 @@ first two numbers in the list*?
 
 Your puzzle answer was `46600`.
 
-The first half of this puzzle is complete! It provides one gold star: \*
-
 --- Part Two ---
 ----------------
 
@@ -162,13 +160,18 @@ Treating your puzzle input as a string of ASCII characters, *what is the
 Knot Hash of your puzzle input?* Ignore any leading or trailing
 whitespace you might encounter.
 
-Although it hasn't changed, you can still [get your puzzle
-input](10/input).
+Your puzzle answer was `23234babdc6afa036749cfa9b597de1b`.
 
-Answer:
+Both parts of this puzzle are complete! They provide two gold stars:
+\*\*
+
+At this point, you should [return to your advent calendar](/2017) and
+try another puzzle.
+
+If you still want to see it, you can [get your puzzle input](10/input).
 
 You can also [\[Share[on
-[Twitter](https://twitter.com/intent/tweet?text=I%27ve+completed+Part+One+of+%22Knot+Hash%22+%2D+Day+10+%2D+Advent+of+Code+2017&url=http%3A%2F%2Fadventofcode%2Ecom%2F2017%2Fday%2F10&related=ericwastl&hashtags=AdventOfCode)
+[Twitter](https://twitter.com/intent/tweet?text=I%27ve+completed+%22Knot+Hash%22+%2D+Day+10+%2D+Advent+of+Code+2017&url=http%3A%2F%2Fadventofcode%2Ecom%2F2017%2Fday%2F10&related=ericwastl&hashtags=AdventOfCode)
 [Google+](https://plus.google.com/share?url=http%3A%2F%2Fadventofcode%2Ecom%2F2017%2Fday%2F10)
-[Reddit](http://www.reddit.com/submit?url=http%3A%2F%2Fadventofcode%2Ecom%2F2017%2Fday%2F10&title=I%27ve+completed+Part+One+of+%22Knot+Hash%22+%2D+Day+10+%2D+Advent+of+Code+2017)]{.share-content}\]]{.share}
+[Reddit](http://www.reddit.com/submit?url=http%3A%2F%2Fadventofcode%2Ecom%2F2017%2Fday%2F10&title=I%27ve+completed+%22Knot+Hash%22+%2D+Day+10+%2D+Advent+of+Code+2017)]{.share-content}\]]{.share}
 this puzzle.

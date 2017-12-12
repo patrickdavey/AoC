@@ -38,8 +38,6 @@ instructions in your puzzle input?
 
 Your puzzle answer was `5221`.
 
-The first half of this puzzle is complete! It provides one gold star: \*
-
 --- Part Two ---
 ----------------
 
@@ -49,13 +47,18 @@ allocate to these operations. For example, in the above instructions,
 the highest value ever held was `10` (in register `c` after the third
 instruction was evaluated).
 
-Although it hasn't changed, you can still [get your puzzle
-input](8/input).
+Your puzzle answer was `7491`.
 
-Answer:
+Both parts of this puzzle are complete! They provide two gold stars:
+\*\*
+
+At this point, you should [return to your advent calendar](/2017) and
+try another puzzle.
+
+If you still want to see it, you can [get your puzzle input](8/input).
 
 You can also [\[Share[on
-[Twitter](https://twitter.com/intent/tweet?text=I%27ve+completed+Part+One+of+%22I+Heard+You+Like+Registers%22+%2D+Day+8+%2D+Advent+of+Code+2017&url=http%3A%2F%2Fadventofcode%2Ecom%2F2017%2Fday%2F8&related=ericwastl&hashtags=AdventOfCode)
+[Twitter](https://twitter.com/intent/tweet?text=I%27ve+completed+%22I+Heard+You+Like+Registers%22+%2D+Day+8+%2D+Advent+of+Code+2017&url=http%3A%2F%2Fadventofcode%2Ecom%2F2017%2Fday%2F8&related=ericwastl&hashtags=AdventOfCode)
 [Google+](https://plus.google.com/share?url=http%3A%2F%2Fadventofcode%2Ecom%2F2017%2Fday%2F8)
-[Reddit](http://www.reddit.com/submit?url=http%3A%2F%2Fadventofcode%2Ecom%2F2017%2Fday%2F8&title=I%27ve+completed+Part+One+of+%22I+Heard+You+Like+Registers%22+%2D+Day+8+%2D+Advent+of+Code+2017)]{.share-content}\]]{.share}
+[Reddit](http://www.reddit.com/submit?url=http%3A%2F%2Fadventofcode%2Ecom%2F2017%2Fday%2F8&title=I%27ve+completed+%22I+Heard+You+Like+Registers%22+%2D+Day+8+%2D+Advent+of+Code+2017)]{.share-content}\]]{.share}
 this puzzle.
