@@ -1,11 +1,11 @@
-import { isUndefined, cloneDeep, forEach, mapValues } from "lodash";
-import { max, keys, chain, intoLines, reduce } from "./utils";
+import { isUndefined, cloneDeep, forEach } from "lodash";
+import { max, keys, chain } from "./utils";
 
 const updateAllScanners = (scanners) => {
   forEach(scanners, (value, key) => {
-    const offset = value.direction == "forward" ? 1 : -1;
-    value.position = (value.position + offset);
-    if (value.position == 0) {
+    const offset = value.direction === "forward" ? 1 : -1;
+    value.position += offset;
+    if (value.position === 0) {
       value.direction = "forward";
     } else if (value.position === value.depth - 1) {
       value.direction = "backwards";
@@ -15,11 +15,11 @@ const updateAllScanners = (scanners) => {
   return scanners;
 };
 
-const calculateSeverity = (scanners, shortCircuit, pico) => {
-  let maxScanner = max(keys(scanners).map((k) => Number(k)));
+const calculateSeverity = (scanners) => {
+  const maxScanner = max(keys(scanners).map(k => Number(k)));
   let severity = 0;
-  for(let i = 0; i < maxScanner + 1; i+= 1) {
-    if(!(isUndefined(scanners[i])) && scanners[i].position == 0) {
+  for (let i = 0; i < maxScanner + 1; i += 1) {
+    if (!(isUndefined(scanners[i])) && scanners[i].position === 0) {
       severity += scanners[i].depth * i;
     }
     updateAllScanners(scanners);
@@ -28,9 +28,9 @@ const calculateSeverity = (scanners, shortCircuit, pico) => {
 };
 
 const noCatch = (scanners, maxScanner) => {
-  for(let i = 0; i < maxScanner + 1; i+= 1) {
-    if(!(isUndefined(scanners[i])) && scanners[i].position == 0) {
-      return false
+  for (let i = 0; i < maxScanner + 1; i += 1) {
+    if (!(isUndefined(scanners[i])) && scanners[i].position === 0) {
+      return false;
     }
     updateAllScanners(scanners);
   }
@@ -39,21 +39,21 @@ const noCatch = (scanners, maxScanner) => {
 
 export const part1 = (scanners) => {
   return chain(scanners)
-    .thru(scanners => calculateSeverity(scanners), false, 0)
+    .thru(s => calculateSeverity(s), false, 0)
     .value();
 };
 
 export const part2 = (input) => {
-  let scanners = cloneDeep(input);
+  const scanners = cloneDeep(input);
   let picoSecond = 0;
-  let maxScanner = max(keys(scanners).map((k) => Number(k)));
+  const maxScanner = max(keys(scanners).map(k => Number(k)));
 
-  while(true) {
-    if(noCatch(cloneDeep(scanners), maxScanner)) {
+  while (true) {
+    if (noCatch(cloneDeep(scanners), maxScanner)) {
       return picoSecond;
     }
 
     updateAllScanners(scanners);
-    picoSecond += 1
+    picoSecond += 1;
   }
 };
