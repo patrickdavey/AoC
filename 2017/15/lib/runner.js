@@ -1,40 +1,28 @@
-import { chain } from "./utils";
 import generator from "./generator";
 
-export const part1 = (a, b) => {
-  let generatorA = generator(16807, a, 40000000, 1);
-  let generatorB = generator(48271, b, 40000000, 1);
-  let done = false
+const countUntilFinished = (genA, genB) => {
   let matches = 0;
-  while(true) {
-    a = generatorA.next()
-    b = generatorB.next()
-    if (a.done) { break; }
+  while (true) {
+    const a = genA.next();
+    const b = genB.next();
 
-    if (a.value == b.value) {
+    if (a.done) { return matches; }
+
+    if (a.value === b.value) {
       matches += 1;
     }
   }
+};
 
-  return matches;
+export const part1 = (a, b) => {
+  const generatorA = generator(16807, a, 40000000, 1);
+  const generatorB = generator(48271, b, 40000000, 1);
 
+  return countUntilFinished(generatorA, generatorB);
 };
 
 export const part2 = (a, b) => {
-  let generatorA = generator(16807, a, 5000000, 4);
-  let generatorB = generator(48271, b, 5000000, 8);
-  let done = false
-  let matches = 0;
-  while(true) {
-    a = generatorA.next()
-    b = generatorB.next()
-    if (a.done) { break; }
-
-    if (a.value == b.value) {
-      matches += 1;
-    }
-  }
-
-  return matches;
-
+  const generatorA = generator(16807, a, 5000000, 4);
+  const generatorB = generator(48271, b, 5000000, 8);
+  return countUntilFinished(generatorA, generatorB);
 };
