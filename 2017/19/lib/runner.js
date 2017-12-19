@@ -70,6 +70,7 @@ export const part1 = (mapIn) => {
 
   while (true) {
     const currentChar = map[`${x},${y}`];
+    console.log({x, y, currentChar, steps})
     switch (currentChar) {
       case "-":
         performHorizontalTravel();
@@ -85,7 +86,7 @@ export const part1 = (mapIn) => {
         if (!testIsLetter) {
           return {
             letters: letters.join(""),
-            steps: steps
+            steps: steps - 1
           }
         }
         letters.push(currentChar);
