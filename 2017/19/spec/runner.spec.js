@@ -12,6 +12,6 @@ describe("Runner", () => {
   });
 
   test("part 2 passes tests cases", () => {
-    expect(part1(parse(MAZE)).steps).toEqual(39)
+    expect(part1(parse(MAZE)).steps).toEqual(38)
   });
 });

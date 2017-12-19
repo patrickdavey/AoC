@@ -2,12 +2,12 @@ import { isUndefined, chain } from "./utils";
 
 const isLetter = l => /[A-Za-z]/.test(l)
 
-let letters = [];
-let travel = "up";
+let letters = null;
+let travel = null;
 let x = null;
 let y = null;
 let map = null;
-let steps = 0;
+let steps = null;
 
 const VECTORS = {
   up: [0, 1],
@@ -65,12 +65,18 @@ const performAtCrossroads = () => {
 };
 
 export const part1 = (mapIn) => {
+  letters = [];
+  travel = "up";
+  x = null;
+  y = null;
+  map = null;
+  steps = 0;
+
   map = mapIn;
   [x, y] = map.start;
 
   while (true) {
     const currentChar = map[`${x},${y}`];
-    console.log({x, y, currentChar, steps})
     switch (currentChar) {
       case "-":
         performHorizontalTravel();
@@ -86,7 +92,7 @@ export const part1 = (mapIn) => {
         if (!testIsLetter) {
           return {
             letters: letters.join(""),
-            steps: steps - 1
+            steps: steps
           }
         }
         letters.push(currentChar);
