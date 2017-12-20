@@ -1,4 +1,6 @@
 import {
+  some,
+  isEqual,
   chunk,
   chain,
   filter,
@@ -157,6 +159,8 @@ export {
   difference,
   transpose,
   keys,
+  some,
+  isEqual,
   trim,
   map,
   filter,
