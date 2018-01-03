@@ -33,21 +33,25 @@ const INSTRUCTIONS = {
 export default class InstructionRunner {
   constructor(instructionSequence) {
     this.instructionSequence = instructionSequence;
-    this.registers = {};
+    this.registers = { a: 1 };
     this.position = 0;
   }
 
   run () {
     let instruction, args;
+    let i = 0;
 
-    while (true) {
+    while (i < 10000) {
       ({ instruction, args } = this.instructionSequence[this.position]);
       let result = INSTRUCTIONS[instruction].call(null, ...args, this.registers, this.position);
       this.position = result.position;
+      console.log({pos: this.position, reg: this.registers })
 
       if (this.position < 0 || this.position >= this.instructionSequence.length) {
         return mulCount;
       }
+
+      i += 1;
     }
   }
 };
