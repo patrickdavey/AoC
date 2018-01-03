@@ -1,0 +1,56 @@
+{
+  "name": "advent-of-code-ecmascript",
+  "version": "0.0.0",
+  "description": "Advent of Code exercises in ECMAScript 6.",
+  "author": "Patrick Davey",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/patrickdavey/AoC"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^7.1.1",
+    "babel-jest": "^20.0.1",
+    "babel-plugin-transform-builtin-extend": "^1.1.2",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "eslint": "^4.12.1",
+    "jest": "^20.0.1",
+    "jest-environment-node-debug": "^2.0.0"
+  },
+  "jest": {
+    "modulePathIgnorePatterns": [
+      "package.json"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ],
+    "plugins": [
+      [
+        "babel-plugin-transform-builtin-extend",
+        {
+          "globals": [
+            "Error"
+          ]
+        }
+      ]
+    ]
+  },
+  "scripts": {
+    "test": "jest --no-cache ./*",
+    "start": "babel-node main.js --presets es2015,stage-2",
+    "watch": "jest --no-cache --watch ./*"
+  },
+  "licenses": [
+    "MIT"
+  ],
+  "dependencies": {
+    "js-combinatorics": "^0.5.2",
+    "lodash": "^4.17.4",
+    "mathjs": "^3.17.0"
+  }
+}
