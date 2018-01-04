@@ -16,5 +16,7 @@ describe("Runner", () => {
   });
 
   test("part 2 passes tests cases", () => {
+    let parsed = parse(INPUT)
+    expect(part2(parsed)).toEqual(19)
   });
 });

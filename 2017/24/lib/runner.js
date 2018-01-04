@@ -3,6 +3,7 @@ const tco = require("tco");
 
 let possibleBridges = null;
 let allBridges = null;
+let maxLength = 0;
 
 const availablePortsWithConnections = (ports, pin) => {
   return filter(ports, ([x, y]) => x == pin || y == pin);
@@ -18,6 +19,9 @@ const structureize = ([a, b]) => {
 const addSpanToBridge = ([a, b], bridge) => {
   bridge.links.push([a, b])
   bridge.nextConnection = (bridge.nextConnection == a ? b : a)
+
+  if (bridge.links.length > maxLength) { maxLength = bridge.links.length }
+
   return bridge;
 }
 
@@ -61,5 +65,19 @@ export const part1 = (ports) => {
     .value()
 };
 
-export const part2 = (input) => {
+export const part2 = (ports) => {
+  allBridges = cloneDeep(ports);
+  let bridgesToCheck = availablePortsWithConnections(ports, "0")
+  bridgesToCheck = map(bridgesToCheck, structureize)
+
+  let finishedBridges = findBestBridge(bridgesToCheck, [])
+
+  return chain(finishedBridges)
+    .map(b => b.links)
+    .thru(links => filter(links, (link, _index, collection) => link.length == maxLength))
+    .map(links => flatten(links))
+    .map(link => map(link, (e) => Number(e)))
+    .map(link => reduce(link, (acc, v) => acc + v), 0)
+    .thru(max)
+    .value()
 };
