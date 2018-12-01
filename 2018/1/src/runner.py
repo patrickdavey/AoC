@@ -1,25 +1,23 @@
+import itertools
+
 def lines(string):
   return string.strip().split("\n")
 
+def numbers(input):
+  return [int(line) for line in lines(input)]
+
 def run(input = None):
   input = Input() if input is None else input
-  answer = 0
-  instructions = ['answer {}'.format(line) for line in lines(input)]
-
-  for instruction in instructions:
-    answer = eval(instruction)
-
-  return answer
+  return sum(numbers(input))
 
 def run2(input = None):
   input = Input() if input is None else input
   answer = 0
-  found = {}
-  instructions = ['answer {}'.format(line) for line in lines(input)]
-  while True:
-    for instruction in instructions:
-      answer = eval(instruction)
-      if answer in found:
-        return answer
-      else:
-        found[answer] = True
+  found = set([0])
+
+  for number in itertools.cycle(numbers(input)):
+    answer += number
+    if answer in found:
+      return answer
+    else:
+      found.add(answer)
