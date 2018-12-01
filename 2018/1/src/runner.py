@@ -6,12 +6,10 @@ def lines(string):
 def numbers(input):
   return [int(line) for line in lines(input)]
 
-def run(input = None):
-  input = Input() if input is None else input
+def run(input):
   return sum(numbers(input))
 
-def run2(input = None):
-  input = Input() if input is None else input
+def run2(input):
   answer = 0
   found = set([0])
 
