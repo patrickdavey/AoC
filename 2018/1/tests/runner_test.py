@@ -10,4 +10,5 @@ from runner import run
 
 class RunnerTest(unittest.TestCase):
     def test_basic(self):
-        self.assertEqual(run(), True)
+        string = "+1\n+1\n+1"
+        self.assertEqual(run(string), 3)
