@@ -67,8 +67,6 @@ claims?*
 
 Your puzzle answer was `112378`.
 
-The first half of this puzzle is complete! It provides one gold star: \*
-
 --- Part Two --- {#part2}
 ----------------
 
@@ -82,12 +80,17 @@ claims are made.
 
 *What is the ID of the only claim that doesn't overlap?*
 
-Although it hasn't changed, you can still [get your puzzle
-input](3/input).
+Your puzzle answer was `603`.
 
-Answer:
+Both parts of this puzzle are complete! They provide two gold stars:
+\*\*
+
+At this point, you should [return to your advent calendar](/2018) and
+try another puzzle.
+
+If you still want to see it, you can [get your puzzle input](3/input).
 
 You can also [\[Share[on
-[Twitter](https://twitter.com/intent/tweet?text=I%27ve+completed+Part+One+of+%22No+Matter+How+You+Slice+It%22+%2D+Day+3+%2D+Advent+of+Code+2018&url=https%3A%2F%2Fadventofcode%2Ecom%2F2018%2Fday%2F3&related=ericwastl&hashtags=AdventOfCode)
-[Reddit](http://www.reddit.com/submit?url=https%3A%2F%2Fadventofcode%2Ecom%2F2018%2Fday%2F3&title=I%27ve+completed+Part+One+of+%22No+Matter+How+You+Slice+It%22+%2D+Day+3+%2D+Advent+of+Code+2018)]{.share-content}\]]{.share}
+[Twitter](https://twitter.com/intent/tweet?text=I%27ve+completed+%22No+Matter+How+You+Slice+It%22+%2D+Day+3+%2D+Advent+of+Code+2018&url=https%3A%2F%2Fadventofcode%2Ecom%2F2018%2Fday%2F3&related=ericwastl&hashtags=AdventOfCode)
+[Reddit](http://www.reddit.com/submit?url=https%3A%2F%2Fadventofcode%2Ecom%2F2018%2Fday%2F3&title=I%27ve+completed+%22No+Matter+How+You+Slice+It%22+%2D+Day+3+%2D+Advent+of+Code+2018)]{.share-content}\]]{.share}
 this puzzle.
