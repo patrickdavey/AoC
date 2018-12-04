@@ -18,3 +18,10 @@ class Guard(object):
   def sleepiest_minute(self):
     (minute, _count) = self.times_asleep.most_common(1)[0]
     return minute;
+
+  def sleepiest_minute_count(self):
+    if self.total_time_asleep == 0:
+      return 0
+
+    (_minute, count) = self.times_asleep.most_common(1)[0]
+    return count;

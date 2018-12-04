@@ -2,42 +2,51 @@ import re;
 from collections import defaultdict
 from guard import Guard
 
-STARTING_SHIFT = 0
-FALLING_ALSEEP = 1
-WAKING_UP = 2
+class Runner:
+  STARTING_SHIFT = 0
+  FALLING_ALSEEP = 1
+  WAKING_UP = 2
+  SHIFT_MATCHER = "(?P<hour>\d\d):(?P<minute>\d\d).*(?P<type>Guard #(?P<id>\d+)|falls|wakes)"
 
-def action(s):
-  if s.startswith("Guard"):
-    return STARTING_SHIFT
-  elif s.startswith("falls"):
-    return FALLING_ALSEEP
-  else:
-    return WAKING_UP
+  def __init__(self, raw):
+    lines = [line.strip() for line in raw.split("\n")]
+    self.schedule = [re.search(self.SHIFT_MATCHER, line).groupdict() for line in lines]
+    self.guards = self.calculate_sleeping_patterns()
+
+  def part1(self):
+    sleepiest_guard = max(self.guards, key = lambda g: g.total_time_asleep)
+    return int(sleepiest_guard.id) * sleepiest_guard.sleepiest_minute()
+
+  def part2(self):
+    consistently_asleep_guard = max(self.guards, key = lambda g: g.sleepiest_minute_count())
+    return int(consistently_asleep_guard.id) * consistently_asleep_guard.sleepiest_minute()
+
+  def calculate_sleeping_patterns(self):
+    guards = {}
+
+    guard_on_duty = None
+    for item in self.schedule:
+      id = item["id"]
+      behavior = self.action(item["type"])
+      hour = int(item["hour"])
+      minute = int(item["minute"])
+
+      if behavior == self.STARTING_SHIFT:
+        if id not in guards: guards[id] = Guard(id)
+        guard_on_duty = guards[id]
+        guard_on_duty.start_shift(hour, minute)
+      elif behavior == self.FALLING_ALSEEP:
+        guard_on_duty.falls_asleep(minute)
+      elif behavior == self.WAKING_UP:
+        guard_on_duty.wakes_up(minute)
+    return guards.values()
+
+  def action(self, s):
+    if s.startswith("Guard"):
+      return self.STARTING_SHIFT
+    elif s.startswith("falls"):
+      return self.FALLING_ALSEEP
+    else:
+      return self.WAKING_UP
 
 
-SHIFT_MATCHER = "(?P<hour>\d\d):(?P<minute>\d\d).*(?P<type>Guard #(?P<id>\d+)|falls|wakes)"
-def run(raw):
-  d = {}
-  lines = [line.strip() for line in raw.split("\n")]
-  schedule = [re.search(SHIFT_MATCHER, line).groupdict() for line in lines]
-
-  guard_on_duty = None
-  for item in schedule:
-    id = item["id"]
-    behavior = action(item["type"])
-    hour = int(item["hour"])
-    minute = int(item["minute"])
-
-    if behavior == STARTING_SHIFT:
-      if id not in d: d[id] = Guard(id)
-      guard_on_duty = d[id]
-      guard_on_duty.start_shift(hour, minute)
-    elif behavior == FALLING_ALSEEP:
-      guard_on_duty.falls_asleep(minute)
-    elif behavior == WAKING_UP:
-      guard_on_duty.wakes_up(minute)
-
-
-  sleepiest_guard = max(d.values(), key = lambda g: g.total_time_asleep)
-
-  return int(sleepiest_guard.id) * sleepiest_guard.sleepiest_minute()

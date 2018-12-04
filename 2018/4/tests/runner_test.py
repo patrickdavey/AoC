@@ -3,14 +3,10 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
-from runner import run
+from runner import Runner
 
-
-# Tests adapted from `problem-specifications//canonical-data.json` @ v1.3.0
-
-class RunnerTest(unittest.TestCase):
-  def test_part_1(self):
-    times = """[1518-11-01 00:00] Guard #10 begins shift
+def test_input():
+  return """[1518-11-01 00:00] Guard #10 begins shift
       [1518-11-01 00:05] falls asleep
       [1518-11-01 00:25] wakes up
       [1518-11-01 00:30] falls asleep
@@ -27,4 +23,10 @@ class RunnerTest(unittest.TestCase):
       [1518-11-05 00:03] Guard #99 begins shift
       [1518-11-05 00:45] falls asleep
       [1518-11-05 00:55] wakes up"""
-    self.assertEqual(run(times), 240)
+
+class RunnerTest(unittest.TestCase):
+  def test_part_1(self):
+    self.assertEqual(Runner(test_input()).part1(), 240)
+
+  def test_part_2(self):
+    self.assertEqual(Runner(test_input()).part2(), 4455)
