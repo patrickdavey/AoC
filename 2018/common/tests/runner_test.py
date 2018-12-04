@@ -3,11 +3,15 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 
-from runner import run
+from runner import Runner
 
-
-# Tests adapted from `problem-specifications//canonical-data.json` @ v1.3.0
+test_input = """
+foo
+"""
 
 class RunnerTest(unittest.TestCase):
-    def test_basic(self):
-        self.assertEqual(run(), True)
+  def test_part1(self):
+    self.assertEqual(Runner(test_input.strip()).part1(), True)
+
+  def test_part2(self):
+    self.assertEqual(Runner(test_input.strip()).part2(), True)
