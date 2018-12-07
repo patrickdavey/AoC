@@ -11,26 +11,20 @@ class Runner():
     for idx, line in enumerate(raw.splitlines()):
       self.points.append(Point(*(map(int, line.strip().split(","))), chr(97 + idx), random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
 
-    self.max_x = max(point.x for point in self.points) + 2
-    self.max_y = max(point.y for point in self.points) + 2
+    self.max_x = max(point.x for point in self.points)
+    self.max_y = max(point.y for point in self.points)
     self.grid = {}
 
 
   def part1(self):
     self.find_closest_points()
-    self.print_grid()
-
+    # self.print_grid()
     return self.biggest_gap()
 
   def part2(self, target):
     self.target = target
     self.find_total_within_target()
-    total = 0
-    for i in self.grid.values():
-      if i == "#":
-        total += 1
-
-    return total
+    return list(self.grid.values()).count("#")
 
   def manhattan_distance(self, point_a, point_b):
     (x1, y1) = point_a
@@ -100,8 +94,4 @@ class Runner():
     for point in self.points:
       total += self.manhattan_distance((point.x, point.y), (x, y))
 
-    if total < self.target:
-      return "#"
-    else:
-      return "."
-
+    return "#" if total < self.target else "."
