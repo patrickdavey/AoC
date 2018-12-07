@@ -76,8 +76,6 @@ area is *17*.
 
 Your puzzle answer was `4233`.
 
-The first half of this puzzle is complete! It provides one gold star: \*
-
 --- Part Two --- {#part2}
 ----------------
 
@@ -129,12 +127,17 @@ than *10000*.
 *What is the size of the region containing all locations which have a
 total distance to all given coordinates of less than 10000?*
 
-Although it hasn't changed, you can still [get your puzzle
-input](6/input).
+Your puzzle answer was `45290`.
 
-Answer:
+Both parts of this puzzle are complete! They provide two gold stars:
+\*\*
+
+At this point, you should [return to your advent calendar](/2018) and
+try another puzzle.
+
+If you still want to see it, you can [get your puzzle input](6/input).
 
 You can also [\[Share[on
-[Twitter](https://twitter.com/intent/tweet?text=I%27ve+completed+Part+One+of+%22Chronal+Coordinates%22+%2D+Day+6+%2D+Advent+of+Code+2018&url=https%3A%2F%2Fadventofcode%2Ecom%2F2018%2Fday%2F6&related=ericwastl&hashtags=AdventOfCode)
-[Reddit](http://www.reddit.com/submit?url=https%3A%2F%2Fadventofcode%2Ecom%2F2018%2Fday%2F6&title=I%27ve+completed+Part+One+of+%22Chronal+Coordinates%22+%2D+Day+6+%2D+Advent+of+Code+2018)]{.share-content}\]]{.share}
+[Twitter](https://twitter.com/intent/tweet?text=I%27ve+completed+%22Chronal+Coordinates%22+%2D+Day+6+%2D+Advent+of+Code+2018&url=https%3A%2F%2Fadventofcode%2Ecom%2F2018%2Fday%2F6&related=ericwastl&hashtags=AdventOfCode)
+[Reddit](http://www.reddit.com/submit?url=https%3A%2F%2Fadventofcode%2Ecom%2F2018%2Fday%2F6&title=I%27ve+completed+%22Chronal+Coordinates%22+%2D+Day+6+%2D+Advent+of+Code+2018)]{.share-content}\]]{.share}
 this puzzle.
