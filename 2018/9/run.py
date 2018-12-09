@@ -6,4 +6,5 @@ from runner import Runner
 
 runner = Runner(486, 70833)
 print(runner.part1())
-# print(runner.part2())
+runner = Runner(486, 7083300)
+print(runner.part1())
