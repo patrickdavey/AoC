@@ -8,6 +8,7 @@ def Input():
   filename = './input.txt'
   return open(filename).read().strip()
 
-runner = Runner(Input())
-print(runner.part1())
-print(runner.part2())
+runner = Runner()
+print(runner.part1(int(Input())))
+runner = Runner()
+print(runner.part2(Input()))
