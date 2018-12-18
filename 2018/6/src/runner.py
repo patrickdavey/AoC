@@ -18,7 +18,6 @@ class Runner():
 
   def part1(self):
     self.find_closest_points()
-    # self.print_grid()
     return self.biggest_gap()
 
   def part2(self, target):
