@@ -1,0 +1,25 @@
+
+  mulr 3 2 4 reg 4 = reg 3 * reg 2
+  eqrr 4 1 4 sets register 4 = 1 if reg4 = reg 1
+  addr 4 5 5 sets pointer to pointer + reg4 (which will break us out if its 1)
+  addi 5 1 5 adds 1 to reg 5 skipping us over the next one
+  ??addr 3 0 0 # this is our register zero set to register 0 + register 3
+  addi 2 1 2 # incrementes register 2 by 1
+  gtrr 2 1 4 # sets register 4 to 1 if register 2 > register 1
+  addr 5 4 5
+  seti 2 7 5 # loops us back
+
+reg3 = reg1 / reg2
+reg2 = reg1 + 1
+sets register 4 to 1
+
+in block 3 - 9 only reg 2 changes
+
+check = reg 3 * reg 2
+
+if reg3 * reg 2 == 10551410:
+  set reg0 = reg0 + reg 3
+
+reg2 += 1
+break if reg2 > reg1
+set
