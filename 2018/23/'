@@ -1,0 +1,66 @@
+import re
+from collections import defaultdict, namedtuple
+Point = namedtuple("Point", "x, y, z")
+
+def extract_ints(a_string):
+    return tuple(map(int, re.findall(r'-?\d+', a_string)))
+
+def manhattan_distance(point_a, point_b):
+  (x1, y1, z1) = point_a
+  (x2, y2, z2) = point_b
+  return abs(x1 - x2) + abs(y1 - y2) + abs(z1 - z2)
+
+class Runner():
+  def __init__(self, raw):
+
+    self.bots = {}
+    max_power = 0
+    best_bot = None
+    min_x = 0
+    min_y = 0
+    min_z = 0
+    max_x = 0
+    max_y = 0
+    max_z = 0
+    for line in raw.splitlines():
+      (x, y, z, radius) = extract_ints(line)
+      if x > max_x:
+        max_x = x
+      if x < min_x:
+        min_x = x
+      if y > max_y:
+        max_y = y
+      if y < min_y:
+        min_y = y
+      if z > max_z:
+        max_z = z
+      if z < min_z:
+        min_z = z
+
+      p = Point(x, y, z)
+      if radius > max_power:
+        max_power = radius
+        best_bot = p
+      self.bots[p] = radius
+    self.best_bot = best_bot
+    self.best_bot_power = max_power
+    self.min_x = min_x
+    self.min_y = min_y
+    self.min_z = min_z
+    self.max_x = max_x
+    self.max_y = max_y
+    self.max_z = max_z
+
+  def part1(self):
+    in_range = 0
+    for b in self.bots:
+      if manhattan_distance(self.best_bot, b) <= self.best_bot_power:
+        in_range += 1
+    return in_range
+
+  def part2(self):
+    for x in range(self.min_x, self.max_x):
+      for y in range(self.min_y, self.max_y):
+        for z in range(self.min_z, self.max_z):
+          import ipdb; ipdb.set_trace()
+    return True
