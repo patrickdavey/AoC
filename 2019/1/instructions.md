@@ -37,10 +37,52 @@ it, individually calculate the fuel needed for the mass of each module
 *What is the sum of the fuel requirements* for all of the modules on
 your spacecraft?
 
-To begin, [get your puzzle input](1/input).
+Your puzzle answer was `3380880`.
+
+The first half of this puzzle is complete! It provides one gold star: \*
+
+--- Part Two --- {#part2}
+----------------
+
+During the second Go / No Go poll, the Elf in charge of the Rocket
+Equation Double-Checker stops the launch sequence. Apparently, you
+forgot to include additional fuel for the fuel you just added.
+
+Fuel itself requires fuel just like a module - take its mass, divide by
+three, round down, and subtract 2. However, that fuel *also* requires
+fuel, and *that* fuel requires fuel, and so on. Any mass that would
+require *negative fuel* should instead be treated as if it requires
+*zero fuel*; the remaining mass, if any, is instead handled by *wishing
+really hard*, which has no mass and is outside the scope of this
+calculation.
+
+So, for each module mass, calculate its fuel and add it to the total.
+Then, treat the fuel amount you just calculated as the input mass and
+repeat the process, continuing until a fuel requirement is zero or
+negative. For example:
+
+-   A module of mass `14` requires `2` fuel. This fuel requires no
+    further fuel (2 divided by 3 and rounded down is `0`, which would
+    call for a negative fuel), so the total fuel required is still just
+    `2`.
+-   At first, a module of mass `1969` requires `654` fuel. Then, this
+    fuel requires `216` more fuel (`654 / 3 - 2`). `216` then requires
+    `70` more fuel, which requires `21` fuel, which requires `5` fuel,
+    which requires no further fuel. So, the total fuel required for a
+    module of mass `1969` is `654 + 216 + 70 + 21 + 5 = 966`.
+-   The fuel required by a module of mass `100756` and its fuel is:
+    `33583 + 11192 + 3728 + 1240 + 411 + 135 + 43 + 12 + 2 = 50346`.
+
+*What is the sum of the fuel requirements* for all of the modules on
+your spacecraft when also taking into account the mass of the added
+fuel? (Calculate the fuel requirements for each module separately, then
+add them all up at the end.)
+
+Although it hasn't changed, you can still [get your puzzle
+input](1/input).
 
 Answer:
 
 You can also [\[Share[on
-[Twitter](https://twitter.com/intent/tweet?text=%22The+Tyranny+of+the+Rocket+Equation%22+%2D+Day+1+%2D+Advent+of+Code+2019&url=https%3A%2F%2Fadventofcode%2Ecom%2F2019%2Fday%2F1&related=ericwastl&hashtags=AdventOfCode)
+[Twitter](https://twitter.com/intent/tweet?text=I%27ve+completed+Part+One+of+%22The+Tyranny+of+the+Rocket+Equation%22+%2D+Day+1+%2D+Advent+of+Code+2019&url=https%3A%2F%2Fadventofcode%2Ecom%2F2019%2Fday%2F1&related=ericwastl&hashtags=AdventOfCode)
 [Mastodon](javascript:void(0);)]{.share-content}\]]{.share} this puzzle.

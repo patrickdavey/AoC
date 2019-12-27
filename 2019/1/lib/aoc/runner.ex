@@ -6,7 +6,9 @@ defmodule AOC.Runner do
   end
 
   def part_2 do
-    "part 2"
+    structured_data
+    |> Enum.map(&AOC.Calculator.full_calculate/1)
+    |> Enum.sum
   end
 
   defp structured_data do
