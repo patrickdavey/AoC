@@ -1,6 +1,4 @@
 defmodule AOC.Parser do
-  @capture ~r/(?<letters>\D+)(?<sector>\d+)\[(?<check>\w+)\]/
-
   def parse do
     {:ok, binary} = File.read("./input.txt")
     _parse(binary)
