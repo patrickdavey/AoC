@@ -4,6 +4,10 @@ defmodule AOC.Intcode do
     _next(list, code, offset)
   end
 
+  def final(list) do
+    Enum.at(next(list, 0), 0)
+  end
+
   defp _next(list, 1, offset) do
     op1 = Enum.at(list, Enum.at(list, offset + 1))
     op2 = Enum.at(list, Enum.at(list, offset + 2))
