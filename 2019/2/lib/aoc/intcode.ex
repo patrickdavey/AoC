@@ -1,28 +1,38 @@
 defmodule AOC.Intcode do
-  def next(list, offset) do
-    code = Enum.at(list, offset)
-    _next(list, code, offset)
+  @add_opcode 1
+  @mult_opcode 2
+  @terminate 99
+
+  def execute(program, instruction_pointer \\ 0) do
+    execute(Map.fetch!(program, instruction_pointer), program, instruction_pointer)
   end
 
-  def final(list) do
-    Enum.at(next(list, 0), 0)
+  def execute(@add_opcode, program, instruction_pointer) do
+    program
+    |> execute_opcode(instruction_pointer, &Kernel.+/2)
+    |> execute(instruction_pointer + 4)
   end
 
-  defp _next(list, 1, offset) do
-    op1 = Enum.at(list, Enum.at(list, offset + 1))
-    op2 = Enum.at(list, Enum.at(list, offset + 2))
-    list = List.replace_at(list, Enum.at(list, offset + 3), op1 + op2)
-    next(list, offset + 4)
+  def execute(@mult_opcode, program, instruction_pointer) do
+    program
+    |> execute_opcode(instruction_pointer, &Kernel.*/2)
+    |> execute(instruction_pointer + 4)
   end
 
-  defp _next(list, 2, offset) do
-    op1 = Enum.at(list, Enum.at(list, offset + 1))
-    op2 = Enum.at(list, Enum.at(list, offset + 2))
-    list = List.replace_at(list, Enum.at(list, offset + 3), op1 * op2)
-    next(list, offset + 4)
+  def execute(@terminate, program, _instruction_pointer) do
+    program
   end
 
-  defp _next(list, 99, _offset) do
-    list
+  def execute_opcode(program, instruction_pointer, op) do
+    Map.put(
+      program,
+      Map.fetch!(program, instruction_pointer + 3),
+      op.(
+        lookup(program, instruction_pointer + 1),
+        lookup(program, instruction_pointer + 2)
+      )
+    )
   end
+
+  defp lookup(program, address), do: Map.fetch!(program, Map.fetch!(program, address))
 end

@@ -13,9 +13,7 @@ defmodule AOC.Parser do
     |> String.trim
     |> String.split(",")
     |> Enum.map(&String.to_integer/1)
-  end
-
-  def formatted(line) do
-    line
+    |> Enum.with_index
+    |> Enum.into(%{}, fn { i, j } -> { j, i } end)
   end
 end
