@@ -4,7 +4,7 @@ defmodule AOC.Board do
 
     for y <- min_y..max_y do
       for x <- min_x..max_x do
-        Map.get(board, { x, y }, ["."]) |> Enum.join("")
+        Map.get(board, { x, y }, ["."]) |> print_value
       end |> Enum.join("")
     end |> Enum.join("\n")
   end
@@ -25,4 +25,8 @@ defmodule AOC.Board do
       }
     end)
   end
+
+  defp print_value(["."]), do: "."
+  defp print_value([a]), do: "#{a}"
+  defp print_value(_), do: "x"
 end
