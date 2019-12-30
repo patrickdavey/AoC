@@ -1,13 +1,16 @@
 defmodule AOC.Runner do
   alias AOC.PasswordValidator
+
   def part_1 do
     range
-    |> Enum.filter(&(PasswordValidator.check(range, &1)))
+    |> Enum.filter(&(PasswordValidator.check/1))
     |> length
   end
 
   def part_2 do
-    "part 2"
+    range
+    |> Enum.filter(&(PasswordValidator.check2/1))
+    |> length
   end
 
   defp range do
