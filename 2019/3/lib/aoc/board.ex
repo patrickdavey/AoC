@@ -27,6 +27,7 @@ defmodule AOC.Board do
   end
 
   defp print_value(["."]), do: "."
-  defp print_value([a]), do: "#{a}"
+  defp print_value(["o"]), do: "o"
+  defp print_value([{a, b}]), do: "#{a}"
   defp print_value(_), do: "x"
 end

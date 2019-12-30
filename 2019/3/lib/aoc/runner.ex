@@ -10,17 +10,30 @@ defmodule AOC.Runner do
     |> Enum.min
   end
 
-  defp crossing({position, traces}) when length(traces) > 1 do
-    traces |> Enum.uniq |> length == 2
+  def part_2(paths \\ structured_data()) do
+    Plotter.plot(paths)
+    |> Enum.filter(&crossing/1)
+    |> Enum.filter(&distance/1)
+    |> Enum.map(&distance_travelled/1)
+    |> Enum.min
   end
 
-  defp crossing(_), do: false
 
-  def part_2 do
-    "part 2"
+  defp crossing({position, traces}) do
+    traces |> Enum.map(&(elem(&1, 0))) |> Enum.uniq |> length == 2
+  end
+
+  defp distance({position, traces}) do
+    traces |> Enum.reduce(%{}, fn({id, count}, acc) ->
+      Map.update(acc, id, count, &(if &1 < count, do: &1, else: count))
+    end)
   end
 
   defp structured_data do
     AOC.Parser.parse
+  end
+
+  defp distance_travelled({point, [{id1, steps1}, {id2, steps2}]}) do
+    steps1 + steps2
   end
 end
