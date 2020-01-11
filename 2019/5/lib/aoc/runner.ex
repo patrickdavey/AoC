@@ -8,9 +8,6 @@ defmodule AOC.Runner do
     |> Enum.at(0)
   end
 
-  def part_2 do
-  end
-
   defp structured_data do
     AOC.Parser.parse
   end
