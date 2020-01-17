@@ -12,6 +12,7 @@ defmodule AOC.Parser do
     binary
     |> String.trim
     |> String.split(",")
+    |> Enum.map(&String.trim/1)
     |> Enum.map(&String.to_integer/1)
     |> Enum.with_index
     |> Enum.into(%{}, fn { i, j } -> { j, i } end)

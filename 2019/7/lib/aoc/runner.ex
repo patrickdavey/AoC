@@ -1,54 +1,56 @@
 defmodule AOC.Runner do
-  alias AOC.{IntcodeAgent, Input}
+  alias AOC.{IntcodeAgent}
 
-  def part_1(program \\ structured_data) do
-    Input.start_link([])
-
+  def part_1(program \\ structured_data()) do
     AOC.CombinePermute.permute(Enum.to_list((0..4)))
     |> Enum.map(&(calculate_run(program, &1)))
     |> Enum.max
   end
 
-  def part_2(program \\ structured_data) do
+  def part_2(program \\ structured_data()) do
     AOC.CombinePermute.permute(Enum.to_list((5..9)))
-    |> Enum.map(&(part_2_run(program, &1)))
-
-    Process.sleep(100000)
-  end
-
-  def part_2_run(program, [a, b, c, d, e]) do
-    {:ok, amp_a} = IntcodeAgent.init
-    {:ok, amp_b} = IntcodeAgent.init
-    {:ok, amp_c} = IntcodeAgent.init
-    {:ok, amp_d} = IntcodeAgent.init
-    {:ok, amp_e} = IntcodeAgent.init
-
-    IntcodeAgent.set_initial(amp_a, amp_b, program, [a, 0])
-    IntcodeAgent.set_initial(amp_b, amp_c, program, [b])
-    IntcodeAgent.set_initial(amp_c, amp_d, program, [c])
-    IntcodeAgent.set_initial(amp_d, amp_e, program, [d])
-    IntcodeAgent.set_initial(amp_e, amp_a, program, [e])
-
-    spawn(fn -> IntcodeAgent.run(amp_a) end)
-    spawn(fn -> IntcodeAgent.run(amp_b) end)
-    spawn(fn -> IntcodeAgent.run(amp_c) end)
-    spawn(fn -> IntcodeAgent.run(amp_d) end)
-    spawn(fn -> IntcodeAgent.run(amp_e) end)
+    |> Enum.map(&(calculate_run(program, &1)))
+    |> Enum.max
   end
 
   defp structured_data do
     AOC.Parser.parse
   end
 
-  def calculate_run(program, inputs) do
-    inputs
-    |> Enum.reduce(0, fn(phase, acc) ->
-      Input.set([phase, acc])
+  def calculate_run(program, [a, b, c, d, e]) do
+    supervisor_pid = self()
+    amp_a = spawn_link(fn -> IntcodeAgent.init(%{supervisor: supervisor_pid}) end)
+    amp_b = spawn_link(fn -> IntcodeAgent.init(%{supervisor: supervisor_pid}) end)
+    amp_c = spawn_link(fn -> IntcodeAgent.init(%{supervisor: supervisor_pid}) end)
+    amp_d = spawn_link(fn -> IntcodeAgent.init(%{supervisor: supervisor_pid}) end)
+    amp_e = spawn_link(fn -> IntcodeAgent.init(%{supervisor: supervisor_pid}) end)
+    send(amp_a, {:set_initial, amp_b, program})
+    send(amp_b, {:set_initial, amp_c, program})
+    send(amp_c, {:set_initial, amp_d, program})
+    send(amp_d, {:set_initial, amp_e, program})
+    send(amp_e, {:set_initial, amp_a, program})
+    send(amp_a, {:input, a})
+    send(amp_a, {:input, 0})
+    send(amp_b, {:input, b})
+    send(amp_c, {:input, c})
+    send(amp_d, {:input, d})
+    send(amp_e, {:input, e})
 
-      program
-      |> Intcode.execute
-      |> Map.fetch!("output")
-      |> List.first
-    end)
+    send(amp_a, :run)
+    send(amp_b, :run)
+    send(amp_c, :run)
+    send(amp_d, :run)
+    send(amp_e, :run)
+
+    wait_loop(0, amp_e)
+  end
+
+  defp wait_loop(value, amp) do
+    receive do
+      {:terminating, ^amp} ->
+        value
+      {:input, value, ^amp} ->
+        wait_loop(value, amp)
+    end
   end
 end
