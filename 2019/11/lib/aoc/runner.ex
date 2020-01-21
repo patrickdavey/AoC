@@ -1,5 +1,5 @@
 defmodule AOC.Runner do
-  alias AOC.{IntcodeAgent}
+  alias AOC.{IntcodeAgent, Board}
   @turn_left 0
   @turn_right 1
 
@@ -16,7 +16,14 @@ defmodule AOC.Runner do
   end
 
   def part_2(program \\ structured_data()) do
-    "part 2"
+    supervisor_pid = self()
+    computer = spawn_link(fn -> IntcodeAgent.init(%{supervisor: supervisor_pid}) end)
+    send(computer, {:set_initial, self(), program})
+    send(computer, {:input, 1})
+    send(computer, :run)
+
+    wait_loop({{0,0, :north}, %{}, []}, computer)
+    |> Board.print
   end
 
   defp structured_data do
