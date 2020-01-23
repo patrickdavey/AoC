@@ -14,6 +14,7 @@ defmodule AOC.Runner do
     send(computer, :run)
 
     wait_loop(%{}, computer, [])
+    "finished"
   end
 
   defp structured_data do
