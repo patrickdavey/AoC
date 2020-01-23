@@ -8,6 +8,7 @@ defmodule AOC.Runner do
   def part_2(program \\ structured_data()) do
     supervisor_pid = self()
     computer = spawn_link(fn -> IntcodeAgent.init(%{supervisor: supervisor_pid}) end)
+    Process.register(computer, :intcode)
     send(computer, {:set_initial, self(), program})
     send(computer, {:input, 2})
     send(computer, :run)
@@ -62,8 +63,13 @@ defmodule AOC.Runner do
   defp move_paddle(board, _), do: board
 
   defp move({{x, y}, _}, nil), do: nil
-  defp move({{x, y}, _}, {{px, py}, _}) do
-    require IEx
-    IEx.pry
+  defp move({{x, y}, _}, {{px, py}, _}) when px < x do
+    send(:intcode, {:input, 1})
+  end
+  defp move({{x, y}, _}, {{px, py}, _}) when px > x do
+    send(:intcode, {:input, -1})
+  end
+  defp move({{x, y}, _}, {{px, py}, _}) when px == x do
+    send(:intcode, {:input, 0})
   end
 end
