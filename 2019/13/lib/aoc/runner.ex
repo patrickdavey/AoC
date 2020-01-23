@@ -4,14 +4,19 @@ defmodule AOC.Runner do
 
 
   def part_1(program \\ structured_data()) do
+    initial_board
+    |> Board.print
+    |> Map.values
+    |> Enum.count(&(&1 == @block_type))
+  end
+
+  def initial_board(program \\ structured_data()) do
     supervisor_pid = self()
     computer = spawn_link(fn -> IntcodeAgent.init(%{supervisor: supervisor_pid}) end)
     send(computer, {:set_initial, self(), program})
     send(computer, :run)
 
     wait_loop(%{}, computer, [])
-    |> Map.values
-    |> Enum.count(&(&1 == @block_type))
   end
 
   defp structured_data do

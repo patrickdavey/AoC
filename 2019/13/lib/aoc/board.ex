@@ -1,9 +1,20 @@
 defmodule AOC.Board do
+  @pieces %{
+    0 => ".",
+    1 => "#",
+    2 => "x",
+    3 => "_",
+    4 => "B"
+  }
+
   def print(board) do
     {min_x, min_y, max_x, max_y} = get_dimensions(board)
 
     Enum.map(min_y..max_y, &(get_row(&1, board, min_x, max_x)))
     |> Enum.join("\n")
+    |> IO.puts
+
+    board
   end
 
 
@@ -15,8 +26,8 @@ defmodule AOC.Board do
   end
 
   defp get_row(y, board, min_x, max_x) do
-    Enum.map(min_x..max_x, &(Map.get(board, {&1,y}, 0)))
-    |> Enum.map(&(if &1 == 0, do: ".", else: "#"))
+    Enum.map(min_x..max_x, &(Map.fetch!(board, {&1,y})))
+    |> Enum.map(&(Map.fetch!(@pieces, &1)))
     |> Enum.join("")
   end
 end
