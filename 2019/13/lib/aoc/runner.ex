@@ -1,5 +1,6 @@
 defmodule AOC.Runner do
-  @block_type 2
+  @ball_type 4
+
   alias AOC.{IntcodeAgent, Board}
 
 
@@ -11,9 +12,6 @@ defmodule AOC.Runner do
     send(computer, :run)
 
     wait_loop(%{}, computer, [])
-    |> Board.print
-
-    "2"
   end
 
   defp structured_data do
@@ -37,8 +35,24 @@ defmodule AOC.Runner do
         board
       {:input, type, ^computer} ->
         board
-        |> Map.put({x, y}, type)
+        |> process(x, y, type)
         |> wait_loop(computer, [])
     end
+  end
+
+  defp process(board, -1, 0, score) do
+    IO.puts("score: #{score}")
+    board
+  end
+
+  defp process(board, x, y, @ball_type) do
+    require IEx
+    IEx.pry
+  end
+
+  defp process(board, x, y, type) do
+    Map.put(board, {x, y})
+    require IEx
+    IEx.pry
   end
 end
