@@ -1,4 +1,5 @@
 defmodule AOC.Runner do
+  @paddle_type 3
   @ball_type 4
 
   alias AOC.{IntcodeAgent, Board}
@@ -36,6 +37,7 @@ defmodule AOC.Runner do
       {:input, type, ^computer} ->
         board
         |> process(x, y, type)
+        |> move_paddle(type)
         |> wait_loop(computer, [])
     end
   end
@@ -45,13 +47,22 @@ defmodule AOC.Runner do
     board
   end
 
-  defp process(board, x, y, @ball_type) do
-    require IEx
-    IEx.pry
+  defp process(board, x, y, type) do
+    Map.put(board, {x, y}, type)
   end
 
-  defp process(board, x, y, type) do
-    Map.put(board, {x, y})
+  defp move_paddle(board, @ball_type) do
+    ball = Enum.find(board, fn({{x,y}, v}) -> v == 4 end)
+    paddle = Enum.find(board, nil, fn({{x,y}, v}) -> v == 3 end)
+
+    move(ball, paddle)
+    board
+  end
+
+  defp move_paddle(board, _), do: board
+
+  defp move({{x, y}, _}, nil), do: nil
+  defp move({{x, y}, _}, {{px, py}, _}) do
     require IEx
     IEx.pry
   end
