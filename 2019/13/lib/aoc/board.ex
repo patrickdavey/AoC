@@ -8,11 +8,14 @@ defmodule AOC.Board do
   }
 
   def print(board) do
-    {min_x, min_y, max_x, max_y} = get_dimensions(board)
+    if (board |> Map.keys |> length > 50) do
 
-    Enum.map(min_y..max_y, &(get_row(&1, board, min_x, max_x)))
-    |> Enum.join("\n")
-    |> IO.puts
+      {min_x, min_y, max_x, max_y} = get_dimensions(board)
+
+      Enum.map(min_y..max_y, &(get_row(&1, board, min_x, max_x)))
+      |> Enum.join("\n")
+      |> IO.puts
+    end
 
     board
   end
@@ -26,7 +29,7 @@ defmodule AOC.Board do
   end
 
   defp get_row(y, board, min_x, max_x) do
-    Enum.map(min_x..max_x, &(Map.fetch!(board, {&1,y})))
+    Enum.map(min_x..max_x, &(Map.get(board, {&1,y}, 0)))
     |> Enum.map(&(Map.fetch!(@pieces, &1)))
     |> Enum.join("")
   end

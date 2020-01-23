@@ -10,10 +10,25 @@ defmodule AOC.Runner do
     |> Enum.count(&(&1 == @block_type))
   end
 
+
+  def part_2(program \\ structured_data()) do
+    supervisor_pid = self()
+    computer = spawn_link(fn -> IntcodeAgent.init(%{supervisor: supervisor_pid}) end)
+    send(computer, {:set_initial, self(), program})
+    send(computer, {:input, 2})
+    send(computer, :run)
+
+    wait_loop(%{}, computer, [])
+    |> Board.print
+
+    "2"
+  end
+
   def initial_board(program \\ structured_data()) do
     supervisor_pid = self()
     computer = spawn_link(fn -> IntcodeAgent.init(%{supervisor: supervisor_pid}) end)
     send(computer, {:set_initial, self(), program})
+    send(computer, {:input, 0})
     send(computer, :run)
 
     wait_loop(%{}, computer, [])
@@ -24,6 +39,7 @@ defmodule AOC.Runner do
   end
 
   defp wait_loop(board, computer, acc) when length(acc) < 2 do
+    Board.print(board)
     receive do
       {:terminating, ^computer} ->
         board
@@ -33,6 +49,7 @@ defmodule AOC.Runner do
   end
 
   defp wait_loop(board, computer, [x, y]) do
+    Board.print(board)
     receive do
       {:terminating, ^computer} ->
         board
