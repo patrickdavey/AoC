@@ -10,25 +10,27 @@ defmodule AOC.Runner do
   end
 
   def part_2(reactions \\ structured_data) do
-    find_best_fuel(reactions, {0, 0}, {1, part_1(reactions)})
+    find_best_fuel(reactions, {0, 0}, {1, part_1(reactions)}, nil)
   end
 
-  defp find_best_fuel(reactions, {lower_fuel, a}, {upper_fuel, a}) do
+  defp find_best_fuel(reactions, {lower_fuel, a}, {upper_fuel, a}, _) do
     lower_fuel
   end
 
-  defp find_best_fuel(reactions, {lower_fuel, lower_ore}, {upper_fuel, upper_ore}) do
-    IO.inspect({lower_fuel, upper_fuel})
+  defp find_best_fuel(reactions, {lower_fuel, lower_ore}, {upper_fuel, upper_ore}, max_fuel) do
     cond do
       upper_ore <= @ore_limit ->
-        next_fuel = upper_fuel * 2
+        IO.puts("first: #{inspect({lower_fuel, upper_fuel, max_fuel})}")
+        next_fuel = if max_fuel, do: Enum.min([max_fuel, upper_fuel * 2]), else: upper_fuel * 2
+
         next_ore = part_1(Map.update!(reactions, "FUEL", &(%{&1 | quantity: next_fuel})))
-        find_best_fuel(reactions, {upper_fuel, upper_ore}, {next_fuel, next_ore})
+        find_best_fuel(reactions, {upper_fuel, upper_ore}, {next_fuel, next_ore}, max_fuel)
       true ->
         # we have exceeded our fuel allowance. binary? search
+        IO.puts("second: #{inspect({lower_fuel, upper_fuel, max_fuel})}")
         next_fuel = lower_fuel + floor((upper_fuel - lower_fuel) / 2)
         next_ore = part_1(Map.update!(reactions, "FUEL", &(%{&1 | quantity: next_fuel})))
-        find_best_fuel(reactions, {lower_fuel, lower_ore}, {next_fuel, next_ore})
+        find_best_fuel(reactions, {lower_fuel, lower_ore}, {next_fuel, next_ore}, upper_fuel)
     end
   end
 
