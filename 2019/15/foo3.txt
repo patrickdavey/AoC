@@ -1,0 +1,70 @@
+Compiling 1 file (.ex)
+just received input: 1
+hit wall
+resetting 1
+just received input: 2
+hit wall
+resetting 1
+just received input: 4
+hit wall
+resetting 1
+just received input: 3
+Cannot pry #PID<0.101.0> at AOC.Runner.wait_loop/5 (lib/aoc/runner.ex:52). Is an IEx shell running?
+new_paths: [[2], [3], [1]]
+resetting 2
+just received input: 2
+hit wall
+resetting 1
+just received input: 3
+Cannot pry #PID<0.101.0> at AOC.Runner.wait_loop/5 (lib/aoc/runner.ex:52). Is an IEx shell running?
+new_paths: [[1], [2], [3], [1]]
+resetting 2
+just received input: 1
+hit wall
+resetting 1
+just received input: 2
+hit wall
+resetting 1
+just received input: 3
+Cannot pry #PID<0.101.0> at AOC.Runner.wait_loop/5 (lib/aoc/runner.ex:52). Is an IEx shell running?
+new_paths: [[1], [2], [3], [1]]
+resetting 2
+just received input: 1
+hit wall
+resetting 1
+just received input: 2
+hit wall
+resetting 1
+just received input: 3
+Cannot pry #PID<0.101.0> at AOC.Runner.wait_loop/5 (lib/aoc/runner.ex:52). Is an IEx shell running?
+new_paths: [[1], [2], [3], [1]]
+resetting 2
+just received input: 1
+hit wall
+resetting 1
+just received input: 2
+hit wall
+resetting 1
+just received input: 3
+Cannot pry #PID<0.101.0> at AOC.Runner.wait_loop/5 (lib/aoc/runner.ex:52). Is an IEx shell running?
+new_paths: [[1], [2], [3], [1]]
+resetting 2
+just received input: 1
+hit wall
+resetting 1
+just received input: 2
+hit wall
+resetting 1
+just received input: 3
+Cannot pry #PID<0.101.0> at AOC.Runner.wait_loop/5 (lib/aoc/runner.ex:52). Is an IEx shell running?
+new_paths: [[1], [2], [3], [1]]
+resetting 2
+just received input: 1
+hit wall
+resetting 1
+just received input: 2
+hit wall
+resetting 1
+
+BREAK: (a)bort (c)ontinue (p)roc info (i)nfo (l)oaded
+       (v)ersion (k)ill (D)b-tables (d)istribution
