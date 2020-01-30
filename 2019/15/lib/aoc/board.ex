@@ -10,9 +10,9 @@ defmodule AOC.Board do
 
       {min_x, min_y, max_x, max_y} = get_dimensions(board)
 
-      Enum.map(min_y..max_y, &(get_row(&1, board, min_x, max_x)))
+      b = Enum.map(min_y..max_y, &(get_row(&1, board, min_x, max_x)))
       |> Enum.join("\n")
-      |> IO.puts
+      IO.puts("\n\n#{b}\n\n")
     end
 
     board

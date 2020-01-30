@@ -42,7 +42,6 @@ defmodule AOC.IntcodeAgent do
   defp execute({:input, {address}}, state) do
     receive do
       {:input, value } ->
-        IO.puts("just received input: #{value}")
         state
         |> update_program(address, value)
         |> advance_pointer(2)
