@@ -11,11 +11,12 @@ defmodule AOC.Parser do
   defp _parse(binary) do
     binary
     |> String.trim
-    |> String.split("\n")
-    |> Enum.map(&formatted/1)
+    |> formatted
   end
 
   def formatted(line) do
     line
+    |> String.graphemes
+    |> Enum.map(&String.to_integer/1)
   end
 end

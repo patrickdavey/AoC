@@ -1,6 +1,7 @@
 defmodule AOC.Runner do
-  def part_1 do
-    "part 1"
+  def part_1(data \\ structured_data(), iterations) do
+    require IEx
+    IEx.pry
   end
 
   def part_2 do
