@@ -1,6 +1,6 @@
 defmodule AOC.Runner do
   @pattern [0, 1, 0, -1]
-  def part_1(inputs \\ structured_data(), iterations) do
+  def part_1(iterations, inputs \\ structured_data()) do
     offsets = calculate_offsets(inputs |> length)
 
     calculate(inputs, offsets, iterations)
