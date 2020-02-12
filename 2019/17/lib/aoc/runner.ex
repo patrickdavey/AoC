@@ -8,23 +8,21 @@ defmodule AOC.Runner do
     send(intcode, {:set_initial, self(), program})
     send(intcode, :run)
 
-    wait_loop(%{}, intcode)
+    wait_loop([], intcode)
   end
 
   defp structured_data do
     AOC.Parser.parse
   end
 
-  defp wait_loop(board, intcode) do
+  defp wait_loop(acc, intcode) do
     receive do
       {:terminating, ^intcode} ->
         require IEx
         IEx.pry
-        board
+        acc
       {:input, value, ^intcode} ->
-        require IEx
-        IEx.pry
-        wait_loop(board, intcode)
+        wait_loop(acc ++ [value], intcode)
     end
   end
 end
