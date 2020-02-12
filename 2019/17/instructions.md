@@ -83,8 +83,10 @@ parameters*. In the above example, this is `76`.
 Run your ASCII program. *What is the sum of the alignment parameters*
 for the scaffold intersections?
 
-To play, please identify yourself via one of these services:
+To begin, [get your puzzle input](17/input).
 
-[\[GitHub\]](/auth/github) [\[Google\]](/auth/google)
-[\[Twitter\]](/auth/twitter) [\[Reddit\]](/auth/reddit) [- [\[How Does
-Auth Work?\]](/about#faq_auth)]{.quiet}
+Answer:
+
+You can also [\[Share[on
+[Twitter](https://twitter.com/intent/tweet?text=%22Set+and+Forget%22+%2D+Day+17+%2D+Advent+of+Code+2019&url=https%3A%2F%2Fadventofcode%2Ecom%2F2019%2Fday%2F17&related=ericwastl&hashtags=AdventOfCode)
+[Mastodon](javascript:void(0);)]{.share-content}\]]{.share} this puzzle.
