@@ -1,8 +1,12 @@
 defmodule AOC.Board do
   @pieces %{
-    0 => "#",
-    1 => ".",
-    2 => "O",
+    :scaffold => "#",
+    :empty => ".",
+    :robot_up => "^",
+    :robot_down => "v",
+    :robot_left => "<",
+    :robot_right => ">",
+    :robot_dead => "X",
   }
 
   def print(board) do
