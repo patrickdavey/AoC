@@ -19,15 +19,11 @@ defmodule AOC.Runner do
     intcode = spawn_link(fn -> IntcodeAgent.init(%{supervisor: supervisor_pid}) end)
     Process.register(intcode, :intcode)
     send(intcode, {:set_initial, self(), program})
-    send(intcode, {:input, "A,B,A,C,B,C,A,C,B,C"})
-    send(intcode, {:input, "\n"})
-    send(intcode, {:input, "L,8,R,10,L,10"})
-    send(intcode, {:input, "\n"})
-    send(intcode, {:input, "R,10,L,8,L,8,L,10"})
-    send(intcode, {:input, "\n"})
-    send(intcode, {:input, "L,4,L,6,L,8,L,8"})
-    send(intcode, {:input, "\n"})
-    send(intcode, {:input, "n\n"})
+    send_intcode("A,B,A,C,B,C,A,C,B,C\n")
+    send_intcode("L,8,R,10,L,10\n")
+    send_intcode("R,10,L,8,L,8,L,10\n")
+    send_intcode("L,4,L,6,L,8,L,8\n")
+    send_intcode("n\n")
     send(intcode, :run)
 
     wait_loop([], intcode)
@@ -46,5 +42,13 @@ defmodule AOC.Runner do
       {:input, value, ^intcode} ->
         wait_loop(acc ++ [value], intcode)
     end
+  end
+
+  defp send_intcode(string) do
+    string
+    |> String.to_charlist
+    |> Enum.each(fn(i) ->
+      send(:intcode, {:input, i })
+    end)
   end
 end
