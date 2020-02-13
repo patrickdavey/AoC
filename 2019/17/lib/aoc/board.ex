@@ -23,7 +23,7 @@ defmodule AOC.Board do
   end
 
 
-  defp get_dimensions(board) do
+  def get_dimensions(board) do
     keys = board |> Map.keys |> Enum.map(&([elem(&1, 0), elem(&1, 1)]))
     {min_x, max_x} = keys |> Enum.map(fn([a, _]) -> a end) |> Enum.min_max
     {min_y, max_y} = keys |> Enum.map(fn([_, a]) -> a end) |> Enum.min_max

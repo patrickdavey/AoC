@@ -1,5 +1,5 @@
 defmodule AOC.Runner do
-  alias AOC.{IntcodeAgent, Board, CameraParser}
+  alias AOC.{IntcodeAgent, Board, CameraParser, Scaffold}
 
   def part_1(program \\ structured_data()) do
     supervisor_pid = self()
@@ -10,10 +10,7 @@ defmodule AOC.Runner do
 
     wait_loop([], intcode)
     |> CameraParser.parse
-    |> Board.print
-
-
-    "hello"
+    |> Scaffold.sum_crossings
   end
 
   defp structured_data do
