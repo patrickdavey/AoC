@@ -13,6 +13,26 @@ defmodule AOC.Runner do
     |> Scaffold.sum_crossings
   end
 
+  def part_2(program \\ structured_data()) do
+    program = Map.put(program, 0, 2)
+    supervisor_pid = self()
+    intcode = spawn_link(fn -> IntcodeAgent.init(%{supervisor: supervisor_pid}) end)
+    Process.register(intcode, :intcode)
+    send(intcode, {:set_initial, self(), program})
+    send(intcode, {:input, "A,B,A,C,B,C,A,C,B,C"})
+    send(intcode, {:input, "\n"})
+    send(intcode, {:input, "L,8,R,10,L,10"})
+    send(intcode, {:input, "\n"})
+    send(intcode, {:input, "R,10,L,8,L,8,L,10"})
+    send(intcode, {:input, "\n"})
+    send(intcode, {:input, "L,4,L,6,L,8,L,8"})
+    send(intcode, {:input, "\n"})
+    send(intcode, {:input, "n\n"})
+    send(intcode, :run)
+
+    wait_loop([], intcode)
+  end
+
   defp structured_data do
     AOC.Parser.parse
   end
@@ -20,6 +40,8 @@ defmodule AOC.Runner do
   defp wait_loop(acc, intcode) do
     receive do
       {:terminating, ^intcode} ->
+        require IEx
+        IEx.pry
         acc
       {:input, value, ^intcode} ->
         wait_loop(acc ++ [value], intcode)
