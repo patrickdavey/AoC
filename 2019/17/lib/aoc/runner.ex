@@ -36,9 +36,7 @@ defmodule AOC.Runner do
   defp wait_loop(acc, intcode) do
     receive do
       {:terminating, ^intcode} ->
-        require IEx
-        IEx.pry
-        acc
+        acc |> List.last
       {:input, value, ^intcode} ->
         wait_loop(acc ++ [value], intcode)
     end
