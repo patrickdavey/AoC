@@ -55,7 +55,7 @@
   ],
   "dependencies": {
     "js-combinatorics": "^0.5.2",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.19",
     "mathjs": "^3.17.0"
   }
 }
