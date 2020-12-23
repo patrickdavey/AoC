@@ -1,0 +1,1 @@
+Should rework this one by scanning down the left hand edge (you can always start from the last x, y+1) and then check the 3 other corners, should actually be pretty quick
