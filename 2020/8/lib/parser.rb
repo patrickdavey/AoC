@@ -7,6 +7,12 @@ class Parser
     input
       .strip
       .split("\n")
-      .map(&:to_i)
+      .each_with_object([]) do |l, acc|
+        inst, value = l.split
+        acc << {
+          instruction: inst,
+          value: value.to_i
+        }
+      end
   end
 end
