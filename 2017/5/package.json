@@ -52,7 +52,7 @@
   "dependencies": {
     "js-combinatorics": "^0.5.2",
     "lodash": "^4.17.4",
-    "mathjs": "^3.17.0",
+    "mathjs": "^7.5.1",
     "tco": "0.0.15"
   }
 }
